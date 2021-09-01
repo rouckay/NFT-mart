@@ -174,6 +174,28 @@
     END FOOTER AREA
 =================================-->
 
+<!-- Modal 2 -->
+<div class="modal fade rating_modal item_remove_modal" id="myModal2" tabindex="-1" role="dialog"
+    aria-labelledby="myModal2">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Are you sure you want to do this?</h3>
+                <p>You will not be able to recover this file!</p>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- end /.modal-header -->
+
+            <div class="modal-body">
+                <button type="submit" class="btn btn--round btn-danger btn--default">Delete</button>
+                <button class="btn btn--round modal_close" data-dismiss="modal">Cancel</button>
+            </div>
+            <!-- end /.modal-body -->
+        </div>
+    </div>
+</div>
 <!--//////////////////// JS GOES HERE ////////////////-->
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0C5etf1GVmL_ldVAichWwFFVcDfa1y_c"></script>
@@ -197,6 +219,7 @@
 <script src="js/vendor/waypoints.min.js"></script>
 <script src="js/dashboard.js"></script>
 <script src="js/main.js"></script>
+<script src="js/jquery.js"></script>
 <script src="js/map.js"></script>
 <!-- endinject -->
 </body>

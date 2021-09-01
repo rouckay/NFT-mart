@@ -553,5 +553,69 @@ function message_to_mem($msg_user_name, $msg_email, $message, $reciever)
     ]);
 }
 // END Message System 
+// Delete Member Product From Member Dashboard
+function delet_mem_pro_from_dash($pro_id, $author)
+{
+    $conn = config();
+    $author = $_POST['author'];
+    $pro_id = $_POST['pro_id'];
+    $dele_query = "DELETE FROM mem_products WHERE mem_pro_id = :id , author = :author";
+    $stmt = $conn->prepare($dele_query);
+    $stmt->execute([
+        ':id' => $pro_id,
+        ':author' => $author
 
+    ]);
+}
+// END Delete Member Product From Member Dashboard
+// Hide Member Products
+function hideProduct($pro_id)
+{
+    $conn = config();
+    $pro_id = $_POST['pro_id'];
+    $hide_pro_sql = "UPDATE mem_products SET status= :status WHERE mem_pro_id=:pro_id";
+    $stmt = $conn->prepare($hide_pro_sql);
+    $stmt->execute([
+        ':status' => "draft",
+        ':pro_id' => $pro_id
+    ]);
+}
+// END Hide Member Products
+// view Message and Remove Active Parameter from it
+if (isset($_POST['msg_view_id'])) {
+    $conn = config();
+    $msg_id = $_POST['msg_view_id'];
+    $view_query = "UPDATE messages SET msg_state = :state WHERE msg_id=:msg_id";
+    $stmt = $conn->prepare($view_query);
+    $stmt->execute([
+        ':state' => '1',
+        ':msg_id' => $msg_id
+    ]);
+}
+// view Message and Remove Active Parameter from it
+// Add BIO Using AJAX
+function add_mem_bio($bio, $user_id)
+{
+
+    $conn = config();
+    if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
+        $user_id = $_SESSION['member_id'];
+        $user_name = $_SESSION['member_user'];
+    } elseif (isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
+        $user_id = $_COOKIE['mem_user_id'];
+        $user_name = $_COOKIE['mem_user_user'];
+    } else {
+        $user_id = -1;
+        $user_name = -1;
+    }
+    $mem_id = $_POST['mem_id'];
+    $bio = $_POST['bio'];
+    $bio_sql = "INSERT INTO mem_bio (bio_detail,bio_user_id) VALUES (:detail, :user_id )";
+    $stmt = $conn->prepare($bio_sql);
+    $stmt->execute([
+        ':detail' => $bio,
+        ':user_id' => $mem_id
+    ]);
+}
+// END Add BIO Using AJAX
 ?>

@@ -133,39 +133,79 @@
                             $status = $rows_msg['msg_status'];
                             $state = $rows_msg['msg_state'];
                         ?>
-                        <div class="messages">
-                            <div class="message active">
-                                <div class="message__actions_avatar">
-                                    <div class="actions">
-                                        <span class="fa fa-star-o"></span>
-                                        <div class="custom_checkbox">
-                                            <input type="checkbox" id="ch2">
-                                            <label for="ch2">
-                                                <span class="shadow_checkbox"></span>
-                                            </label>
+                        <!-- Sender Info Here -->
+                        <?php
+                            $sql_send = "SELECT * FROM members WHERE mem_user_name = :sender_mem_user";
+                            $stmt_sender = $conn->prepare($sql_send);
+                            $stmt_sender->execute([
+                                ':sender_mem_user' => $user
+                            ]);
+                            $sender_rows = $stmt_sender->fetch(PDO::FETCH_ASSOC);
+                            $send_user_name = $sender_rows['mem_user_name'];
+                            $send_image = $sender_rows['mem_image'];
+
+                            ?>
+                        <!-- Collaps -->
+
+
+                        <div id="accordion">
+                            <div class="card">
+                                <div class="card-header">
+                                    <form method="POST">
+                                        <a type="hidden" class="card-link " data-toggle="collapse" id="btn_viewed"
+                                            href="#collapse<?php echo $msg_id; ?>">
+                                            <input type="hidden" id="msg_view_id" name="msg_view_id"
+                                                value="<?php echo $msg_id ?>">
+                                            <!-- <button type="submit" id="btn_viewed" name="btn_viewed">click</button> -->
+                                    </form>
+                                    <!-- Title -->
+                                    <div class="messages">
+                                        <div class="message <?php echo $state == '0' ? 'active' : ''; ?>">
+                                            <div class="message__actions_avatar">
+                                                <div class="actions">
+                                                    <span class="fa fa-star-o"></span>
+                                                    <div class="custom_checkbox">
+                                                        <input type="checkbox" id="ch2">
+                                                        <label for="ch2">
+                                                            <span class="shadow_checkbox"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="avatar">
+                                                    <img src="admin/img/member_avatars/<?php echo $user; ?>/<?php echo $send_image;  ?>"
+                                                        alt="<?php echo $user; ?>">
+                                                </div>
+                                            </div>
+                                            <!-- end /.actions -->
+
+                                            <div class="message_data">
+                                                <div class="name_time">
+                                                    <div class="name">
+                                                        <p><?php echo $user; ?></p>
+                                                        <span class="lnr lnr-envelope"></span>
+                                                    </div>
+
+                                                    <span class="time"><?php echo $date; ?></span>
+                                                    <p><?php echo substr($detail, 0, 36);  ?> ...</p>
+                                                </div>
+                                            </div>
+                                            <!-- end /.message_data -->
                                         </div>
                                     </div>
-
-                                    <div class="avatar">
-                                        <img src="images/notification_head5.png" alt="">
-                                    </div>
-                                </div>
-                                <!-- end /.actions -->
-
-                                <div class="message_data">
-                                    <div class="name_time">
-                                        <div class="name">
-                                            <p><?php echo $user; ?></p>
-                                            <span class="lnr lnr-envelope"></span>
+                                    </a>
+                                    <div id="collapse<?php echo $msg_id; ?>" class="collapse" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <p><?php echo $detail;  ?></p>
                                         </div>
-
-                                        <span class="time"><?php echo $date; ?></span>
-                                        <p><?php echo substr($detail, 0, 36);  ?> ...</p>
                                     </div>
                                 </div>
-                                <!-- end /.message_data -->
                             </div>
                         </div>
+                        <!-- Collaps -->
+                        <!-- END Sender Info Here -->
+
+
                         <?php } ?>
                         <!-- end /.message -->
                         <?php if ($count_msg <= 0) { ?>
@@ -349,6 +389,23 @@
         <!-- end /.row -->
     </div>
 </section>
+<script>
+$(document).ready(function() {
+    $('#btn_viewed').click(function() {
+        var msg_id = $('#msg_id').val();
+        $.ajax({
+            url: 'admin/include/user_functions.php',
+            method: 'POST',
+            data: {
+                msg_id: msg_id
+            },
+            success: function(dataResault) {
+                var dataResault = JSON.parse(dataResault);
+            }
+        })
+    });
+});
+</script>
 <!--================================
             END MESSAGE AREA
     =================================-->

@@ -363,15 +363,51 @@ $at = $row_user['created_at'];
                             <h2>About
                                 <span><?php echo $user_name; ?></span>
                             </h2>
-                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the
-                                mattisleo
-                                quam aliquet congue. Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo
-                                ut scelerisque the mattisleo quam aliquet congue. Nunc placerat mi id nisi interdum
-                                mollis.
-                                Prae sent pharetra, justo ut scelerisque the mattisleo quam aliquet congue.</p>
-                            <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the
-                                mattisleo
-                                quam aliquet congue. Nunc placerat mi id nisi interdum mollis. Praesent pharetra.</p>
+                            <!-- MEMBER Bio text  -->
+                            <?php
+                            $bio_check = "SELECT * FROM mem_bio WHERE bio_user_id = :bio_check";
+                            $stmt_bio = $conn->prepare($bio_check);
+                            $stmt_bio->execute([
+                                ':bio_check' => $user_id
+                            ]);
+                            $rows_bio = $stmt_bio->fetch(PDO::FETCH_ASSOC);
+                            $user_bio_id = $rows_bio['bio_user_id'];
+                            $user_bio_detail_from_db = $rows_bio['bio_detail'];
+                            $rows_in_db = $stmt_bio->rowCount();
+                            if ($rows_in_db != 1) {
+                            ?>
+                            <?php
+                                if (isset($_POST['save_bio'])) {
+                                    $mem_id = $_POST['mem_id'];
+                                    $bio = $_POST['bio'];
+                                    add_mem_bio($bio, $user_id);
+                                }
+
+                                ?>
+                            <h3 class="alert alert-danger">You Don't Have Bio Yet</h3>
+                            <br>
+                            <div class="message-form">
+                                <form method="POST" id="bio_form">
+                                    <div class="form-group">
+                                        <input type="text" name="bio" class="text_field" id="bio"
+                                            placeholder="Your Bio...">
+                                        <input type="hidden" name="mem_id" id="mem_id" value="<?php echo $mem_id; ?>">
+                                    </div>
+
+                                    <div>
+                                        <button type="submit" name="save_bio" id="save_bio"
+                                            class="btn btn--md btn--round">Save You
+                                            Bio</button>
+                                    </div>
+                                </form>
+                                <?php //} 
+                                    ?>
+
+                            </div>
+                            <?php } elseif ($rows_in_db == '1') { ?>
+                            <div class="text text-primary"><?php echo $user_bio_detail_from_db;  ?></div>
+                            <?php } ?>
+                            <!-- END MEMBER Bio text  -->
                         </div>
                     </div>
                 </div>
@@ -524,12 +560,29 @@ $at = $row_user['created_at'];
 <!--================================
         END AUTHOR AREA
     =================================-->
+<script>
+// $(document).ready(function() {
+//     $('#save_bio').click(function() {
+//         $('#save_bio').attr('disabled', 'disabled');
+//         $('#bio_form')[0].reset();
+//         var bio = $('#bio').val();
+//         var mem_id = $('#mem_id').val();
+//         $.ajax({
+//             url: 'admin/include/user_functions.php',
+//             method: 'POST',
+//             data: {
+//                 bio: bio,
+//                 mem_id: mem_id
+//             },
+//             success: function(dataResault) {
+//                 var dataResault = JSON.parse(dataResault);
+//             }
+//         });
+//     });
+// });
+</script>
 
-<?php
-//  } else {
-//     header("location:index.php");
-// } 
-?>
+
 <!--================================
         START CALL TO ACTION AREA
     =================================-->

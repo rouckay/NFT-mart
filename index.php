@@ -135,7 +135,7 @@
                             <?php
                                 $exp = explode(".", $image);
                                 $ext = end($exp);
-                                if ($ext == "jpg" or $ext == "png" or $ext == "jpeg") { ?>
+                                if ($ext == "jpg" or $ext == "png" or $ext == "jpeg" or $ext == "gif") { ?>
                             <img height="450px" width="555px"
                                 src="./admin/img/product/<?php echo $name; ?>/<?php echo $image; ?>"
                                 alt="Product Image">
@@ -320,7 +320,7 @@
                         <?php
                             $exp = explode(".", $image);
                             $ext = end($exp);
-                            if ($ext == "jpg" or $ext == "png" or $ext == "jpeg") { ?>
+                            if ($ext == "jpg" or $ext == "png" or $ext == "jpeg" or $ext == 'gif') { ?>
                         <img height="350px" width="361px"
                             src="./admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>"
                             alt="Product Image">

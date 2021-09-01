@@ -124,12 +124,14 @@
                 } else {
                     $user_id = -1;
                 }
-                $mem_pro_sql = "SELECT * FROM mem_products WHERE author = :author  ORDER BY mem_pro_id DESC";
+                $mem_pro_sql = "SELECT * FROM mem_products WHERE author = :author AND status = :status LIMIT 0,6";
                 $stmt_mem = $conn->prepare($mem_pro_sql);
                 $stmt_mem->execute([
-                    ':author' => $mem_user_name
+                    ':author' => $mem_user_name,
+                    ':status' => 'publish'
                 ]);
                 while ($rows_mem_pro = $stmt_mem->fetch(PDO::FETCH_ASSOC)) {
+                    $id = $rows_mem_pro['mem_pro_id'];
                     $name = $rows_mem_pro['mem_pro_name'];
                     $detail = $rows_mem_pro['mem_pro_detail'];
                     $image = $rows_mem_pro['mem_pro_image'];
@@ -140,14 +142,60 @@
                     $views = $rows_mem_pro['pro_views'];
                     $price = $rows_mem_pro['price'];
                 ?>
+                <!-- modal For Deleting Products -->
+                <!-- Modal 2 -->
+
+                <form method="POST" action="dashboard-manage-item.php">
+                    <input type="hidden" name="pro_id" value="<?php echo $id; ?>">
+                    <input type="hidden" name="author" value="<?php echo $by; ?>">
+                    <div class="modal fade rating_modal item_remove_modal" id="delete_mem_products" tabindex="-1"
+                        role="dialog" aria-labelledby="myModal2">
+                        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title">Are you sure to delete this item?</h3>
+                                    <p>You will not be able to recover this file!</p>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <!-- end /.modal-header -->
+
+                                <div class="modal-body">
+                                    <button type="submit" class="btn btn--round btn-danger btn--default">Delete</button>
+                                    <button class="btn btn--round modal_close" data-dismiss="modal">Cancel</button>
+                                </div>
+                                <!-- end /.modal-body -->
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- END modal For Deleting Products -->
                 <div class="col-lg-4 col-md-6">
                     <!-- start .single-product -->
                     <div class="product product--card">
 
                         <div class="product__thumbnail">
-                            <img width="361px" height="230px"
-                                src="admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>"
+                            <!-- <img width="361px" height="230px"
+                                src="admin/img/member_product/<?php //echo $name; 
+                                                                ?>/<?php // echo $image; 
+                                                                    ?>"
+                                alt="Product Image"> -->
+                            <!-- Image & video Show AND Size: height 450px , width 555px  -->
+                            <?php
+                                $exp = explode(".", $image);
+                                $ext = end($exp);
+                                if ($ext == "jpg" or $ext == "png" or $ext == "jpeg" or $ext == 'gif') { ?>
+                            <img height="450px" width="555px"
+                                src="./admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>"
                                 alt="Product Image">
+
+                            <?php } else { ?>
+                            <video width="100%" height="30%" autoplay muted loop>
+                                <source src="./admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>">
+                            </video>
+                            <?php } ?>
+                            <!-- END Image & video Show -->
 
                             <div class="prod_option">
                                 <a href="#" id="drop2" class="dropdown-trigger" data-toggle="dropdown"
@@ -158,16 +206,39 @@
                                 <div class="options dropdown-menu" aria-labelledby="drop2">
                                     <ul>
                                         <li>
-                                            <a href="edit-item.php">
-                                                <span class="lnr lnr-pencil"></span>Edit</a>
+                                            <form>
+                                                <a href="edit-item.php">
+                                                    <span class="lnr lnr-pencil"></span>Edit</a>
+                                            </form>
                                         </li>
                                         <li>
-                                            <a href="#">
-                                                <span class="lnr lnr-eye"></span>Hide</a>
+                                            <?php if (isset($_POST['hide_pro'])) {
+                                                    $pro_id = $_POST['pro_id'];
+                                                    hideProduct($pro_id);
+                                                } ?>
+                                            <form method="POST" action="dashboard-manage-item.php">
+                                                <input type="hidden" name="pro_id" value="<?php echo $id; ?>">
+                                                <button class="btn btn-primary" type="submit" name="hide_pro">
+                                                    <span class="lnr lnr-eye"></span>Hide</button>
+                                            </form>
                                         </li>
                                         <li>
-                                            <a href="#" data-toggle="modal" data-target="#myModal2" class="delete">
-                                                <span class="lnr lnr-trash"></span>Delete</a>
+                                            <?php
+                                                if (isset($_POST['delete_mem_pro'])) {
+                                                    echo
+                                                    $author = $_POST['author'];
+                                                    echo $pro_id = $_POST['pro_id'];
+                                                    delet_mem_pro_from_dash($pro_id, $author);
+                                                }
+                                                ?>
+                                            <form action="" method="POST">
+                                                <input type="hidden" name="pro_id" value="<?php echo $id; ?>">
+                                                <input type="hidden" name="author" value="<?php echo $by; ?>">
+                                                <button class="text text-danger" type="submit" name="delete_mem_pro"
+                                                    data-toggle="modal" data-target="#delete_mem_products"
+                                                    class="delete">
+                                                    <span class="lnr lnr-trash"></span>Delete</button>
+                                            </form>
                                         </li>
                                     </ul>
                                 </div>
@@ -236,6 +307,7 @@
                     </div>
                     <!-- end /.single-product -->
                 </div>
+
                 <?php } ?>
                 <!-- end /.col-md-4 -->
             </div>
@@ -267,6 +339,8 @@
     </div>
     <!-- end /.dashboard_menu_area -->
 </section>
+
+
 <!--================================
             END DASHBOARD AREA
     =================================-->

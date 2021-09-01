@@ -62,9 +62,10 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
                     } else {
                         $mem_id = -1;
                     }
-                    $msg_notif = "SELECT * FROM messages WHERE reciever = :reciever";
+                    $msg_notif = "SELECT * FROM messages WHERE msg_state=:state AND reciever = :reciever";
                     $stmt_notif = $conn->prepare($msg_notif);
                     $stmt_notif->execute([
+                        ':state' => '0',
                         ':reciever' => $mem_id
                     ]);
                     $count_msg = $stmt_notif->rowCount();

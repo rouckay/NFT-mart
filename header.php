@@ -13,7 +13,8 @@
     <meta name="keywords" content="marketplace, easy digital download, digital product, digital, html5">
 
     <title><?php echo $curr_page; ?></title>
-
+    <script src="js/jquery.js"></script>
+    <script src="js/frontscript.js"></script>
     <!-- inject:css -->
     <link rel="stylesheet" href="css/animate.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
@@ -26,7 +27,6 @@
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
     <!-- endinject -->
-
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="16x16" href="img/icon.png">
 </head>
