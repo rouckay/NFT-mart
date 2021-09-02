@@ -1,6 +1,19 @@
 <?php $curr_page = basename(__FILE__); ?>
 <?php require_once "header.php"; ?>
 <?php check_mem(); ?>
+<?php
+$conn = config();
+if (isset($_GET['msg_id'])) {
+    $msg_id_from_notif = $_GET['msg_id'];
+    $upd_query_for_active_msg = "UPDATE messages SET msg_state = :state WHERE msg_id = :id_msg";
+    $stmt_state = $conn->prepare($upd_query_for_active_msg);
+    $stmt_state->execute([
+        ':state' => '1',
+        ':id_msg' => $msg_id_from_notif
+    ]);
+}
+
+?>
 <!--================================
         START BREADCRUMB AREA
     =================================-->
@@ -151,48 +164,43 @@
                         <div id="accordion">
                             <div class="card">
                                 <div class="card-header">
-                                    <form method="POST">
-                                        <a type="hidden" class="card-link " data-toggle="collapse" id="btn_viewed"
-                                            href="#collapse<?php echo $msg_id; ?>">
-                                            <input type="hidden" id="msg_view_id" name="msg_view_id"
-                                                value="<?php echo $msg_id ?>">
-                                            <!-- <button type="submit" id="btn_viewed" name="btn_viewed">click</button> -->
-                                    </form>
-                                    <!-- Title -->
-                                    <div class="messages">
-                                        <div class="message <?php echo $state == '0' ? 'active' : ''; ?>">
-                                            <div class="message__actions_avatar">
-                                                <div class="actions">
-                                                    <span class="fa fa-star-o"></span>
-                                                    <div class="custom_checkbox">
-                                                        <input type="checkbox" id="ch2">
-                                                        <label for="ch2">
-                                                            <span class="shadow_checkbox"></span>
-                                                        </label>
-                                                    </div>
-                                                </div>
-
-                                                <div class="avatar">
-                                                    <img src="admin/img/member_avatars/<?php echo $user; ?>/<?php echo $send_image;  ?>"
-                                                        alt="<?php echo $user; ?>">
-                                                </div>
-                                            </div>
-                                            <!-- end /.actions -->
-
-                                            <div class="message_data">
-                                                <div class="name_time">
-                                                    <div class="name">
-                                                        <p><?php echo $user; ?></p>
-                                                        <span class="lnr lnr-envelope"></span>
+                                    <a class="card-link " data-toggle="collapse" id="btn_viewed"
+                                        href="#collapse<?php echo $msg_id; ?>">
+                                        <!-- Title -->
+                                        <div class="messages">
+                                            <div class="message <?php echo $state == '0' ? 'active' : ''; ?>">
+                                                <div class="message__actions_avatar">
+                                                    <div class="actions">
+                                                        <span class="fa fa-star-o"></span>
+                                                        <div class="custom_checkbox">
+                                                            <input type="checkbox" id="ch2">
+                                                            <label for="ch2">
+                                                                <span class="shadow_checkbox"></span>
+                                                            </label>
+                                                        </div>
                                                     </div>
 
-                                                    <span class="time"><?php echo $date; ?></span>
-                                                    <p><?php echo substr($detail, 0, 36);  ?> ...</p>
+                                                    <div class="avatar">
+                                                        <img src="admin/img/member_avatars/<?php echo $user; ?>/<?php echo $send_image;  ?>"
+                                                            alt="<?php echo $user; ?>">
+                                                    </div>
                                                 </div>
+                                                <!-- end /.actions -->
+
+                                                <div class="message_data">
+                                                    <div class="name_time">
+                                                        <div class="name">
+                                                            <p><?php echo $user; ?></p>
+                                                            <span class="lnr lnr-envelope"></span>
+                                                        </div>
+
+                                                        <span class="time"><?php echo $date; ?></span>
+                                                        <p><?php echo substr($detail, 0, 36);  ?> ...</p>
+                                                    </div>
+                                                </div>
+                                                <!-- end /.message_data -->
                                             </div>
-                                            <!-- end /.message_data -->
                                         </div>
-                                    </div>
                                     </a>
                                     <div id="collapse<?php echo $msg_id; ?>" class="collapse" data-parent="#accordion">
                                         <div class="card-body">

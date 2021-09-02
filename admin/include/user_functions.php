@@ -448,13 +448,14 @@ function check_social($rows)
 // END Social Media Check
 // Add To Favourite
 if (isset($_POST['btn_add_fav'])) {
+    // check_mem();
     $conn = config();
     if (isset($_SESSION['member_id'])) {
         $id = $_SESSION['member_id'];
     } elseif (isset($_COOKIE['mem_user_id'])) {
         $id = base64_decode($_COOKIE['mem_user_id']);
     } else {
-        $id = -1;
+        header("location:../../login.php?login_to_add_to_fav");
     }
     $fav_pro_id = $_POST['pro_id'];
 
@@ -470,7 +471,7 @@ if (isset($_POST['btn_add_fav'])) {
     //     ':id' => $fav_data,
     //     ':fav_data' => $user . "_" . "fav"
     // ]);
-    // header("location:../../favourites.php?items_added");
+    header("location:../../favourites.php?items_added");
 }
 // upload Background Image For Home Page
 function background_image_add($name, $image)
@@ -557,9 +558,31 @@ function message_to_mem($msg_user_name, $msg_email, $message, $reciever)
 function delet_mem_pro_from_dash($pro_id, $author)
 {
     $conn = config();
+    if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
+        $user_id = $_SESSION['member_id'];
+        $user_name = $_SESSION['member_user'];
+    } elseif (isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
+        $user_id = $_COOKIE['mem_user_id'];
+        $user_name = $_COOKIE['mem_user_user'];
+    } else {
+        $user_id = -1;
+        $user_name = -1;
+    }
     $author = $_POST['author'];
     $pro_id = $_POST['pro_id'];
-    $dele_query = "DELETE FROM mem_products WHERE mem_pro_id = :id , author = :author";
+    $mem_info_for_del = "SELECT * FROM mem_products WHERE mem_pro_id=:pro_id AND author = :pro_author";
+    $stmt_dir_rm = $conn->prepare($mem_info_for_del);
+    $stmt_dir_rm->execute([
+        ':pro_id' => $pro_id,
+        ':pro_author' => $author
+    ]);
+    $mem_pro_detail = $stmt_dir_rm->fetch(PDO::FETCH_ASSOC);
+    $mem_pro_name = $mem_pro_detail['mem_pro_name'];
+    $mem_pro_image = $mem_pro_detail['mem_pro_image'];
+    unlink('admin/img/member_product/' . $mem_pro_name . "/" . $mem_pro_image);
+    rmdir('admin/img/member_product/' . $mem_pro_name);
+
+    $dele_query = "DELETE FROM mem_products WHERE mem_pro_id = :id AND author = :author";
     $stmt = $conn->prepare($dele_query);
     $stmt->execute([
         ':id' => $pro_id,
@@ -579,8 +602,23 @@ function hideProduct($pro_id)
         ':status' => "draft",
         ':pro_id' => $pro_id
     ]);
+    header('refresh:0;url=dashboard-manage-item.php?your_is_hiding');
 }
 // END Hide Member Products
+// Show Back Member Products
+function showProduct($pro_show_id)
+{
+    $conn = config();
+    $pro_show_id = $_POST['pro_show_id'];
+    $show_pro_sql = "UPDATE mem_products SET status= :status WHERE mem_pro_id=:pro_id";
+    $stmt_show = $conn->prepare($show_pro_sql);
+    $stmt_show->execute([
+        ':status' => "publish",
+        ':pro_id' => $pro_show_id
+    ]);
+    header('refresh:2;url=dashboard-manage-item.php');
+}
+// END Show Back Member Products
 // view Message and Remove Active Parameter from it
 if (isset($_POST['msg_view_id'])) {
     $conn = config();

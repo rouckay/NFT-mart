@@ -71,6 +71,7 @@
                     <div class="search_box">
                         <form action="search.php" method="POST">
                             <input type="text" name="s_text" class="text_field" placeholder="Search your products...">
+
                             <div class="search__select select-wrap">
                                 <!-- <select name="category" class="select--field" id="blah">
                                     <option value="">All Categories</option>
@@ -91,8 +92,9 @@
     <!--start /.search-area -->
 </section>
 <!--================================
-    END HERO AREA
+END HERO AREA
 =================================-->
+
 <section class="featured-products bgcolor2 section--padding">
     <div class="container">
         <div class="row">
@@ -716,7 +718,6 @@
 <!--================================
     END SELL BUY
 =================================-->
-
 
 
 <!-- Footer -->

@@ -62,6 +62,12 @@
                         <div class="dashboard__title dashboard__title pull-left">
                             <h3>Manage Items</h3>
                         </div>
+                        <div class="dashboard__title dashboard__title pull-right">
+
+                            <a id="hide_btn" href='dashboard-manage-item.php?show_hidden_products'
+                                class="btn btn--round btn--md">Show Hidden
+                                Products</a>
+                        </div>
 
                         <div class="pull-right">
                             <div class="filter__option filter--text">
@@ -142,35 +148,11 @@
                     $views = $rows_mem_pro['pro_views'];
                     $price = $rows_mem_pro['price'];
                 ?>
-                <!-- modal For Deleting Products -->
-                <!-- Modal 2 -->
-
-                <form method="POST" action="dashboard-manage-item.php">
-                    <input type="hidden" name="pro_id" value="<?php echo $id; ?>">
-                    <input type="hidden" name="author" value="<?php echo $by; ?>">
-                    <div class="modal fade rating_modal item_remove_modal" id="delete_mem_products" tabindex="-1"
-                        role="dialog" aria-labelledby="myModal2">
-                        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h3 class="modal-title">Are you sure to delete this item?</h3>
-                                    <p>You will not be able to recover this file!</p>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <!-- end /.modal-header -->
-
-                                <div class="modal-body">
-                                    <button type="submit" class="btn btn--round btn-danger btn--default">Delete</button>
-                                    <button class="btn btn--round modal_close" data-dismiss="modal">Cancel</button>
-                                </div>
-                                <!-- end /.modal-body -->
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <!-- END modal For Deleting Products -->
+                <?php
+                    if (isset($_GET['show_hidden_products'])) {
+                        require_once "module/hidden_mem_products.php";
+                    } else {
+                    ?>
                 <div class="col-lg-4 col-md-6">
                     <!-- start .single-product -->
                     <div class="product product--card">
@@ -183,9 +165,9 @@
                                 alt="Product Image"> -->
                             <!-- Image & video Show AND Size: height 450px , width 555px  -->
                             <?php
-                                $exp = explode(".", $image);
-                                $ext = end($exp);
-                                if ($ext == "jpg" or $ext == "png" or $ext == "jpeg" or $ext == 'gif') { ?>
+                                    $exp = explode(".", $image);
+                                    $ext = end($exp);
+                                    if ($ext == "jpg" or $ext == "png" or $ext == "jpeg" or $ext == 'gif') { ?>
                             <img height="450px" width="555px"
                                 src="./admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>"
                                 alt="Product Image">
@@ -213,9 +195,9 @@
                                         </li>
                                         <li>
                                             <?php if (isset($_POST['hide_pro'])) {
-                                                    $pro_id = $_POST['pro_id'];
-                                                    hideProduct($pro_id);
-                                                } ?>
+                                                        $pro_id = $_POST['pro_id'];
+                                                        hideProduct($pro_id);
+                                                    } ?>
                                             <form method="POST" action="dashboard-manage-item.php">
                                                 <input type="hidden" name="pro_id" value="<?php echo $id; ?>">
                                                 <button class="btn btn-primary" type="submit" name="hide_pro">
@@ -224,18 +206,16 @@
                                         </li>
                                         <li>
                                             <?php
-                                                if (isset($_POST['delete_mem_pro'])) {
-                                                    echo
-                                                    $author = $_POST['author'];
-                                                    echo $pro_id = $_POST['pro_id'];
-                                                    delet_mem_pro_from_dash($pro_id, $author);
-                                                }
-                                                ?>
-                                            <form action="" method="POST">
+                                                    if (isset($_POST['delete_mem_pro'])) {
+                                                        $author = $_POST['author'];
+                                                        $pro_id = $_POST['pro_id'];
+                                                        delet_mem_pro_from_dash($pro_id, $author);
+                                                    }
+                                                    ?>
+                                            <form action="dashboard-manage-item.php" method="POST">
                                                 <input type="hidden" name="pro_id" value="<?php echo $id; ?>">
                                                 <input type="hidden" name="author" value="<?php echo $by; ?>">
                                                 <button class="text text-danger" type="submit" name="delete_mem_pro"
-                                                    data-toggle="modal" data-target="#delete_mem_products"
                                                     class="delete">
                                                     <span class="lnr lnr-trash"></span>Delete</button>
                                             </form>
@@ -252,16 +232,16 @@
                             </a>
                             <ul class="titlebtm">
                                 <?php
-                                    $conn = config();
-                                    $mem_img_sql = "SELECT * FROM members WHERE mem_id =:id";
-                                    $stmt_img = $conn->prepare($mem_img_sql);
-                                    $stmt_img->execute([
-                                        ':id' => $user_id
-                                    ]);
-                                    $rows = $stmt_img->fetch(PDO::FETCH_ASSOC);
-                                    $user_image = $rows['mem_image'];
-                                    $mem_name = $rows['mem_user_name'];
-                                    ?>
+                                        $conn = config();
+                                        $mem_img_sql = "SELECT * FROM members WHERE mem_id =:id";
+                                        $stmt_img = $conn->prepare($mem_img_sql);
+                                        $stmt_img->execute([
+                                            ':id' => $user_id
+                                        ]);
+                                        $rows = $stmt_img->fetch(PDO::FETCH_ASSOC);
+                                        $user_image = $rows['mem_image'];
+                                        $mem_name = $rows['mem_user_name'];
+                                        ?>
                                 <li>
                                     <img class="auth-img" width="30px" height="30px"
                                         src="admin/img/member_avatars/<?php echo $mem_name; ?>/<?php echo $user_image; ?>"
@@ -273,14 +253,14 @@
                                 <li class="product_cat">
                                     <a href="#">
                                         <?php
-                                            $pro_cat = "SELECT * FROM category WHERE cat_id = :id";
-                                            $stmt_cat = $conn->prepare($pro_cat);
-                                            $stmt_cat->execute([
-                                                ':id' => $category
-                                            ]);
-                                            $rows_cat = $stmt_cat->fetch(PDO::FETCH_ASSOC);
-                                            $cat_name = $rows_cat['cat_name'];
-                                            ?>
+                                                $pro_cat = "SELECT * FROM category WHERE cat_id = :id";
+                                                $stmt_cat = $conn->prepare($pro_cat);
+                                                $stmt_cat->execute([
+                                                    ':id' => $category
+                                                ]);
+                                                $rows_cat = $stmt_cat->fetch(PDO::FETCH_ASSOC);
+                                                $cat_name = $rows_cat['cat_name'];
+                                                ?>
                                         <span class="lnr lnr-book"></span><?php echo $cat_name; ?></a>
                                 </li>
                             </ul>
@@ -307,11 +287,19 @@
                     </div>
                     <!-- end /.single-product -->
                 </div>
+                <?php } ?>
 
                 <?php } ?>
                 <!-- end /.col-md-4 -->
             </div>
-
+            <script>
+            $(document).ready(function() {
+                $('#hide_btn').click(function() {
+                    $('#hide_btn').fadeOut(5000);
+                    $('#hide_btn').html('Here Below is Your Hidden Products!');
+                });
+            })
+            </script>
             <div class="row">
                 <div class="col-md-12">
                     <div class="pagination-area">

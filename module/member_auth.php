@@ -62,6 +62,9 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
                     } else {
                         $mem_id = -1;
                     }
+
+
+
                     $msg_notif = "SELECT * FROM messages WHERE msg_state=:state AND reciever = :reciever";
                     $stmt_notif = $conn->prepare($msg_notif);
                     $stmt_notif->execute([
@@ -72,7 +75,11 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
                     ?>
                 <div class="icon_wrap">
                     <span class="lnr lnr-envelope"></span>
+                    <?php if ($count_msg >= 1) { ?>
                     <span class="notification_count msg"><?php echo $count_msg; ?></span>
+                    <?php } else {
+                            // Badge is Not Exist! Because The Message is Not Exist
+                        } ?>
                 </div>
 
                 <div class="dropdowns messaging--dropdown">
@@ -83,14 +90,28 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
 
                     <div class="messages">
                         <?php while ($rows_msg = $stmt_notif->fetch(PDO::FETCH_ASSOC)) {
+                                $msg_id = $rows_msg['msg_id'];
                                 $msg_user = $rows_msg['msg_user_name'];
                                 $msg_detail = $rows_msg['msg_detail'];
                                 $msg_date = $rows_msg['msg_date'];
                             ?>
-                        <a href="message.php" class="message active">
+                        <?php  ?>
+                        <a href="message.php?msg_id=<?php echo $msg_id; ?>" class="message active">
                             <div class="message__actions_avatar">
+                                <?php
+                                        // query for Sender info
+                                        $sender_sql = "SELECT * FROM members WHERE mem_user_name=:mem_user_name";
+                                        $stmt_sender = $conn->prepare($sender_sql);
+                                        $stmt_sender->execute([
+                                            ':mem_user_name' => $msg_user
+                                        ]);
+                                        $rows_sender = $stmt_sender->fetch(PDO::FETCH_ASSOC);
+                                        $sender_user_name = $rows_sender['mem_user_name'];
+                                        $sender_image = $rows_sender['mem_image'];
+                                        ?>
                                 <div class="avatar">
-                                    <img src="images/notification_head4.png" alt="">
+                                    <img src="admin/img/member_avatars/<?php echo $msg_user; ?>/<?php echo $sender_image; ?>"
+                                        alt="<?php echo $msg_user; ?>">
                                 </div>
                             </div>
                             <!-- end /.actions -->
@@ -103,7 +124,7 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
                                     </div>
 
                                     <span class="time"><?php echo substr($msg_date, 0, 10); ?></span>
-                                    <p><?php echo substr($msg_detail, 0, 35); ?> ...</p>
+                                    <p><?php echo substr($msg_detail, 0, 25); ?> ...</p>
                                 </div>
                             </div>
                             <!-- end /.message_data -->
