@@ -458,11 +458,12 @@ if (isset($_POST['btn_add_fav'])) {
         header("location:../../login.php?login_to_add_to_fav");
     }
     $fav_pro_id = $_POST['pro_id'];
-
-    $fav_add_sql = "INSERT INTO favourite (pro_id, mem_id) VALUES (:pro_id, :mem_id)";
+    $fav_pro_author = $_POST['pro_author'];
+    $fav_add_sql = "INSERT INTO favourite (pro_id, pro_author , mem_id) VALUES (:pro_id, :pro_author, :mem_id)";
     $stmt_add_fav = $conn->prepare($fav_add_sql);
     $stmt_add_fav->execute([
         ':pro_id' => $fav_pro_id,
+        ':pro_author' => $fav_pro_author,
         ':mem_id' => $id
     ]);
     // $update_pro = "UPDATE mem_products SET mem_fav_pro = :fav_data WHERE mem_pro_id = :id";
@@ -656,4 +657,49 @@ function add_mem_bio($bio, $user_id)
     ]);
 }
 // END Add BIO Using AJAX
+// Add To Cart 
+if (isset($_POST['btn_add_to_cart'])) {
+    $conn = config();
+    $pro_id = $_POST['cart_pro_id'];
+    $pro_author = $_POST['cart_pro_author'];
+    $who = $_POST['who_adding_to_cart'];
+    $add_to_cart_sql = "INSERT INTO cart (pro_id , pro_author, who_adding_id) VALUES (:pro_id, :pro_author ,:owner)";
+    $stmt_cart = $conn->prepare($add_to_cart_sql);
+    $stmt_cart->execute([
+        ':pro_id' => $pro_id,
+        ':pro_author' => $pro_author,
+        ':owner' => $who
+    ]);
+    header('location:index.php');
+}
+// END Add To Cart 
+// Count Cart Products In Member Notification AND page
+function Count_And_Fetch_cart()
+{
+    $conn = config();
+    if (isset($_SESSION['member_id'])) {
+        $user_id = $_SESSION['member_id'];
+    } elseif (isset($_COOKIE['mem_user_id'])) {
+        $user_id = $_COOKIE['mem_user_id'];
+    } else {
+        $user_id = -1;
+    }
+    $sql_cart = "SELECT * FROM cart WHERE who_adding_to_cart = :cart_owner";
+    $stmt_cart = $conn->prepare($sql_cart);
+    $stmt_cart->execute([
+        ':cart_owner' => $user_id
+    ]);
+    $rows_cart = $stmt_cart->fetch(PDO::FETCH_ASSOC);
+    $cart_product = $rows_cart['pro_id'];
+    $cart_owner = $rows_cart['who_adding_id'];
+    $sql_pro_cart = "SELECT * FROM mem_products WHERE mem_pro_id = :pro_id AND author=:who";
+    $stmt_pro = $conn->prepare($sql_pro_cart);
+    $stmt_pro->execute([
+        ':pro_id' => $cart_product,
+        ':who' => $cart_owner
+    ]);
+    $rows_product = $stmt_pro->fetch(PDO::FETCH_ASSOC);
+    return $rows_product;
+}
+// END Count Cart Products In Member Notification AND page
 ?>

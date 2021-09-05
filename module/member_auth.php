@@ -3,6 +3,21 @@
 </head>
 <?php
 if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) { ?>
+<?php
+
+    if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
+        $user_id = $_SESSION['member_id'];
+        $user_name = $_SESSION['member_user'];
+    } elseif (isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
+        $user_id = $_COOKIE['mem_user_id'];
+        $user_name = $_COOKIE['mem_user_user'];
+    } else {
+        $user_id = -1;
+        $user_name = -1;
+    }
+
+
+    ?>
 <div class="author-area">
     <!-- <a href="signup.php" class="author-area__seller-btn inline">Become a Seller</a> -->
 
@@ -134,23 +149,66 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
                     </div>
                 </div>
             </li>
+            <?php
+                $sql_cart = "SELECT * FROM cart WHERE who_adding_id = :cart_owner";
+                $stmt_cart = $conn->prepare($sql_cart);
+                $stmt_cart->execute([
+                    ':cart_owner' => $mem_id
+                ]);
+                $count_rows_in_cart = $stmt_cart->rowCount();
+                ?>
             <li class="has_dropdown">
                 <div class="icon_wrap">
                     <span class="lnr lnr-cart"></span>
-                    <span class="notification_count purch">2</span>
+                    <span class="notification_count purch"><?php echo $count_rows_in_cart; ?></span>
                 </div>
-
                 <div class="dropdowns dropdown--cart">
                     <div class="cart_area">
+                        <?php
+
+                            while ($rows_cart = $stmt_cart->fetch(PDO::FETCH_ASSOC)) {
+                                $cart_product = $rows_cart['pro_id'];
+                                $cart_owner = $rows_cart['pro_author'];
+
+                                $sql_pro_cart = "SELECT * FROM mem_products WHERE mem_pro_id=:mem_pro_id AND author = :author_cart";
+                                $stmt_pro = $conn->prepare($sql_pro_cart);
+                                $stmt_pro->execute([
+                                    ':mem_pro_id' => $cart_product,
+                                    ':author_cart' => $cart_owner
+                                ]); ?>
+
+                        <?php
+                                while ($rows_product = $stmt_pro->fetch(PDO::FETCH_ASSOC)) {
+                                    $pro_cart_id = $rows_product['mem_pro_id'];
+                                    $name = $rows_product['mem_pro_name'];
+                                    $image = $rows_product['mem_pro_image'];
+                                    $price = $rows_product['price'];
+                                ?>
                         <div class="cart_product">
                             <div class="product__info">
                                 <div class="thumbn">
-                                    <img src="images/capro1.jpg" alt="cart product thumbnail">
+                                    <!-- Image OR Video -->
+                                    <?php
+                                                $exp = explode(".", $image);
+                                                $ext = end($exp);
+                                                if ($ext == "jpg" or $ext == "png" or $ext == "jpeg" or $ext == 'gif') { ?>
+                                    <img class="round" height="80px" width="80px"
+                                        src="./admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>"
+                                        alt="Product Image">
+
+                                    <?php } else { ?>
+                                    <div class="card">
+                                        <video width="80px" height="80px" autoplay muted loop poster="placeholder.png">
+                                            <source
+                                                src="./admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>">
+                                        </video>
+                                    </div>
+                                    <?php } ?>
+                                    <!-- END Image OR Video -->
                                 </div>
 
                                 <div class="info">
-                                    <a class="title" href="single-product.php">Finance and
-                                        Consulting Business Theme</a>
+                                    <a class="title" href="single-product.php"><?php echo $name; ?></a>
                                     <div class="cat">
                                         <a href="#">
                                             <img src="images/catword.png" alt="">Wordpress</a>
@@ -165,29 +223,8 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
                                 <p>$60</p>
                             </div>
                         </div>
-                        <div class="cart_product">
-                            <div class="product__info">
-                                <div class="thumbn">
-                                    <img src="images/capro2.jpg" alt="cart product thumbnail">
-                                </div>
-
-                                <div class="info">
-                                    <a class="title" href="single-product.php">Flounce -
-                                        Multipurpose OpenCart Theme</a>
-                                    <div class="cat">
-                                        <a href="#">
-                                            <img src="images/catword.png" alt="">Wordpress</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="product__action">
-                                <a href="#">
-                                    <span class="lnr lnr-trash"></span>
-                                </a>
-                                <p>$60</p>
-                            </div>
-                        </div>
+                        <?php }
+                            } ?>
                         <div class="total">
                             <p>
                                 <span>Total :</span>$80

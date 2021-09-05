@@ -83,17 +83,18 @@
                                     } else {
                                         $user_id = -1;
                                     }
-                                    $mem_pro_sql = "SELECT * FROM mem_products WHERE author = :author  ORDER BY mem_pro_id DESC";
+                                    $mem_pro_sql = "SELECT * FROM mem_products WHERE author = :author AND status =:status  ORDER BY mem_pro_id DESC";
                                     $stmt_mem = $conn->prepare($mem_pro_sql);
                                     $stmt_mem->execute([
-                                        ':author' => $mem_user_name
+                                        ':author' => $mem_user_name,
+                                        ':status' => "publish"
                                     ]);
                                     $rows = $stmt_mem->rowCount();
                                     if ($rows <= 0) {
                                         echo "<p class='alert alert-danger'>Sorry Product Is Not Uploaded</p>";
                                     } else {
                                         $total_found = $rows; ?>
-                                    <span><?php echo $total_found; ?></span> Products
+                                    <span><?php echo "<span class='text-success'>$total_found: Items</span>" ?></span>
 
                                     <?php } ?>
                                 </p>
@@ -187,10 +188,18 @@
 
                                 <div class="options dropdown-menu" aria-labelledby="drop2">
                                     <ul>
+                                        <?php
+                                                if (isset($_POST['btn_edit_pro'])) {
+                                                    header('location:edit_mem_product.php');
+                                                }
+
+                                                ?>
                                         <li>
-                                            <form>
-                                                <a href="edit-item.php">
-                                                    <span class="lnr lnr-pencil"></span>Edit</a>
+                                            <form action="edit_mem_product.php" method="POST">
+                                                <input type="hidden" name="pro_id" value="<?php echo $id; ?>">
+                                                <a href="edit_mem_product.php" type="submit" name="btn_edit_pro"
+                                                    class="fa fa-edit btn-primary btn--round btn-sm">
+                                                    Edit </a>
                                             </form>
                                         </li>
                                         <li>
@@ -200,8 +209,9 @@
                                                     } ?>
                                             <form method="POST" action="dashboard-manage-item.php">
                                                 <input type="hidden" name="pro_id" value="<?php echo $id; ?>">
-                                                <button class="btn btn-primary" type="submit" name="hide_pro">
-                                                    <span class="lnr lnr-eye"></span>Hide</button>
+                                                <button class="fa fa-hidden btn-primary btn--round btn-sm" type="submit"
+                                                    name="hide_pro">
+                                                    <span class="lnr lnr-eye"></span> Hide</button>
                                             </form>
                                         </li>
                                         <li>
@@ -215,9 +225,8 @@
                                             <form action="dashboard-manage-item.php" method="POST">
                                                 <input type="hidden" name="pro_id" value="<?php echo $id; ?>">
                                                 <input type="hidden" name="author" value="<?php echo $by; ?>">
-                                                <button class="text text-danger" type="submit" name="delete_mem_pro"
-                                                    class="delete">
-                                                    <span class="lnr lnr-trash"></span>Delete</button>
+                                                <button class="fa fa-trash btn-danger btn--round btn-sm" type="submit"
+                                                    name="delete_mem_pro" class="delete"> Delete</button>
                                             </form>
                                         </li>
                                     </ul>

@@ -39,7 +39,29 @@
                 <div class="filter-bar filter-bar3">
                     <div class="filter__option filter--text pull-left">
                         <p>
-                            <span>570</span> Items
+                            <?php
+                            $conn = config();
+                            if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
+                                $id = $_SESSION['member_id'];
+                                $user_name = $_SESSION['member_user'];
+                            } elseif (isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
+                                $id = base64_decode($_COOKIE['mem_id']);
+                                $user_name = base64_decode($_COOKIE['mem_user_name']);
+                            } else {
+                                $id = -1;
+                                $user_name = -1;
+                            }
+                            $fav_pro_tab = "SELECT * FROM favourite WHERE  mem_id = :mem_id";
+                            $stmt_fav_tab = $conn->prepare($fav_pro_tab);
+                            $stmt_fav_tab->execute([
+                                ':mem_id' => $id
+                            ]);
+                            $count_fav = $stmt_fav_tab->rowCount();
+
+                            ?>
+                            <span><?php if (isset($count_fav)) {
+                                        echo "<span class='text text-success'>$count_fav Items</span>";
+                                    } ?></span>
                         </p>
                     </div>
 
@@ -123,47 +145,53 @@
             <!-- start .col-md-4 -->
             <!-- start .single-product -->
             <?php
-            function fav_pro()
-            {
-                $conn = config();
-                if (isset($_SESSION['member_id'])) {
-                    $id = $_SESSION['member_id'];
-                } elseif (isset($_COOKIE['mem_user_id'])) {
-                    $id = base64_decode($_COOKIE['mem_id']);
-                } else {
-                    $id = -1;
-                }
-                $fav_pro_tab = "SELECT * FROM favourite WHERE mem_id = :mem_id";
-                $stmt_fav_tab = $conn->prepare($fav_pro_tab);
-                $stmt_fav_tab->execute([
-                    ':mem_id' => $id
-                ]);
-                while ($rows_tab = $stmt_fav_tab->fetch(PDO::FETCH_ASSOC)) {
-                    $resault[] = $rows_tab;
-                }
-                return $resault;
-            }
-            $fav_pro = fav_pro();
-            foreach ($fav_pro as $fav_data) {
-                $fav_pro =  $fav_data['pro_id'];
-            }
             $conn = config();
-            $fav_pro_sql = "SELECT * FROM mem_products WHERE mem_pro_id = :pro_id ";
-            $stmt_fav = $conn->prepare($fav_pro_sql);
-            $stmt_fav->execute([
-                ':pro_id' => $fav_pro
+            if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
+                $id = $_SESSION['member_id'];
+                $user_name = $_SESSION['member_user'];
+            } elseif (isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
+                $id = base64_decode($_COOKIE['mem_id']);
+                $user_name = base64_decode($_COOKIE['mem_user_name']);
+            } else {
+                $id = -1;
+                $user_name = -1;
+            }
+            $fav_pro_tab = "SELECT * FROM favourite WHERE  mem_id = :mem_id";
+            $stmt_fav_tab = $conn->prepare($fav_pro_tab);
+            $stmt_fav_tab->execute([
+                ':mem_id' => $id
             ]);
-            while ($rows_fav_fetched = $stmt_fav->fetch(PDO::FETCH_ASSOC)) {
-                $id = $rows_fav_fetched['mem_pro_id'];
-                $image = $rows_fav_fetched['mem_pro_image'];
-                $name = $rows_fav_fetched['mem_pro_name'];
-                $detail = $rows_fav_fetched['mem_pro_detail'];
-                $price = $rows_fav_fetched['price'];
-                $category = $rows_fav_fetched['category_id'];
-                $tags = $rows_fav_fetched['tag'];
-                $author = $rows_fav_fetched['author'];
-
+            $count_fav = $stmt_fav_tab->rowCount();
+            if ($count_fav == 0) { ?>
+            <div class="alert alert-info"><strong>Sorry,</strong>You Did Not Added Your Favourite Products</div>
+            <?php } ?>
+            <?php
+            while ($rows_tab = $stmt_fav_tab->fetch(PDO::FETCH_ASSOC)) {
+                $mem_id = $rows_tab['mem_id'];
+                $pro_author = $rows_tab['pro_author'];
+                $pro_id = $rows_tab['pro_id'];
             ?>
+            <?php
+
+
+                $fav_pro_sql = "SELECT * FROM mem_products WHERE author = :author AND mem_pro_id = :pro_id";
+                $stmt_fav = $conn->prepare($fav_pro_sql);
+                $stmt_fav->execute([
+                    ':author' => $pro_author,
+                    ':pro_id' => $pro_id
+                ]);
+
+                while ($rows_fav_fetched = $stmt_fav->fetch(PDO::FETCH_ASSOC)) {
+                    $id = $rows_fav_fetched['mem_pro_id'];
+                    $image = $rows_fav_fetched['mem_pro_image'];
+                    $name = $rows_fav_fetched['mem_pro_name'];
+                    $detail = $rows_fav_fetched['mem_pro_detail'];
+                    $price = $rows_fav_fetched['price'];
+                    $category = $rows_fav_fetched['category_id'];
+                    $tags = $rows_fav_fetched['tag'];
+                    $author = $rows_fav_fetched['author'];
+
+                ?>
             <div class="col-lg-4 col-md-6">
                 <div class="product product--card">
 
@@ -219,6 +247,7 @@
                     <!-- end /.product-purchase -->
                 </div>
             </div>
+            <?php } ?>
             <?php } ?>
             <!-- end /.single-product -->
             <!-- end /.col-md-4 -->

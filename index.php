@@ -5,6 +5,20 @@
 <!--================================
     START HERO AREA
 =================================-->
+<!-- Current user Info -->
+<?php
+if (isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
+    $user_id = base64_decode($_COOKIE['mem_user_id']);
+    $user_name = base64_decode($_COOKIE['mem_user_name']);
+} elseif (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
+    $user_id = $_SESSION['member_id'];
+    $user_name = $_SESSION['member_user'];
+} else {
+    $user_id = -1;
+    $user_name = -1;
+}
+?>
+<!-- END Current user Info -->
 <section class="hero-area bgimage">
     <div class="bg_image_holder">
         <?php
@@ -312,6 +326,7 @@ END HERO AREA
                 $author = $row_home_pro['author'];
 
             ?>
+
             <!-- start .col-md-4 -->
             <div class="col-lg-4 col-md-6">
                 <!-- start .single-product -->
@@ -323,13 +338,14 @@ END HERO AREA
                             $exp = explode(".", $image);
                             $ext = end($exp);
                             if ($ext == "jpg" or $ext == "png" or $ext == "jpeg" or $ext == 'gif') { ?>
-                        <img height="350px" width="361px"
+                        <img width="361px" height="240px"
                             src="./admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>"
                             alt="Product Image">
 
                         <?php } else { ?>
                         <div class="card">
-                            <video max-width="100%" autoplay muted loop>
+                            <video width="361px" height="240px" autoplay muted loop poster="placeholder.png" controls
+                                style="background-size:contain">
                                 <source src="./admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>">
                             </video>
                         </div>
@@ -392,24 +408,40 @@ END HERO AREA
                         //     header('location:login.php');
                         // }
                         ?>
-                    <form action="admin/include/user_functions.php" method="POST">
-                        <input type="hidden" name="pro_id" value="<?php echo $id; ?>">
-                        <div class="product-purchase">
-                            <div class="price_love">
+                    <div class="product-purchase">
+                        <div class="price_love">
+                            <form action="admin/include/user_functions.php" method="POST">
+                                <input type="hidden" name="pro_id" value="<?php echo $id; ?>">
+                                <input type="hidden" name="pro_author" value="<?php echo $author; ?>">
                                 <span>$<?php echo $price; ?></span>
                                 <p>
                                     <button type="submit" name="btn_add_fav"
-                                        class="btn btn-danger btn-sm rounded-circle"><span class="lnr lnr-heart"></span>
+                                        class="btn btn-danger btn-sm btn--round"><span class="lnr lnr-heart"></span>
                                     </button>
-                                </p>
-                            </div>
-                            <div class="sell">
-                                <p>
-                                    <span class="lnr lnr-cart"></span>
-                                    <span>16</span>
-                                </p>
-                            </div>
+                            </form>
+                            </p>
                         </div>
+                        <div class="sell">
+                            <p>
+                                <?php
+                                    if (isset($_POST['btn_add_to_cart'])) {
+                                        $pro_id = $_POST['cart_pro_id'];
+                                        $pro_author = $_POST['cart_pro_author'];
+                                        $who = $_POST['who_adding_to_cart'];
+                                        // add_to_cart($pro_id, $pro_author, $who);
+                                    }
+                                    ?>
+                            <form action="index.php" method="POST">
+                                <input type="hidden" name="cart_pro_id" value="<?php echo $id; ?>">
+                                <input type="hidden" name="cart_pro_author" value="<?php echo $author; ?>">
+                                <input type="hidden" name="who_adding_to_cart" value="<?php echo $user_id; ?>">
+
+                                <button type="submit" class="btn btn--round btn-sm" name="btn_add_to_cart"><span
+                                        class="lnr lnr-cart"></span>
+                                    14 </button>
+                                </p>
+                        </div>
+                    </div>
                     </form>
                     <!-- end /.product-purchase -->
                 </div>
@@ -488,11 +520,13 @@ END HERO AREA
                     <!-- end /.product-desc -->
                     <?php
                         if (isset($_POST['btn_add_fav'])) {
-                            $fav_data = $_POST['pro_id_fav'];
+                            $fav_pro_id = $_POST['pro_id_fav'];
+                            $fav_pro_author = $_POST['pro_author'];
                         }
                         ?>
                     <form action="admin/include/user_functions.php" method="POST">
                         <input type="text" name="pro_id_fav" value="<?php echo $id; ?>">
+                        <input type="hidden" name="pro_author" value="<?php echo $author; ?>">
                         <div class="product-purchase">
                             <div class="price_love">
                                 <span>$<?php echo $price; ?></span>
