@@ -90,20 +90,18 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
                     ?>
                 <div class="icon_wrap">
                     <span class="lnr lnr-envelope"></span>
-                    <?php if ($count_msg >= 1) { ?>
-                    <span class="notification_count msg"><?php echo $count_msg; ?></span>
-                    <?php } else {
-                            // Badge is Not Exist! Because The Message is Not Exist
-                        } ?>
+
+                    <?php echo $count_msg >= 1 ? "<span class='notification_count msg'> $count_msg</span>" : ""; ?>
                 </div>
 
+                <!-- Badge is Not Exist! Because The Message is Not Exist -->
                 <div class="dropdowns messaging--dropdown">
                     <div class="dropdown_module_header">
                         <h4>My Messages</h4>
                         <a href="message.php">View All</a>
                     </div>
 
-                    <div class="messages">
+                    <div class="messages active">
                         <?php while ($rows_msg = $stmt_notif->fetch(PDO::FETCH_ASSOC)) {
                                 $msg_id = $rows_msg['msg_id'];
                                 $msg_user = $rows_msg['msg_user_name'];
@@ -111,7 +109,7 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
                                 $msg_date = $rows_msg['msg_date'];
                             ?>
                         <?php  ?>
-                        <a href="message.php?msg_id=<?php echo $msg_id; ?>" class="message active">
+                        <a href="message.php?msg_id=<?php echo $msg_id; ?>" class="message">
                             <div class="message__actions_avatar">
                                 <?php
                                         // query for Sender info
@@ -134,11 +132,11 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
                             <div class="message_data">
                                 <div class="name_time">
                                     <div class="name">
-                                        <p><?php echo $msg_user; ?></p>
                                         <span class="lnr lnr-envelope"></span>
+                                        <p><?php echo $msg_user; ?></p>
                                     </div>
 
-                                    <span class="time"><?php echo substr($msg_date, 0, 10); ?></span>
+                                    <span class="time"><?php echo $msg_date; ?></span>
                                     <p><?php echo substr($msg_detail, 0, 25); ?> ...</p>
                                 </div>
                             </div>
@@ -159,8 +157,14 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
                 ?>
             <li class="has_dropdown">
                 <div class="icon_wrap">
-                    <span class="lnr lnr-cart"></span>
-                    <span class="notification_count purch"><?php echo $count_rows_in_cart; ?></span>
+                <a href="cart.php"><span class="lnr lnr-cart"></span></a>
+                    <!-- Cart Badge -->
+
+                    <?php echo $count_rows_in_cart >= 1 ? "<span class='notification_count purch'>  $count_rows_in_cart </span>"
+                            : '';
+                        ?>
+
+                    <!-- END Cart Badge -->
                 </div>
                 <div class="dropdowns dropdown--cart">
                     <div class="cart_area">

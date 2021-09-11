@@ -160,14 +160,32 @@
             <!-- start col-md-9 -->
             <div class="col-lg-9">
                 <div class="row">
-
-
-
                     <?php
                     $conn = config();
-                    $category_sql = "SELECT * FROM category";
-                    $stmt = $conn->prepare($category_sql);
-                    $stmt->execute();
+                    $count_sql = "SELECT * FROM category WHERE status = :status ";
+                    $stmt_count = $conn->prepare($count_sql);
+                    $stmt_count->execute([
+                        ':status' => 'publish'
+                    ]);
+                    $total_cats = $stmt_count->rowCount();
+                    $category_per_page = 2;
+                    if (isset($_GET['page'])) {
+                        $page = $_GET['page'];
+                        if ($page == 1) {
+                            $page_id = 0;
+                        } else {
+                            $page_id = ($page * $category_per_page) - $category_per_page;
+                        }
+                    } else {
+                        $page = 1;
+                        $page_id = 0;
+                    }
+                    $total_pages = ceil($total_cats / $category_per_page);
+                    $count_sql = "SELECT * FROM category WHERE status = :status ORDER BY cat_id LIMIT $page_id,$category_per_page";
+                    $stmt = $conn->prepare($count_sql);
+                    $stmt->execute([
+                        ':status' => 'publish'
+                    ]);
                     while ($rows = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         $id = $rows['cat_id'];
                         $name = $rows['cat_name'];
@@ -231,18 +249,27 @@
             <!-- end /.col-md-9 -->
         </div>
         <!-- end /.row -->
-
+        <?php if ($total_cats > $category_per_page) { ?>
         <div class="row">
             <div class="col-md-12">
                 <div class="pagination-area categorised_item_pagination">
                     <nav class="navigation pagination" role="navigation">
                         <div class="nav-links">
+
                             <a class="prev page-numbers" href="#">
                                 <span class="lnr lnr-arrow-left"></span>
                             </a>
-                            <a class="page-numbers current" href="#">1</a>
-                            <a class="page-numbers" href="#">2</a>
-                            <a class="page-numbers" href="#">3</a>
+
+                            <?php
+                                for ($i = 1; $i <= $total_pages; $i++) {
+                                ?>
+                            <?php if ($i == $page) { ?>
+                            <a class="page-numbers current"
+                                href="category.php?page=<?php echo $id; ?>"><?php echo $i; ?></a>
+                            <?php } else { ?>
+                            <a class="page-numbers" href="category.php?page=<?php echo $i ?>"><?php echo $i ?></a>
+                            <?php }
+                                } ?>
                             <a class="next page-numbers" href="#">
                                 <span class="lnr lnr-arrow-right"></span>
                             </a>
@@ -251,6 +278,7 @@
                 </div>
             </div>
         </div>
+        <?php } ?>
         <!-- end /.row -->
     </div>
     <!-- end /.container -->

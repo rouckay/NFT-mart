@@ -147,7 +147,7 @@ function signup_member($signup_data, $avatar)
         ]);
         echo  $success_up = "<div class='alert alert-success' role='alert'>
         <span class='alert_icon lnr lnr-warning'></span>
-         '<strong>Correct!</strong> You Will be Redirect To login Page.';
+         <strong>Correct!</strong> You Will be Redirect To login Page.
                     <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                         <span class='lnr lnr-cross' aria-hidden='true'></span>
                     </button>
@@ -663,14 +663,18 @@ if (isset($_POST['btn_add_to_cart'])) {
     $pro_id = $_POST['cart_pro_id'];
     $pro_author = $_POST['cart_pro_author'];
     $who = $_POST['who_adding_to_cart'];
-    $add_to_cart_sql = "INSERT INTO cart (pro_id , pro_author, who_adding_id) VALUES (:pro_id, :pro_author ,:owner)";
-    $stmt_cart = $conn->prepare($add_to_cart_sql);
-    $stmt_cart->execute([
-        ':pro_id' => $pro_id,
-        ':pro_author' => $pro_author,
-        ':owner' => $who
-    ]);
-    header('location:index.php');
+    if ($who == '-1') {
+        check_mem();
+    } else {
+        $add_to_cart_sql = "INSERT INTO cart (pro_id , pro_author, who_adding_id) VALUES (:pro_id, :pro_author ,:owner)";
+        $stmt_cart = $conn->prepare($add_to_cart_sql);
+        $stmt_cart->execute([
+            ':pro_id' => $pro_id,
+            ':pro_author' => $pro_author,
+            ':owner' => $who
+        ]);
+        header('location:index.php');
+    }
 }
 // END Add To Cart 
 // Count Cart Products In Member Notification AND page
@@ -702,4 +706,172 @@ function Count_And_Fetch_cart()
     return $rows_product;
 }
 // END Count Cart Products In Member Notification AND page
+// cart Page Fetch cart Products
+function cart_page_fetch($mem_id)
+{
+    $conn = config();
+    $sql_cart_page = "SELECT * FROM cart WHERE who_adding_id = :added_by_id";
+    $stmt_cart = $conn->prepare($sql_cart_page);
+    $stmt_cart->execute([
+        ':added_by_id' => $mem_id
+    ]);
+    while ($rows_cart = $stmt_cart->fetch(PDO::FETCH_ASSOC)) {
+        $resault_cart[] = $rows_cart;
+    }
+    // return $resault_cart;
+    foreach ($resault_cart as $val_cart) {
+        $cart_id = $val_cart['pro_id'];
+        $cart_author = $val_cart['pro_author'];
+
+        $sql_pro_tabel = "SELECT * FROM mem_products WHERE mem_pro_id = :pro_id AND author = :author";
+        $stmt_pro = $conn->prepare($sql_pro_tabel);
+        $stmt_pro->execute([
+            ':pro_id' => $cart_id,
+            ':author' => $cart_author
+        ]);
+        while ($rows_pro = $stmt_pro->fetch(PDO::FETCH_ASSOC)) {
+            $resault_mem_pro[] = $rows_pro;
+        }
+    }
+    return $resault_mem_pro;
+}
+// END cart Page Fetch cart Products
+// Delete Cart 
+function delete_cart_pro($cart_pro_id, $cart_adder)
+{
+    $conn = config();
+    $del_cat_sql = "DELETE FROM cart WHERE pro_id = :pro_id AND who_adding_id = :adder_id";
+    $stmt_del_cart = $conn->prepare($del_cat_sql);
+    $stmt_del_cart->execute([
+        ':pro_id' => $cart_pro_id,
+        ':adder_id' => $cart_adder
+    ]);
+    header('location:cart.php?Successfully_Deleted');
+}
+// END Delete Cart
+// Count Row Cart  
+function count_row_cart($mem_id)
+{
+    $conn = config();
+    $sql_row_cart = "SELECT * FROM cart WHERE who_adding_id = :adder";
+    $stmt_row_cart = $conn->prepare($sql_row_cart);
+    $stmt_row_cart->execute([
+        ':adder' => $mem_id
+    ]);
+    $count_cart = $stmt_row_cart->rowCount();
+    return $count_cart;
+}
+// END Count Row Cart  
+// Total Added To Cart Count Row Cart  
+function total_added_to_cart_count($pro_id)
+{
+    $conn = config();
+    $sql_total_added = "SELECT * FROM cart where pro_id = :pro_id";
+    $stmt_total = $conn->prepare($sql_total_added);
+    $stmt_total->execute([
+        ':pro_id' => $pro_id
+    ]);
+    $count_total_added_to_cart = $stmt_total->rowCount();
+    return $count_total_added_to_cart;
+}
+// END Total Added To Cart Count Row Cart  
+// Member Author Info That Was For Single Products Page
+function mem_pro_author($author)
+{
+    $conn = config();
+    $sql_pro_author = "SELECT * FROM members WHERE mem_user_name=:auth_name";
+    $stmt = $conn->prepare($sql_pro_author);
+    $stmt->execute([
+        ':auth_name' => $author
+    ]);
+    $rows_pro_author = $stmt->fetch(PDO::FETCH_ASSOC);
+    $author_info[] = $rows_pro_author;
+
+    return $author_info;
+}
+// ENDMember Author Info That Was For Single Products Page
+// Author Products For Single Products
+function mem_pro_for_single_pro($author)
+{
+    $conn = config();
+    $sql_auth_pros = "SELECT * FROM mem_products WHERE author=:auth LIMIT 0,3";
+    $stmt = $conn->prepare($sql_auth_pros);
+    $stmt->execute([
+        ':auth' => $author
+    ]);
+    while ($rows_auth_pros = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $author_pros[] = $rows_auth_pros;
+    }
+    return $author_pros;
+}
+// END Author Products For Single Products
+// Fetch Categories
+function fetch_categories($category)
+{
+    $conn = config();
+    $sql_fetch_cat = "SELECT * FROM category WHERE cat_id = :id AND status=:status";
+    $stmt = $conn->prepare($sql_fetch_cat);
+    $stmt->execute([
+        ':id' => $category,
+        ':status' => 'publish'
+    ]);
+    while ($rows_cat = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $cat_info[] = $rows_cat;
+    }
+    return $cat_info;
+}
+// END Fetch Categories
+// fetch Comments
+function comments($pro_id)
+{
+    $conn = config();
+    $com_sql = "SELECT * FROM comments WHERE com_pro_id = :com_pro_id AND com_status = :status";
+    $stmt = $conn->prepare($com_sql);
+    $stmt->execute([
+        ':com_pro_id' => $pro_id,
+        ':status' => "pendding"
+    ]);
+    $count_comment = $stmt->rowCount();
+    while ($rows_com = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $com_detail[] = $rows_com;
+    }
+    return $com_detail;
+}
+// END fetch Comments
+// Count Comments
+function count_comments($pro_id)
+{
+    $conn = config();
+    $com_sql = "SELECT * FROM comments WHERE com_pro_id = :com_pro_id AND com_status = :status";
+    $stmt = $conn->prepare($com_sql);
+    $stmt->execute([
+        ':com_pro_id' => $pro_id,
+        ':status' => "pendding"
+    ]);
+    $count_comments = $stmt->rowCount();
+    return $count_comments;
+}
+// Count Comments
+// insert Replay First
+function insert_replay($com_id)
+{
+    $conn = config();
+    $inserting = "INSERT INTO replay () VALUES ()";
+}
+// END insert Replay First
+// Insert Comment
+function add_comment($pro_id, $comment, $author, $mem_id)
+{
+    $conn = config();
+    $add_com_sql = "INSERT INTO comments (com_pro_id, com_pro_author, com_detail, com_sender_id, com_date) VALUES (:pro_id, :com_pro_auth, :detail, :sender_id, :date)";
+    $stmt = $conn->prepare($add_com_sql);
+    $stmt->execute([
+        ':pro_id' => $pro_id,
+        ':com_pro_auth' => $author,
+        ':detail' => $comment,
+        ':sender_id' => $mem_id,
+        ':date' => date('M n, Y') . "at" . date('h: i A')
+    ]);
+}
+// END Insert Comment
 ?>

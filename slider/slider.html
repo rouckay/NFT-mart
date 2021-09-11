@@ -1,0 +1,2530 @@
+<!DOCTYPE html>
+		<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+		<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+		<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+		<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+		<head>
+			<meta charset="utf-8">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge">
+			<title>Crypto Slider - Slider Revolution</title>
+			<meta name="description" content="Slider Revolution Example" />
+			<meta name="keywords" content="fullscreen image, grid layout, flexbox grid, transition" />
+			<meta name="author" content="ThemePunch" />
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+
+			<!-- LOAD JQUERY LIBRARY -->
+			<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
+			
+			<!-- LOADING FONTS AND ICONS -->
+			<link href="https://fonts.googleapis.com/css?family=Montserrat:100%2C700%2C500" rel="stylesheet" property="stylesheet" media="all" type="text/css" >
+
+			
+			<link rel="stylesheet" type="text/css" href="fonts/pe-icon-7-stroke/css/pe-icon-7-stroke.css">
+			<link rel="stylesheet" type="text/css" href="fonts/font-awesome/css/font-awesome.css">
+			
+			<!-- REVOLUTION STYLE SHEETS -->
+			<link rel="stylesheet" type="text/css" href="css/rs6.css">
+			<!-- REVOLUTION LAYERS STYLES -->
+							<style type="text/css"></style>
+			<!-- REVOLUTION JS FILES -->
+			<script type="text/javascript" src="js/rbtools.min.js"></script>
+			<script type="text/javascript" src="js/rs6.min.js"></script>
+			
+			<script type="text/javascript">function setREVStartSize(e){
+			//window.requestAnimationFrame(function() {				 
+				window.RSIW = window.RSIW===undefined ? window.innerWidth : window.RSIW;	
+				window.RSIH = window.RSIH===undefined ? window.innerHeight : window.RSIH;	
+				try {								
+					var pw = document.getElementById(e.c).parentNode.offsetWidth,
+						newh;
+					pw = pw===0 || isNaN(pw) ? window.RSIW : pw;
+					e.tabw = e.tabw===undefined ? 0 : parseInt(e.tabw);
+					e.thumbw = e.thumbw===undefined ? 0 : parseInt(e.thumbw);
+					e.tabh = e.tabh===undefined ? 0 : parseInt(e.tabh);
+					e.thumbh = e.thumbh===undefined ? 0 : parseInt(e.thumbh);
+					e.tabhide = e.tabhide===undefined ? 0 : parseInt(e.tabhide);
+					e.thumbhide = e.thumbhide===undefined ? 0 : parseInt(e.thumbhide);
+					e.mh = e.mh===undefined || e.mh=="" || e.mh==="auto" ? 0 : parseInt(e.mh,0);		
+					if(e.layout==="fullscreen" || e.l==="fullscreen") 						
+						newh = Math.max(e.mh,window.RSIH);					
+					else{					
+						e.gw = Array.isArray(e.gw) ? e.gw : [e.gw];
+						for (var i in e.rl) if (e.gw[i]===undefined || e.gw[i]===0) e.gw[i] = e.gw[i-1];					
+						e.gh = e.el===undefined || e.el==="" || (Array.isArray(e.el) && e.el.length==0)? e.gh : e.el;
+						e.gh = Array.isArray(e.gh) ? e.gh : [e.gh];
+						for (var i in e.rl) if (e.gh[i]===undefined || e.gh[i]===0) e.gh[i] = e.gh[i-1];
+											
+						var nl = new Array(e.rl.length),
+							ix = 0,						
+							sl;					
+						e.tabw = e.tabhide>=pw ? 0 : e.tabw;
+						e.thumbw = e.thumbhide>=pw ? 0 : e.thumbw;
+						e.tabh = e.tabhide>=pw ? 0 : e.tabh;
+						e.thumbh = e.thumbhide>=pw ? 0 : e.thumbh;					
+						for (var i in e.rl) nl[i] = e.rl[i]<window.RSIW ? 0 : e.rl[i];
+						sl = nl[0];									
+						for (var i in nl) if (sl>nl[i] && nl[i]>0) { sl = nl[i]; ix=i;}															
+						var m = pw>(e.gw[ix]+e.tabw+e.thumbw) ? 1 : (pw-(e.tabw+e.thumbw)) / (e.gw[ix]);					
+						newh =  (e.gh[ix] * m) + (e.tabh + e.thumbh);
+					}				
+					if(window.rs_init_css===undefined) window.rs_init_css = document.head.appendChild(document.createElement("style"));					
+					document.getElementById(e.c).height = newh+"px";
+					window.rs_init_css.innerHTML += "#"+e.c+"_wrapper { height: "+newh+"px }";				
+				} catch(e){
+					console.log("Failure at Presize of Slider:" + e)
+				}					   
+			//});
+		  };</script>
+		</head>
+		
+		
+
+			<!-- START Crypto Slider REVOLUTION SLIDER 6.3.5 --><p class="rs-p-wp-fix"></p>
+			<rs-module-wrap id="rev_slider_4_1_wrapper" data-alias="crypto-slider" data-source="gallery" style="background:#111111;padding:0;margin:0px auto;margin-top:0;margin-bottom:0;">
+				<rs-module id="rev_slider_4_1" style="" data-version="6.3.5">
+					<rs-slides>
+						<rs-slide data-key="rs-8" data-title="Bitcoin" data-thumb="assets/btc_bg-3-100x50.jpg" data-anim="ei:d;eo:d;s:d;t:slidehorizontal;sl:d;" data-firstanim="t:fade;s:500;sl:7;">
+							<img src="assets/btc_bg-3.jpg" title="Untitled" data-parallax="14" class="rev-slidebg" data-no-retina>
+<!--						--><rs-zone id="rrzm_8" class="rev_row_zone_middle" style="z-index: 17;"><!--
+
+								--><rs-row
+									id="slider-4-slide-8-layer-9" 
+									class="tp_cryptobtc"
+									data-type="row"
+									data-xy="xo:100px;y:m;"
+									data-text="l:22;a:inherit;"
+									data-cbreak="3"
+									data-rsp_bd="off"
+									data-margin="t:100px,75px,0px,0px;r:0px,0,0,0;b:150px,100px,50px,50px;"
+									data-frame_0="tp:600;"
+									data-frame_1="tp:600;sR:10;"
+									data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+									style="z-index:5;"
+								><!--
+									--><rs-column
+										id="slider-4-slide-8-layer-10" 
+										data-type="column"
+										data-xy="xo:100px;yo:100px;"
+										data-text="l:22;a:center;"
+										data-rsp_bd="off"
+										data-column="w:100%;"
+										data-frame_0="tp:600;"
+										data-frame_1="tp:600;"
+										data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+										style="z-index:6;width:100%;"
+									><!--
+										--><rs-layer
+											id="slider-4-slide-8-layer-15" 
+											class="tp_cur"
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:120,120,80,50;l:120,120,80,50;fw:100;a:center;"
+											data-disp="inline-block"
+											data-padding="r:10;b:10;"
+											data-frame_0="y:-100%;o:1;tp:600;"
+											data-frame_0_mask="u:t;y:100%;"
+											data-frame_1="tp:600;st:100;sp:1000;sR:90;"
+											data-frame_1_mask="u:t;"
+											data-frame_999="o:0;tp:600;st:w;sR:7900;"
+											style="z-index:7;font-family:Montserrat;display:inline-block;"
+										>$  
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-8-layer-1" 
+											class="tp_price"
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:120,120,80,50;l:120,120,80,50;fw:700;a:center;"
+											data-disp="inline-block"
+											data-padding="b:10;"
+											data-frame_0="y:-100%;o:1;tp:600;"
+											data-frame_0_mask="u:t;y:100%;"
+											data-frame_1="tp:600;st:100;sp:1000;sR:90;"
+											data-frame_1_mask="u:t;"
+											data-frame_999="o:0;tp:600;st:w;sR:7900;"
+											style="z-index:8;font-family:Montserrat;display:inline-block;"
+										>15,366.90 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-8-layer-22" 
+											class="tp-shape tp-shapewrapper"
+											data-type="shape"
+											data-rsp_ch="on"
+											data-text="w:normal;a:inherit;"
+											data-dim="w:100%;h:20px;"
+											data-disp="inline-block"
+											data-frame_0="tp:600;"
+											data-frame_1="tp:600;"
+											data-frame_999="o:0;tp:600;st:w;sR:8690;"
+											style="z-index:9;display:inline-block;"
+										> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-8-layer-3" 
+											data-type="image"
+											data-rsp_ch="on"
+											data-text="w:normal;l:22;a:inherit;"
+											data-dim="w:64px,64px,48,48;h:64px,64px,48px,48px;"
+											data-disp="inline-block"
+											data-margin="r:10px;"
+											data-frame_0="x:50px;rZ:180deg;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:10;display:inline-block;"
+										><img src="assets/btc.png" width="128" height="128" data-no-retina> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-8-layer-4" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:40,40,30,30;l:64,64,48,48;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="r:10px;"
+											data-frame_0="x:40px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:11;font-family:Montserrat;display:inline-block;"
+										>Bitcoin 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-8-layer-5" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:15,15,13,13;l:64,64,48,48;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="r:0,0,30px,30px;"
+											data-padding="r:40,40,0,0;"
+											data-frame_0="x:30px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:12;font-family:Montserrat;display:inline-block;"
+										>( BTC ) 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-8-layer-24" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:20,20,15,15;l:25,25,20,20;fw:700;"
+											data-dim="w:90px,90px,60px,60px;"
+											data-disp="inline-block"
+											data-margin="t:7px,7px,4px,4px;"
+											data-frame_0="x:20px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:13;font-family:Montserrat;display:inline-block;"
+										>1h
+<div class="tp_onehour" style="color:#22b911;">1.19%</div> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-8-layer-26" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:20,20,15,15;l:25,25,20,20;fw:700;"
+											data-dim="w:90px,90px,60px,60px;"
+											data-disp="inline-block"
+											data-margin="t:7px,7px,4px,4px;r:40px,40px,20px,20px;"
+											data-frame_0="x:10px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:14;font-family:Montserrat;display:inline-block;"
+										>24h
+<div class="tp_oneday" style="color:#ea1519;">-5.22%</div> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-8-layer-7" 
+											class="set_usd rev-btn"
+											data-type="button"
+											data-color="rgba(255,255,255,1)"
+											data-rsp_ch="on"
+											rel="USD"
+											data-text="w:normal;s:15;l:30;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="t:15px,15px,7px,7px;r:-1px;"
+											data-padding="r:30;l:30;"
+											data-border="bos:solid;boc:#ffffff;bow:1px,1px,1px,1px;bor:30px,0px,0px,30px;"
+											data-frame_0="x:-50px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:15;font-family:Montserrat;cursor:pointer;display:inline-block;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;"
+										>USD 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-8-layer-8" 
+											class="set_eur rev-btn"
+											data-type="button"
+											data-rsp_ch="on"
+											rel="EUR"
+											data-text="w:normal;s:15;l:30;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="t:15px,15px,7px,7px;"
+											data-padding="r:30;l:30;"
+											data-border="bos:solid;boc:#ffffff;bow:1px,1px,1px,1px;bor:0px,30px,30px,0px;"
+											data-frame_0="x:-50px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:16;font-family:Montserrat;cursor:pointer;display:inline-block;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;"
+										>EUR
+ 
+										</rs-layer><!--
+									--></rs-column><!--
+								--></rs-row><!--
+
+								--><rs-row
+									id="slider-4-slide-8-layer-17" 
+									data-type="row"
+									data-xy="xo:82px;y:m;"
+									data-text="w:normal;l:22;a:inherit;"
+									data-dim="w:1240;"
+									data-cbreak="3"
+									data-rsp_bd="off"
+									data-frame_0="tp:600;"
+									data-frame_1="tp:600;sR:10;"
+									data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+									style="z-index:17;"
+								><!--
+									--><rs-column
+										id="slider-4-slide-8-layer-18" 
+										data-type="column"
+										data-xy="xo:100px;yo:100px;"
+										data-text="w:normal;l:22;a:center;"
+										data-rsp_bd="off"
+										data-column="w:100%;"
+										data-frame_0="tp:600;"
+										data-frame_1="tp:600;"
+										data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+										style="z-index:18;width:100%;"
+									><!--
+										--><a
+											id="slider-4-slide-8-layer-20" 
+											class="rs-layer rev-btn"
+											href="https://www.coinbase.com/join/5993f44aebee84027633660e" target="_blank" rel="noopener"
+											data-type="button"
+											data-color="rgba(255,255,255,1)"
+											data-rsp_ch="on"
+											data-text="w:normal;l:60;fw:700;a:center;"
+											data-dim="w:300px;"
+											data-disp="inline-block"
+											data-border="bor:30px,30px,30px,30px;"
+											data-frame_0="sX:0.9;sY:0.9;tp:600;blu:10px;"
+											data-frame_1="tp:600;st:300;sp:1000;sR:290;"
+											data-frame_999="o:0;tp:600;st:w;sR:7700;"
+											data-frame_hover="bgc:#f7931a;boc:#000;bor:30px,30px,30px,30px;bos:solid;oX:50;oY:50;sp:200;e:power1.inOut;gra:0%;bri:110%;"
+											style="z-index:19;background-color:#f7931a;font-family:Montserrat;cursor:pointer;display:inline-block;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;"
+										>Buy Bitcoin 
+										</a><!--
+
+										--><rs-layer
+											id="slider-4-slide-8-layer-28" 
+											class="tp-shape tp-shapewrapper"
+											data-type="shape"
+											data-rsp_ch="on"
+											data-xy="xo:5px;yo:5px;"
+											data-text="w:normal;a:inherit;"
+											data-dim="w:100%;h:20px;"
+											data-disp="inline-block"
+											data-frame_0="tp:600;"
+											data-frame_1="tp:600;"
+											data-frame_999="o:0;tp:600;st:w;sR:8690;"
+											style="z-index:21;display:inline-block;"
+										> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-8-layer-21" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:17;l:22;fw:500;a:inherit;"
+											data-disp="inline-block"
+											data-frame_0="sX:0.9;sY:0.9;tp:600;bri:100%;blu:10px;"
+											data-frame_1="tp:600;st:300;sp:1000;sR:290;"
+											data-frame_999="o:0;tp:600;st:w;sR:7700;"
+											style="z-index:20;font-family:Montserrat;display:inline-block;"
+										><span style="font-weight:700;border-bottom:2px solid #f7931a;padding-bottom:2px;">Get $10</span> worth of Bitcoin for free! 
+										</rs-layer><!--
+									--></rs-column><!--
+								--></rs-row><!--
+							--></rs-zone><!--
+-->						</rs-slide>
+						<rs-slide data-key="rs-9" data-title="Ethereum" data-thumb="assets/eth_bg-100x50.jpg" data-anim="ei:d;eo:d;s:d;t:slidehorizontal;sl:d;">
+							<img src="assets/eth_bg.jpg" title="Untitled" data-parallax="14" class="rev-slidebg" data-no-retina>
+<!--						--><rs-zone id="rrzm_9" class="rev_row_zone_middle" style="z-index: 17;"><!--
+
+								--><rs-row
+									id="slider-4-slide-9-layer-9" 
+									class="tp_cryptoeth"
+									data-type="row"
+									data-xy="xo:100px;y:m;"
+									data-text="l:22;a:inherit;"
+									data-cbreak="3"
+									data-rsp_bd="off"
+									data-margin="t:100px,75px,0px,0px;r:0px,0,0,0;b:150px,100px,50px,50px;"
+									data-frame_0="tp:600;"
+									data-frame_1="tp:600;sR:10;"
+									data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+									style="z-index:5;"
+								><!--
+									--><rs-column
+										id="slider-4-slide-9-layer-10" 
+										data-type="column"
+										data-xy="xo:100px;yo:100px;"
+										data-text="l:22;a:center;"
+										data-rsp_bd="off"
+										data-column="w:100%;"
+										data-frame_0="tp:600;"
+										data-frame_1="tp:600;"
+										data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+										style="z-index:6;width:100%;"
+									><!--
+										--><rs-layer
+											id="slider-4-slide-9-layer-15" 
+											class="tp_cur"
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:120,120,80,50;l:120,120,80,50;fw:100;a:center;"
+											data-disp="inline-block"
+											data-padding="r:10;b:10;"
+											data-frame_0="y:-100%;o:1;tp:600;"
+											data-frame_0_mask="u:t;y:100%;"
+											data-frame_1="tp:600;st:100;sp:1000;sR:90;"
+											data-frame_1_mask="u:t;"
+											data-frame_999="o:0;tp:600;st:w;sR:7900;"
+											style="z-index:7;font-family:Montserrat;display:inline-block;"
+										>$  
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-9-layer-1" 
+											class="tp_price"
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:120,120,80,50;l:120,120,80,50;fw:700;a:center;"
+											data-disp="inline-block"
+											data-padding="b:10;"
+											data-frame_0="y:-100%;o:1;tp:600;"
+											data-frame_0_mask="u:t;y:100%;"
+											data-frame_1="tp:600;st:100;sp:1000;sR:90;"
+											data-frame_1_mask="u:t;"
+											data-frame_999="o:0;tp:600;st:w;sR:7900;"
+											style="z-index:8;font-family:Montserrat;display:inline-block;"
+										>15,366.90 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-9-layer-22" 
+											class="tp-shape tp-shapewrapper"
+											data-type="shape"
+											data-rsp_ch="on"
+											data-text="w:normal;a:inherit;"
+											data-dim="w:100%;h:20px;"
+											data-disp="inline-block"
+											data-frame_0="tp:600;"
+											data-frame_1="tp:600;"
+											data-frame_999="o:0;tp:600;st:w;sR:8690;"
+											style="z-index:9;display:inline-block;"
+										> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-9-layer-3" 
+											data-type="image"
+											data-rsp_ch="on"
+											data-text="w:normal;l:22;a:inherit;"
+											data-dim="w:64px,64px,48,48;h:64px,64px,48px,48px;"
+											data-disp="inline-block"
+											data-margin="r:10px;"
+											data-frame_0="x:50px;rZ:180deg;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:10;display:inline-block;"
+										><img src="assets/eth.png" width="128" height="128" data-no-retina> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-9-layer-4" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:40,40,30,30;l:64,64,48,48;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="r:10px;"
+											data-frame_0="x:40px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:11;font-family:Montserrat;display:inline-block;"
+										>Ethereum 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-9-layer-5" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:15,15,13,13;l:64,64,48,48;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="r:0,0,30px,30px;"
+											data-padding="r:40,40,0,0;"
+											data-frame_0="x:30px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:12;font-family:Montserrat;display:inline-block;"
+										>( ETH ) 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-9-layer-24" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:20,20,15,15;l:25,25,20,20;fw:700;"
+											data-dim="w:90px,90px,60px,60px;"
+											data-disp="inline-block"
+											data-margin="t:7px,7px,4px,4px;"
+											data-frame_0="x:20px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:13;font-family:Montserrat;display:inline-block;"
+										>1h
+<div class="tp_onehour" style="color:#22b911;">1.19%</div> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-9-layer-26" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:20,20,15,15;l:25,25,20,20;fw:700;"
+											data-dim="w:90px,90px,60px,60px;"
+											data-disp="inline-block"
+											data-margin="t:7px,7px,4px,4px;r:40px,40px,20px,20px;"
+											data-frame_0="x:10px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:14;font-family:Montserrat;display:inline-block;"
+										>24h
+<div class="tp_oneday" style="color:#ea1519;">-5.22%</div> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-9-layer-7" 
+											class="set_usd rev-btn"
+											data-type="button"
+											data-color="rgba(255,255,255,1)"
+											data-rsp_ch="on"
+											rel="USD"
+											data-text="w:normal;s:15;l:30;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="t:15px,15px,7px,7px;r:-1px;"
+											data-padding="r:30;l:30;"
+											data-border="bos:solid;boc:#ffffff;bow:1px,1px,1px,1px;bor:30px,0px,0px,30px;"
+											data-frame_0="x:-50px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:15;font-family:Montserrat;cursor:pointer;display:inline-block;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;"
+										>USD 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-9-layer-8" 
+											class="set_eur rev-btn"
+											data-type="button"
+											data-rsp_ch="on"
+											rel="EUR"
+											data-text="w:normal;s:15;l:30;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="t:15px,15px,7px,7px;"
+											data-padding="r:30;l:30;"
+											data-border="bos:solid;boc:#ffffff;bow:1px,1px,1px,1px;bor:0px,30px,30px,0px;"
+											data-frame_0="x:-50px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:16;font-family:Montserrat;cursor:pointer;display:inline-block;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;"
+										>EUR
+ 
+										</rs-layer><!--
+									--></rs-column><!--
+								--></rs-row><!--
+
+								--><rs-row
+									id="slider-4-slide-9-layer-17" 
+									data-type="row"
+									data-xy="xo:82px;y:m;"
+									data-text="w:normal;l:22;a:inherit;"
+									data-dim="w:1240;"
+									data-cbreak="3"
+									data-rsp_bd="off"
+									data-frame_0="tp:600;"
+									data-frame_1="tp:600;sR:10;"
+									data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+									style="z-index:17;"
+								><!--
+									--><rs-column
+										id="slider-4-slide-9-layer-18" 
+										data-type="column"
+										data-xy="xo:100px;yo:100px;"
+										data-text="w:normal;l:22;a:center;"
+										data-rsp_bd="off"
+										data-column="w:100%;"
+										data-frame_0="tp:600;"
+										data-frame_1="tp:600;"
+										data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+										style="z-index:18;width:100%;"
+									><!--
+										--><a
+											id="slider-4-slide-9-layer-20" 
+											class="rs-layer rev-btn"
+											href="https://www.coinbase.com/join/59a66cb0c90f89009907d6c3" target="_blank" rel="noopener"
+											data-type="button"
+											data-color="rgba(255,255,255,1)"
+											data-rsp_ch="on"
+											data-text="w:normal;l:60;fw:700;a:center;"
+											data-dim="w:300px;"
+											data-disp="inline-block"
+											data-border="bor:30px,30px,30px,30px;"
+											data-frame_0="sX:0.9;sY:0.9;tp:600;blu:10px;"
+											data-frame_1="tp:600;st:300;sp:1000;sR:290;"
+											data-frame_999="o:0;tp:600;st:w;sR:7700;"
+											data-frame_hover="bgc:#627eea;boc:#000;bor:30px,30px,30px,30px;bos:solid;oX:50;oY:50;sp:200;e:power1.inOut;gra:0%;bri:110%;"
+											style="z-index:19;background-color:#627eea;font-family:Montserrat;cursor:pointer;display:inline-block;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;"
+										>Buy Ethereum 
+										</a><!--
+
+										--><rs-layer
+											id="slider-4-slide-9-layer-28" 
+											class="tp-shape tp-shapewrapper"
+											data-type="shape"
+											data-rsp_ch="on"
+											data-xy="xo:5px;yo:5px;"
+											data-text="w:normal;a:inherit;"
+											data-dim="w:100%;h:20px;"
+											data-disp="inline-block"
+											data-frame_0="tp:600;"
+											data-frame_1="tp:600;"
+											data-frame_999="o:0;tp:600;st:w;sR:8690;"
+											style="z-index:21;display:inline-block;"
+										> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-9-layer-21" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:17;l:22;fw:500;a:inherit;"
+											data-disp="inline-block"
+											data-frame_0="sX:0.9;sY:0.9;tp:600;bri:100%;blu:10px;"
+											data-frame_1="tp:600;st:300;sp:1000;sR:290;"
+											data-frame_999="o:0;tp:600;st:w;sR:7700;"
+											style="z-index:20;font-family:Montserrat;display:inline-block;"
+										><span style="font-weight:700;border-bottom:2px solid #627eea;padding-bottom:2px;">Get $10</span> worth of Bitcoin for free! 
+										</rs-layer><!--
+									--></rs-column><!--
+								--></rs-row><!--
+							--></rs-zone><!--
+-->						</rs-slide>
+						<rs-slide data-key="rs-10" data-title="Litecoin" data-thumb="assets/ltc_bg-1-100x50.jpg" data-anim="ei:d;eo:d;s:d;t:slidehorizontal;sl:d;">
+							<img src="assets/ltc_bg-1.jpg" title="Untitled" data-parallax="14" class="rev-slidebg" data-no-retina>
+<!--						--><rs-zone id="rrzm_10" class="rev_row_zone_middle" style="z-index: 17;"><!--
+
+								--><rs-row
+									id="slider-4-slide-10-layer-9" 
+									class="tp_cryptoltc"
+									data-type="row"
+									data-xy="xo:100px;y:m;"
+									data-text="l:22;a:inherit;"
+									data-cbreak="3"
+									data-rsp_bd="off"
+									data-margin="t:100px,75px,0px,0px;r:0px,0,0,0;b:150px,100px,50px,50px;"
+									data-frame_0="tp:600;"
+									data-frame_1="tp:600;sR:10;"
+									data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+									style="z-index:5;"
+								><!--
+									--><rs-column
+										id="slider-4-slide-10-layer-10" 
+										data-type="column"
+										data-xy="xo:100px;yo:100px;"
+										data-text="l:22;a:center;"
+										data-rsp_bd="off"
+										data-column="w:100%;"
+										data-frame_0="tp:600;"
+										data-frame_1="tp:600;"
+										data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+										style="z-index:6;width:100%;"
+									><!--
+										--><rs-layer
+											id="slider-4-slide-10-layer-15" 
+											class="tp_cur"
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:120,120,80,50;l:120,120,80,50;fw:100;a:center;"
+											data-disp="inline-block"
+											data-padding="r:10;b:10;"
+											data-frame_0="y:-100%;o:1;tp:600;"
+											data-frame_0_mask="u:t;y:100%;"
+											data-frame_1="tp:600;st:100;sp:1000;sR:90;"
+											data-frame_1_mask="u:t;"
+											data-frame_999="o:0;tp:600;st:w;sR:7900;"
+											style="z-index:7;font-family:Montserrat;display:inline-block;"
+										>$  
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-10-layer-1" 
+											class="tp_price"
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:120,120,80,50;l:120,120,80,50;fw:700;a:center;"
+											data-disp="inline-block"
+											data-padding="b:10;"
+											data-frame_0="y:-100%;o:1;tp:600;"
+											data-frame_0_mask="u:t;y:100%;"
+											data-frame_1="tp:600;st:100;sp:1000;sR:90;"
+											data-frame_1_mask="u:t;"
+											data-frame_999="o:0;tp:600;st:w;sR:7900;"
+											style="z-index:8;font-family:Montserrat;display:inline-block;"
+										>15,366.90 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-10-layer-22" 
+											class="tp-shape tp-shapewrapper"
+											data-type="shape"
+											data-rsp_ch="on"
+											data-text="w:normal;a:inherit;"
+											data-dim="w:100%;h:20px;"
+											data-disp="inline-block"
+											data-frame_0="tp:600;"
+											data-frame_1="tp:600;"
+											data-frame_999="o:0;tp:600;st:w;sR:8690;"
+											style="z-index:9;display:inline-block;"
+										> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-10-layer-3" 
+											data-type="image"
+											data-rsp_ch="on"
+											data-text="w:normal;l:22;a:inherit;"
+											data-dim="w:64px,64px,48,48;h:64px,64px,48px,48px;"
+											data-disp="inline-block"
+											data-margin="r:10px;"
+											data-frame_0="x:50px;rZ:180deg;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:10;display:inline-block;"
+										><img src="assets/ltc.png" width="128" height="128" data-no-retina> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-10-layer-4" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:40,40,30,30;l:64,64,48,48;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="r:10px;"
+											data-frame_0="x:40px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:11;font-family:Montserrat;display:inline-block;"
+										>Litecoin 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-10-layer-5" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:15,15,13,13;l:64,64,48,48;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="r:0,0,30px,30px;"
+											data-padding="r:40,40,0,0;"
+											data-frame_0="x:30px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:12;font-family:Montserrat;display:inline-block;"
+										>( LTC ) 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-10-layer-24" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:20,20,15,15;l:25,25,20,20;fw:700;"
+											data-dim="w:90px,90px,60px,60px;"
+											data-disp="inline-block"
+											data-margin="t:7px,7px,4px,4px;"
+											data-frame_0="x:20px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:13;font-family:Montserrat;display:inline-block;"
+										>1h
+<div class="tp_onehour" style="color:#22b911;">1.19%</div> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-10-layer-26" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:20,20,15,15;l:25,25,20,20;fw:700;"
+											data-dim="w:90px,90px,60px,60px;"
+											data-disp="inline-block"
+											data-margin="t:7px,7px,4px,4px;r:40px,40px,20px,20px;"
+											data-frame_0="x:10px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:14;font-family:Montserrat;display:inline-block;"
+										>24h
+<div class="tp_oneday" style="color:#ea1519;">-5.22%</div> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-10-layer-7" 
+											class="set_usd rev-btn"
+											data-type="button"
+											data-color="rgba(255,255,255,1)"
+											data-rsp_ch="on"
+											rel="USD"
+											data-text="w:normal;s:15;l:30;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="t:15px,15px,7px,7px;r:-1px;"
+											data-padding="r:30;l:30;"
+											data-border="bos:solid;boc:#ffffff;bow:1px,1px,1px,1px;bor:30px,0px,0px,30px;"
+											data-frame_0="x:-50px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:15;font-family:Montserrat;cursor:pointer;display:inline-block;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;"
+										>USD 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-10-layer-8" 
+											class="set_eur rev-btn"
+											data-type="button"
+											data-rsp_ch="on"
+											rel="EUR"
+											data-text="w:normal;s:15;l:30;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="t:15px,15px,7px,7px;"
+											data-padding="r:30;l:30;"
+											data-border="bos:solid;boc:#ffffff;bow:1px,1px,1px,1px;bor:0px,30px,30px,0px;"
+											data-frame_0="x:-50px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:16;font-family:Montserrat;cursor:pointer;display:inline-block;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;"
+										>EUR
+ 
+										</rs-layer><!--
+									--></rs-column><!--
+								--></rs-row><!--
+
+								--><rs-row
+									id="slider-4-slide-10-layer-17" 
+									data-type="row"
+									data-xy="xo:82px;y:m;"
+									data-text="w:normal;l:22;a:inherit;"
+									data-dim="w:1240;"
+									data-cbreak="3"
+									data-rsp_bd="off"
+									data-frame_0="tp:600;"
+									data-frame_1="tp:600;sR:10;"
+									data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+									style="z-index:17;"
+								><!--
+									--><rs-column
+										id="slider-4-slide-10-layer-18" 
+										data-type="column"
+										data-xy="xo:100px;yo:100px;"
+										data-text="w:normal;l:22;a:center;"
+										data-rsp_bd="off"
+										data-column="w:100%;"
+										data-frame_0="tp:600;"
+										data-frame_1="tp:600;"
+										data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+										style="z-index:18;width:100%;"
+									><!--
+										--><a
+											id="slider-4-slide-10-layer-20" 
+											class="rs-layer rev-btn"
+											href="https://www.coinbase.com/join/594b81d8b6b434010777359d" target="_blank" rel="noopener"
+											data-type="button"
+											data-color="#333333"
+											data-rsp_ch="on"
+											data-text="w:normal;l:60;fw:700;a:center;"
+											data-dim="w:300px;"
+											data-disp="inline-block"
+											data-border="bor:30px,30px,30px,30px;"
+											data-frame_0="sX:0.9;sY:0.9;tp:600;blu:10px;"
+											data-frame_1="tp:600;st:300;sp:1000;sR:290;"
+											data-frame_999="o:0;tp:600;st:w;sR:7700;"
+											data-frame_hover="c:#333;bgc:#cbc6c6;boc:#000;bor:30px,30px,30px,30px;bos:solid;oX:50;oY:50;sp:200;e:power1.inOut;gra:0%;bri:110%;"
+											style="z-index:19;background-color:#cbc6c6;font-family:Montserrat;cursor:pointer;display:inline-block;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;"
+										>Buy Litecoin 
+										</a><!--
+
+										--><rs-layer
+											id="slider-4-slide-10-layer-28" 
+											class="tp-shape tp-shapewrapper"
+											data-type="shape"
+											data-rsp_ch="on"
+											data-xy="xo:5px;yo:5px;"
+											data-text="w:normal;a:inherit;"
+											data-dim="w:100%;h:20px;"
+											data-disp="inline-block"
+											data-frame_0="tp:600;"
+											data-frame_1="tp:600;"
+											data-frame_999="o:0;tp:600;st:w;sR:8690;"
+											style="z-index:21;display:inline-block;"
+										> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-10-layer-21" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:17;l:22;fw:500;a:inherit;"
+											data-disp="inline-block"
+											data-frame_0="sX:0.9;sY:0.9;tp:600;bri:100%;blu:10px;"
+											data-frame_1="tp:600;st:300;sp:1000;sR:290;"
+											data-frame_999="o:0;tp:600;st:w;sR:7700;"
+											style="z-index:20;font-family:Montserrat;display:inline-block;"
+										><span style="font-weight:700;border-bottom:2px solid #cbc6c6;padding-bottom:2px;">Get $10</span> worth of Bitcoin for free! 
+										</rs-layer><!--
+									--></rs-column><!--
+								--></rs-row><!--
+							--></rs-zone><!--
+-->						</rs-slide>
+						<rs-slide data-key="rs-11" data-title="More" data-thumb="assets/all_bg-100x50.jpg" data-anim="ei:d;eo:d;s:d;t:slidehorizontal;sl:d;">
+							<img src="assets/all_bg.jpg" title="Untitled" data-parallax="14" class="rev-slidebg" data-no-retina>
+<!--						--><rs-zone id="rrzm_11" class="rev_row_zone_middle" style="z-index: 89;"><!--
+
+								--><rs-row
+									id="slider-4-slide-11-layer-9" 
+									data-type="row"
+									data-xy="xo:100px;y:m;"
+									data-text="l:22;a:inherit;"
+									data-rsp_bd="off"
+									data-margin="t:30px,30px,0px,0px;b:50px,40px,0px,0px;"
+									data-padding="r:60,50,100,45;l:60,50,100,45;"
+									data-frame_0="tp:600;"
+									data-frame_1="tp:600;sR:10;"
+									data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+									style="z-index:5;"
+								><!--
+									--><rs-column
+										id="slider-4-slide-11-layer-10" 
+										class="tp_cryptobtc"
+										data-type="column"
+										data-xy="xo:100px;yo:100px;"
+										data-text="l:22;"
+										data-rsp_bd="off"
+										data-margin="b:0,0,10px,10px;"
+										data-frame_0="tp:600;"
+										data-frame_1="tp:600;"
+										data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+										style="z-index:6;width:100%;"
+									><!--
+										--><rs-layer
+											id="slider-4-slide-11-layer-15" 
+											class="tp_cur"
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:40,30,30,17;l:40,30,30,20;fw:100;a:left,left,center,center;"
+											data-dim="w:40px,30px,30px,20px;"
+											data-disp="inline-block"
+											data-padding="r:10;b:0,0,10,10;"
+											data-frame_0="y:-100%;o:1;tp:600;"
+											data-frame_0_mask="u:t;y:100%;"
+											data-frame_1="tp:600;st:100;sp:1000;sR:90;"
+											data-frame_1_mask="u:t;"
+											data-frame_999="o:0;tp:600;st:w;sR:7900;"
+											style="z-index:7;font-family:Montserrat;display:inline-block;"
+										>$ 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-1" 
+											class="tp_price"
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:40,30,30,17;l:40,30,30,20;fw:700;a:center,center,left,left;"
+											data-dim="w:auto,auto,160px,85px;"
+											data-disp="inline-block"
+											data-margin="r:0,0,20px,5px;"
+											data-padding="b:0,0,10,10;"
+											data-frame_0="y:-100%;o:1;tp:600;"
+											data-frame_0_mask="u:t;y:100%;"
+											data-frame_1="tp:600;st:100;sp:1000;sR:90;"
+											data-frame_1_mask="u:t;"
+											data-frame_999="o:0;tp:600;st:w;sR:7900;"
+											style="z-index:8;font-family:Montserrat;display:inline-block;"
+										>15,366.90 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-22" 
+											class="tp-shape tp-shapewrapper"
+											data-type="shape"
+											data-rsp_ch="on"
+											data-text="w:normal;a:inherit;"
+											data-dim="w:100%,100%,20px,0px;h:5px,5px,30px,30px;"
+											data-vbility="t,t,f,f"
+											data-disp="inline-block"
+											data-frame_0="tp:600;"
+											data-frame_1="tp:600;"
+											data-frame_999="o:0;tp:600;st:w;sR:8690;"
+											style="z-index:10;display:inline-block;"
+										> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-3" 
+											data-type="image"
+											data-rsp_ch="on"
+											data-text="w:normal;l:22;a:inherit;"
+											data-dim="w:32px,32px,30px,20px;h:32px,32px,30px,20px;"
+											data-disp="inline-block"
+											data-margin="r:10px,5px,5px,5px;"
+											data-frame_0="x:50px;rZ:180deg;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:9;display:inline-block;"
+										><img src="assets/btc.png" width="128" height="128" data-no-retina> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-4" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:20,15,15,13;l:32,32,30,20;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="r:10px,5px,5px,5px;"
+											data-frame_0="x:40px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:11;font-family:Montserrat;display:inline-block;"
+										>Bitcoin 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-5" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:12,12,10,10;l:32,32,30,20;fw:700;a:inherit,inherit,left,inherit;"
+											data-disp="inline-block"
+											data-margin="r:0,10px,10px,10px;"
+											data-padding="r:20,0,0,0;"
+											data-frame_0="x:30px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:12;font-family:Montserrat;display:inline-block;"
+										>( BTC ) 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-24" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:15,15,12,12;l:15,15,12,12;fw:700;"
+											data-dim="w:60px,60px,50px,45px;"
+											data-disp="inline-block"
+											data-margin="t:3px,2px,3px,3px;"
+											data-frame_0="x:20px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:13;font-family:Montserrat;display:inline-block;"
+										>1h
+<div class="tp_onehour" style="color:#22b911;">1.19%</div> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-26" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:15,15,12,12;l:15,15,12,12;fw:700;"
+											data-dim="w:60px,60px,50px,45px;"
+											data-disp="inline-block"
+											data-margin="t:3px,2px,3px,3px;"
+											data-frame_0="x:10px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:14;font-family:Montserrat;display:inline-block;"
+										>24h
+<div class="tp_oneday" style="color:#ea1519;">-10.22%</div> 
+										</rs-layer><!--
+									--></rs-column><!--
+
+									--><rs-column
+										id="slider-4-slide-11-layer-28" 
+										class="tp_cryptoeth"
+										data-type="column"
+										data-xy="xo:100px;yo:100px;"
+										data-text="l:22;"
+										data-rsp_bd="off"
+										data-margin="b:0,0,10px,10px;"
+										data-frame_0="tp:600;"
+										data-frame_1="tp:600;"
+										data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+										style="z-index:15;width:100%;"
+									><!--
+										--><rs-layer
+											id="slider-4-slide-11-layer-32" 
+											class="tp_cur"
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:40,30,30,17;l:40,30,30,20;fw:100;a:left,left,center,center;"
+											data-dim="w:40px,30px,30px,20px;"
+											data-disp="inline-block"
+											data-padding="r:10;b:0,0,10,10;"
+											data-frame_0="y:-100%;o:1;tp:600;"
+											data-frame_0_mask="u:t;y:100%;"
+											data-frame_1="tp:600;st:100;sp:1000;sR:90;"
+											data-frame_1_mask="u:t;"
+											data-frame_999="o:0;tp:600;st:w;sR:7900;"
+											style="z-index:16;font-family:Montserrat;display:inline-block;"
+										>$  
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-33" 
+											class="tp_price"
+											data-type="text"
+											data-rsp_ch="on"
+											data-xy="xo:0,227px,227px,227px;yo:0,298px,298px,298px;"
+											data-text="w:normal;s:40,30,30,17;l:40,30,30,20;fw:700;a:center,center,left,left;"
+											data-dim="w:auto,auto,160px,85px;"
+											data-disp="inline-block"
+											data-margin="r:0,0,20px,5px;"
+											data-padding="b:0,0,10,10;"
+											data-frame_0="y:-100%;o:1;tp:600;"
+											data-frame_0_mask="u:t;y:100%;"
+											data-frame_1="tp:600;st:100;sp:1000;sR:90;"
+											data-frame_1_mask="u:t;"
+											data-frame_999="o:0;tp:600;st:w;sR:7900;"
+											style="z-index:17;font-family:Montserrat;display:inline-block;"
+										>1,056.90 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-34" 
+											class="tp-shape tp-shapewrapper"
+											data-type="shape"
+											data-rsp_ch="on"
+											data-text="w:normal;a:inherit;"
+											data-dim="w:100%,100%,20px,0px;h:5px,5px,30px,30px;"
+											data-vbility="t,t,f,f"
+											data-disp="inline-block"
+											data-frame_0="tp:600;"
+											data-frame_1="tp:600;"
+											data-frame_999="o:0;tp:600;st:w;sR:8690;"
+											style="z-index:18;display:inline-block;"
+										> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-35" 
+											data-type="image"
+											data-rsp_ch="on"
+											data-text="w:normal;l:22;a:inherit;"
+											data-dim="w:32px,32px,30px,20px;h:32px,32px,30,20;"
+											data-disp="inline-block"
+											data-margin="r:10px,5px,5px,5px;"
+											data-frame_0="x:50px;rZ:180deg;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:19;display:inline-block;"
+										><img src="assets/eth.png" width="128" height="128" data-no-retina> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-36" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:20,15,15,13;l:32,32,30,20;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="r:10px,5px,5px,5px;"
+											data-frame_0="x:40px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:20;font-family:Montserrat;display:inline-block;"
+										>Ethereum 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-37" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:12,12,10,10;l:32,32,30,20;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="r:0,10px,10px,10px;"
+											data-padding="r:20,0,0,0;"
+											data-frame_0="x:30px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:21;font-family:Montserrat;display:inline-block;"
+										>( ETH ) 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-38" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:15,15,12,12;l:15,15,12,12;fw:700;"
+											data-dim="w:60px,60px,50px,50px;"
+											data-disp="inline-block"
+											data-margin="t:3px,2px,3px,3px;"
+											data-frame_0="x:20px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:22;font-family:Montserrat;display:inline-block;"
+										>1h
+<div class="tp_onehour" style="color:#22b911;">1.19%</div> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-39" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:15,15,12,12;l:15,15,12,12;fw:700;"
+											data-dim="w:60px,60px,50px,50px;"
+											data-disp="inline-block"
+											data-margin="t:3px,2px,3px,3px;"
+											data-frame_0="x:10px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:23;font-family:Montserrat;display:inline-block;"
+										>24h
+<div class="tp_oneday" style="color:#ea1519;">-10.22%</div> 
+										</rs-layer><!--
+									--></rs-column><!--
+
+									--><rs-column
+										id="slider-4-slide-11-layer-29" 
+										class="tp_cryptoltc"
+										data-type="column"
+										data-xy="xo:100px;yo:100px;"
+										data-text="l:22;"
+										data-rsp_bd="off"
+										data-margin="b:0,0,10px,10px;"
+										data-frame_0="tp:600;"
+										data-frame_1="tp:600;"
+										data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+										style="z-index:24;width:100%;"
+									><!--
+										--><rs-layer
+											id="slider-4-slide-11-layer-40" 
+											class="tp_cur"
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:40,30,30,17;l:40,30,30,20;fw:100;a:left,left,center,center;"
+											data-dim="w:40px,30px,30px,20px;"
+											data-disp="inline-block"
+											data-padding="r:10;b:0,0,10,10;"
+											data-frame_0="y:-100%;o:1;tp:600;"
+											data-frame_0_mask="u:t;y:100%;"
+											data-frame_1="tp:600;st:100;sp:1000;sR:90;"
+											data-frame_1_mask="u:t;"
+											data-frame_999="o:0;tp:600;st:w;sR:7900;"
+											style="z-index:25;font-family:Montserrat;display:inline-block;"
+										>$  
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-41" 
+											class="tp_price"
+											data-type="text"
+											data-rsp_ch="on"
+											data-xy="xo:0,227px,227px,0;yo:0,298px,298px,0;"
+											data-text="w:normal;s:40,30,30,17;l:40,30,30,20;fw:700;a:center,center,left,left;"
+											data-dim="w:auto,auto,160px,85px;"
+											data-disp="inline-block"
+											data-margin="r:0,0,20px,5px;"
+											data-padding="b:0,0,10,10;"
+											data-frame_0="y:-100%;o:1;tp:600;"
+											data-frame_0_mask="u:t;y:100%;"
+											data-frame_1="tp:600;st:100;sp:1000;sR:90;"
+											data-frame_1_mask="u:t;"
+											data-frame_999="o:0;tp:600;st:w;sR:7900;"
+											style="z-index:26;font-family:Montserrat;display:inline-block;"
+										>266.30 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-43" 
+											class="tp-shape tp-shapewrapper"
+											data-type="shape"
+											data-rsp_ch="on"
+											data-text="w:normal;a:inherit;"
+											data-dim="w:100%,100%,20px,0px;h:5px,5px,30px,30px;"
+											data-vbility="t,t,f,f"
+											data-disp="inline-block"
+											data-frame_0="tp:600;"
+											data-frame_1="tp:600;"
+											data-frame_999="o:0;tp:600;st:w;sR:8690;"
+											style="z-index:28;display:inline-block;"
+										> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-42" 
+											data-type="image"
+											data-rsp_ch="on"
+											data-text="w:normal;l:22;a:inherit;"
+											data-dim="w:32px,32px,30px,20px;h:32px,32px,30,20;"
+											data-disp="inline-block"
+											data-margin="r:10px,5px,5px,5px;"
+											data-frame_0="x:50px;rZ:180deg;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:27;display:inline-block;"
+										><img src="assets/ltc.png" width="128" height="128" data-no-retina> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-44" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:20,15,15,13;l:32,32,30,20;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="r:10px,5px,5px,5px;"
+											data-frame_0="x:40px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:29;font-family:Montserrat;display:inline-block;"
+										>Litecoin 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-45" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:12,12,10,10;l:32,32,30,20;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="r:0,10px,10px,10px;"
+											data-padding="r:20,0,0,0;"
+											data-frame_0="x:30px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:30;font-family:Montserrat;display:inline-block;"
+										>( LTC ) 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-46" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:15,15,12,12;l:15,15,12,12;fw:700;"
+											data-dim="w:60px,60px,50px,50px;"
+											data-disp="inline-block"
+											data-margin="t:3px,2px,3px,3px;"
+											data-frame_0="x:20px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:31;font-family:Montserrat;display:inline-block;"
+										>1h
+<div class="tp_onehour" style="color:#22b911;">1.19%</div> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-47" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:15,15,12,12;l:15,15,12,12;fw:700;"
+											data-dim="w:60px,60px,50px,50px;"
+											data-disp="inline-block"
+											data-margin="t:3px,2px,3px,3px;"
+											data-frame_0="x:10px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:32;font-family:Montserrat;display:inline-block;"
+										>24h
+<div class="tp_oneday" style="color:#ea1519;">-10.22%</div> 
+										</rs-layer><!--
+									--></rs-column><!--
+								--></rs-row><!--
+
+								--><rs-row
+									id="slider-4-slide-11-layer-48" 
+									data-type="row"
+									data-xy="xo:0,100px,100px,100px;y:m;yo:-93px,0,0,0;"
+									data-text="l:22;a:inherit;"
+									data-dim="w:1240;"
+									data-rsp_bd="off"
+									data-margin="b:50px,40px,0px,0px;"
+									data-padding="r:60,50,100,45;l:60,50,100,45;"
+									data-frame_0="tp:600;"
+									data-frame_1="tp:600;sR:10;"
+									data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+									style="z-index:61;"
+								><!--
+									--><rs-column
+										id="slider-4-slide-11-layer-49" 
+										class="tp_cryptoxrp"
+										data-type="column"
+										data-xy="xo:100px;yo:100px;"
+										data-text="l:22;"
+										data-rsp_bd="off"
+										data-margin="b:0,0,10px,10px;"
+										data-frame_0="tp:600;"
+										data-frame_1="tp:600;"
+										data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+										style="z-index:62;width:100%;"
+									><!--
+										--><rs-layer
+											id="slider-4-slide-11-layer-50" 
+											class="tp_cur"
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:40,30,30,17;l:40,30,30,20;fw:100;a:left,left,center,center;"
+											data-dim="w:40px,30px,30px,20px;"
+											data-disp="inline-block"
+											data-padding="r:10;b:0,0,10,10;"
+											data-frame_0="y:-100%;o:1;tp:600;"
+											data-frame_0_mask="u:t;y:100%;"
+											data-frame_1="tp:600;st:100;sp:1000;sR:90;"
+											data-frame_1_mask="u:t;"
+											data-frame_999="o:0;tp:600;st:w;sR:7900;"
+											style="z-index:63;font-family:Montserrat;display:inline-block;"
+										>$  
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-51" 
+											class="tp_price"
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:40,30,30,17;l:40,30,30,20;fw:700;a:center,center,left,left;"
+											data-dim="w:auto,auto,160px,85px;"
+											data-disp="inline-block"
+											data-margin="r:0,0,20px,5px;"
+											data-padding="b:0,0,10,10;"
+											data-frame_0="y:-100%;o:1;tp:600;"
+											data-frame_0_mask="u:t;y:100%;"
+											data-frame_1="tp:600;st:100;sp:1000;sR:90;"
+											data-frame_1_mask="u:t;"
+											data-frame_999="o:0;tp:600;st:w;sR:7900;"
+											style="z-index:64;font-family:Montserrat;display:inline-block;"
+										>2.54 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-53" 
+											class="tp-shape tp-shapewrapper"
+											data-type="shape"
+											data-rsp_ch="on"
+											data-text="w:normal;a:inherit;"
+											data-dim="w:100%,100%,20px,0px;h:5px,5px,30px,30px;"
+											data-vbility="t,t,f,f"
+											data-disp="inline-block"
+											data-frame_0="tp:600;"
+											data-frame_1="tp:600;"
+											data-frame_999="o:0;tp:600;st:w;sR:8690;"
+											style="z-index:66;display:inline-block;"
+										> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-52" 
+											data-type="image"
+											data-rsp_ch="on"
+											data-text="w:normal;l:22;a:inherit;"
+											data-dim="w:32,32px,30px,20px;h:32px,32px,30px,20;"
+											data-disp="inline-block"
+											data-margin="r:10px,5px,5px,5px;"
+											data-frame_0="x:50px;rZ:180deg;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:65;display:inline-block;"
+										><img src="assets/xrp.png" width="128" height="128" data-no-retina> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-54" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:20,15,15,13;l:32,32,30,20;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="r:10px,5px,5px,5px;"
+											data-frame_0="x:40px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:67;font-family:Montserrat;display:inline-block;"
+										>Ripple 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-55" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:12,12,10,10;l:32,32,30,20;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="r:0,10px,10px,10px;"
+											data-padding="r:20,0,0,0;"
+											data-frame_0="x:30px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:68;font-family:Montserrat;display:inline-block;"
+										>( XRP ) 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-56" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:15,15,12,12;l:15,15,12,12;fw:700;"
+											data-dim="w:60px,60px,50px,50px;"
+											data-disp="inline-block"
+											data-margin="t:3px,2px,3px,3px;"
+											data-frame_0="x:20px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:69;font-family:Montserrat;display:inline-block;"
+										>1h
+<div class="tp_onehour" style="color:#22b911;">1.19%</div> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-57" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:15,15,12,12;l:15,15,12,12;fw:700;"
+											data-dim="w:60px,60px,50px,50px;"
+											data-disp="inline-block"
+											data-margin="t:3px,2px,3px,3px;"
+											data-frame_0="x:10px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:70;font-family:Montserrat;display:inline-block;"
+										>24h
+<div class="tp_oneday" style="color:#ea1519;">-10.22%</div> 
+										</rs-layer><!--
+									--></rs-column><!--
+
+									--><rs-column
+										id="slider-4-slide-11-layer-58" 
+										class="tp_cryptomiota"
+										data-type="column"
+										data-xy="xo:100px;yo:100px;"
+										data-text="l:22;"
+										data-rsp_bd="off"
+										data-margin="b:0,0,10px,10px;"
+										data-frame_0="tp:600;"
+										data-frame_1="tp:600;"
+										data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+										style="z-index:71;width:100%;"
+									><!--
+										--><rs-layer
+											id="slider-4-slide-11-layer-59" 
+											class="tp_cur"
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:40,30,30,17;l:40,30,30,20;fw:100;a:left,left,center,center;"
+											data-dim="w:40px,30px,30px,20px;"
+											data-disp="inline-block"
+											data-padding="r:10;b:0,0,10,10;"
+											data-frame_0="y:-100%;o:1;tp:600;"
+											data-frame_0_mask="u:t;y:100%;"
+											data-frame_1="tp:600;st:100;sp:1000;sR:90;"
+											data-frame_1_mask="u:t;"
+											data-frame_999="o:0;tp:600;st:w;sR:7900;"
+											style="z-index:72;font-family:Montserrat;display:inline-block;"
+										>$  
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-60" 
+											class="tp_price"
+											data-type="text"
+											data-rsp_ch="on"
+											data-xy="xo:0,227px,227px,227px;yo:0,298px,298px,298px;"
+											data-text="w:normal;s:40,30,30,17;l:40,30,30,20;fw:700;a:center,center,left,left;"
+											data-dim="w:auto,auto,160px,85px;"
+											data-disp="inline-block"
+											data-margin="r:0,0,20px,5px;"
+											data-padding="b:0,0,10,10;"
+											data-frame_0="y:-100%;o:1;tp:600;"
+											data-frame_0_mask="u:t;y:100%;"
+											data-frame_1="tp:600;st:100;sp:1000;sR:90;"
+											data-frame_1_mask="u:t;"
+											data-frame_999="o:0;tp:600;st:w;sR:7900;"
+											style="z-index:73;font-family:Montserrat;display:inline-block;"
+										>3.96 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-61" 
+											class="tp-shape tp-shapewrapper"
+											data-type="shape"
+											data-rsp_ch="on"
+											data-text="w:normal;a:inherit;"
+											data-dim="w:100%,100%,20px,0px;h:5px,5px,30px,30px;"
+											data-vbility="t,t,f,f"
+											data-disp="inline-block"
+											data-frame_0="tp:600;"
+											data-frame_1="tp:600;"
+											data-frame_999="o:0;tp:600;st:w;sR:8690;"
+											style="z-index:74;display:inline-block;"
+										> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-62" 
+											data-type="image"
+											data-rsp_ch="on"
+											data-text="w:normal;l:22;a:inherit;"
+											data-dim="w:32px,32px,30px,20px;h:32px,32px,30,20;"
+											data-disp="inline-block"
+											data-margin="r:10px,5px,5px,5px;"
+											data-frame_0="x:50px;rZ:180deg;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:75;display:inline-block;"
+										><img src="assets/miota.png" width="128" height="128" data-no-retina> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-63" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:20,15,15,13;l:32,32,30,20;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="r:10px,5px,5px,5px;"
+											data-frame_0="x:40px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:76;font-family:Montserrat;display:inline-block;"
+										>IOTA 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-64" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:12,12,10,10;l:32,32,30,20;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="r:0,10px,10px,10px;"
+											data-padding="r:20,0,0,0;"
+											data-frame_0="x:30px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:77;font-family:Montserrat;display:inline-block;"
+										>( MIOTA ) 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-65" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:15,15,12,12;l:15,15,12,12;fw:700;"
+											data-dim="w:60px,60px,50px,50px;"
+											data-disp="inline-block"
+											data-margin="t:3px,2px,3px,3px;"
+											data-frame_0="x:20px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:78;font-family:Montserrat;display:inline-block;"
+										>1h
+<div class="tp_onehour" style="color:#22b911;">1.19%</div> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-66" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:15,15,12,12;l:15,15,12,12;fw:700;"
+											data-dim="w:60px,60px,50px,50px;"
+											data-disp="inline-block"
+											data-margin="t:3px,2px,3px,3px;"
+											data-frame_0="x:10px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:79;font-family:Montserrat;display:inline-block;"
+										>24h
+<div class="tp_oneday" style="color:#ea1519;">-10.22%</div> 
+										</rs-layer><!--
+									--></rs-column><!--
+
+									--><rs-column
+										id="slider-4-slide-11-layer-67" 
+										class="tp_cryptodash"
+										data-type="column"
+										data-xy="xo:100px;yo:100px;"
+										data-text="l:22;"
+										data-rsp_bd="off"
+										data-margin="b:0,0,10px,10px;"
+										data-frame_0="tp:600;"
+										data-frame_1="tp:600;"
+										data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+										style="z-index:80;width:100%;"
+									><!--
+										--><rs-layer
+											id="slider-4-slide-11-layer-68" 
+											class="tp_cur"
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:40,30,30,17;l:40,30,30,20;fw:100;a:left,left,center,center;"
+											data-dim="w:40px,30px,30px,20px;"
+											data-disp="inline-block"
+											data-padding="r:10;b:0,0,10,10;"
+											data-frame_0="y:-100%;o:1;tp:600;"
+											data-frame_0_mask="u:t;y:100%;"
+											data-frame_1="tp:600;st:100;sp:1000;sR:90;"
+											data-frame_1_mask="u:t;"
+											data-frame_999="o:0;tp:600;st:w;sR:7900;"
+											style="z-index:81;font-family:Montserrat;display:inline-block;"
+										>$  
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-69" 
+											class="tp_price"
+											data-type="text"
+											data-rsp_ch="on"
+											data-xy="xo:0,227px,227px,227px;yo:0,298px,298px,298px;"
+											data-text="w:normal;s:40,30,30,17;l:40,30,30,20;fw:700;a:center,center,left,left;"
+											data-dim="w:auto,auto,160px,85px;"
+											data-disp="inline-block"
+											data-margin="r:0,0,20px,5px;"
+											data-padding="b:0,0,10,10;"
+											data-frame_0="y:-100%;o:1;tp:600;"
+											data-frame_0_mask="u:t;y:100%;"
+											data-frame_1="tp:600;st:100;sp:1000;sR:90;"
+											data-frame_1_mask="u:t;"
+											data-frame_999="o:0;tp:600;st:w;sR:7900;"
+											style="z-index:82;font-family:Montserrat;display:inline-block;"
+										>1,136.02 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-71" 
+											class="tp-shape tp-shapewrapper"
+											data-type="shape"
+											data-rsp_ch="on"
+											data-text="w:normal;a:inherit;"
+											data-dim="w:100%,100%,20px,0px;h:5px,5px,30px,30px;"
+											data-vbility="t,t,f,f"
+											data-disp="inline-block"
+											data-frame_0="tp:600;"
+											data-frame_1="tp:600;"
+											data-frame_999="o:0;tp:600;st:w;sR:8690;"
+											style="z-index:84;display:inline-block;"
+										> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-70" 
+											data-type="image"
+											data-rsp_ch="on"
+											data-text="w:normal;l:22;a:inherit;"
+											data-dim="w:32,32px,30px,20px;h:32px,32px,30,20;"
+											data-disp="inline-block"
+											data-margin="r:10px,5px,5px,5px;"
+											data-frame_0="x:50px;rZ:180deg;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:83;display:inline-block;"
+										><img src="assets/dash.png" width="128" height="128" data-no-retina> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-72" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:20,15,15,13;l:32,32,30,20;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="r:10px,5px,5px,5px;"
+											data-frame_0="x:40px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:85;font-family:Montserrat;display:inline-block;"
+										>DASH 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-73" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:12,12,10,10;l:32,32,30,20;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="r:0,10px,10px,10px;"
+											data-padding="r:20,0,0,0;"
+											data-frame_0="x:30px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:86;font-family:Montserrat;display:inline-block;"
+										>( DASH ) 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-74" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:15,15,12,12;l:15,15,12,12;fw:700;"
+											data-dim="w:60px,60px,50px,50px;"
+											data-disp="inline-block"
+											data-margin="t:3px,2px,3px,3px;"
+											data-frame_0="x:20px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:87;font-family:Montserrat;display:inline-block;"
+										>1h
+<div class="tp_onehour" style="color:#22b911;">1.19%</div> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-75" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:15,15,12,12;l:15,15,12,12;fw:700;"
+											data-dim="w:60px,60px,50px,50px;"
+											data-disp="inline-block"
+											data-margin="t:3px,2px,3px,3px;"
+											data-frame_0="x:10px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:88;font-family:Montserrat;display:inline-block;"
+										>24h
+<div class="tp_oneday" style="color:#ea1519;">-10.22%</div> 
+										</rs-layer><!--
+									--></rs-column><!--
+								--></rs-row><!--
+
+								--><rs-row
+									id="slider-4-slide-11-layer-77" 
+									data-type="row"
+									data-xy="xo:0,100px,100px,100px;y:m;yo:-8px,0,0,0;"
+									data-text="l:22;a:inherit;"
+									data-dim="w:1240;"
+									data-rsp_bd="off"
+									data-margin="b:75px,50px,30px,30px;"
+									data-padding="r:60,50,100,45;l:60,50,100,45;"
+									data-frame_0="tp:600;"
+									data-frame_1="tp:600;sR:10;"
+									data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+									style="z-index:33;"
+								><!--
+									--><rs-column
+										id="slider-4-slide-11-layer-78" 
+										class="tp_cryptoneo"
+										data-type="column"
+										data-xy="xo:100px;yo:100px;"
+										data-text="l:22;"
+										data-rsp_bd="off"
+										data-margin="b:0,0,10px,10px;"
+										data-frame_0="tp:600;"
+										data-frame_1="tp:600;"
+										data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+										style="z-index:34;width:100%;"
+									><!--
+										--><rs-layer
+											id="slider-4-slide-11-layer-79" 
+											class="tp_cur"
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:40,30,30,17;l:40,30,30,20;fw:100;a:left,left,center,center;"
+											data-dim="w:40px,30px,30px,20px;"
+											data-disp="inline-block"
+											data-padding="r:10;b:0,0,10,10;"
+											data-frame_0="y:-100%;o:1;tp:600;"
+											data-frame_0_mask="u:t;y:100%;"
+											data-frame_1="tp:600;st:100;sp:1000;sR:90;"
+											data-frame_1_mask="u:t;"
+											data-frame_999="o:0;tp:600;st:w;sR:7900;"
+											style="z-index:35;font-family:Montserrat;display:inline-block;"
+										>$  
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-80" 
+											class="tp_price"
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:40,30,30,17;l:40,30,30,20;fw:700;a:center,center,left,left;"
+											data-dim="w:auto,auto,160px,85px;"
+											data-disp="inline-block"
+											data-margin="r:0,0,20px,5px;"
+											data-padding="b:0,0,10,10;"
+											data-frame_0="y:-100%;o:1;tp:600;"
+											data-frame_0_mask="u:t;y:100%;"
+											data-frame_1="tp:600;st:100;sp:1000;sR:90;"
+											data-frame_1_mask="u:t;"
+											data-frame_999="o:0;tp:600;st:w;sR:7900;"
+											style="z-index:36;font-family:Montserrat;display:inline-block;"
+										>101.32 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-82" 
+											class="tp-shape tp-shapewrapper"
+											data-type="shape"
+											data-rsp_ch="on"
+											data-text="w:normal;a:inherit;"
+											data-dim="w:100%,100%,20px,0px;h:5px,5px,30px,30px;"
+											data-vbility="t,t,f,f"
+											data-disp="inline-block"
+											data-frame_0="tp:600;"
+											data-frame_1="tp:600;"
+											data-frame_999="o:0;tp:600;st:w;sR:8690;"
+											style="z-index:38;display:inline-block;"
+										> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-81" 
+											data-type="image"
+											data-rsp_ch="on"
+											data-text="w:normal;l:22;a:inherit;"
+											data-dim="w:32,32px,30px,20px;h:32px,32px,30px,20;"
+											data-disp="inline-block"
+											data-margin="r:10px,5px,5px,5px;"
+											data-frame_0="x:50px;rZ:180deg;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:37;display:inline-block;"
+										><img src="assets/neo.png" width="128" height="128" data-no-retina> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-83" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:20,15,15,13;l:32,32,30,20;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="r:10px,5px,5px,5px;"
+											data-frame_0="x:40px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:39;font-family:Montserrat;display:inline-block;"
+										>NEO 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-84" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:12,12,10,10;l:32,32,30,20;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="r:0,10px,10px,10px;"
+											data-padding="r:20,0,0,0;"
+											data-frame_0="x:30px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:40;font-family:Montserrat;display:inline-block;"
+										>( NEO ) 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-85" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:15,15,12,12;l:15,15,12,12;fw:700;"
+											data-dim="w:60px,60px,50px,50px;"
+											data-disp="inline-block"
+											data-margin="t:3px,2px,3px,3px;"
+											data-frame_0="x:20px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:41;font-family:Montserrat;display:inline-block;"
+										>1h
+<div class="tp_onehour" style="color:#22b911;">1.19%</div> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-86" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:15,15,12,12;l:15,15,12,12;fw:700;"
+											data-dim="w:60px,60px,50px,50px;"
+											data-disp="inline-block"
+											data-margin="t:3px,2px,3px,3px;"
+											data-frame_0="x:10px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:42;font-family:Montserrat;display:inline-block;"
+										>24h
+<div class="tp_oneday" style="color:#ea1519;">-10.22%</div> 
+										</rs-layer><!--
+									--></rs-column><!--
+
+									--><rs-column
+										id="slider-4-slide-11-layer-87" 
+										class="tp_cryptoxmr"
+										data-type="column"
+										data-xy="xo:100px;yo:100px;"
+										data-text="l:22;"
+										data-rsp_bd="off"
+										data-margin="b:0,0,10px,10px;"
+										data-frame_0="tp:600;"
+										data-frame_1="tp:600;"
+										data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+										style="z-index:43;width:100%;"
+									><!--
+										--><rs-layer
+											id="slider-4-slide-11-layer-88" 
+											class="tp_cur"
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:40,30,30,17;l:40,30,30,20;fw:100;a:left,left,center,center;"
+											data-dim="w:40px,30px,30px,20px;"
+											data-disp="inline-block"
+											data-padding="r:10;b:0,0,10,10;"
+											data-frame_0="y:-100%;o:1;tp:600;"
+											data-frame_0_mask="u:t;y:100%;"
+											data-frame_1="tp:600;st:100;sp:1000;sR:90;"
+											data-frame_1_mask="u:t;"
+											data-frame_999="o:0;tp:600;st:w;sR:7900;"
+											style="z-index:44;font-family:Montserrat;display:inline-block;"
+										>$  
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-89" 
+											class="tp_price"
+											data-type="text"
+											data-rsp_ch="on"
+											data-xy="xo:0,227px,227px,227px;yo:0,298px,298px,298px;"
+											data-text="w:normal;s:40,30,30,17;l:40,30,30,20;fw:700;a:center,center,left,left;"
+											data-dim="w:auto,auto,160px,85px;"
+											data-disp="inline-block"
+											data-margin="r:0,0,20px,5px;"
+											data-padding="b:0,0,10,10;"
+											data-frame_0="y:-100%;o:1;tp:600;"
+											data-frame_0_mask="u:t;y:100%;"
+											data-frame_1="tp:600;st:100;sp:1000;sR:90;"
+											data-frame_1_mask="u:t;"
+											data-frame_999="o:0;tp:600;st:w;sR:7900;"
+											style="z-index:45;font-family:Montserrat;display:inline-block;"
+										>390.02 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-90" 
+											class="tp-shape tp-shapewrapper"
+											data-type="shape"
+											data-rsp_ch="on"
+											data-text="w:normal;a:inherit;"
+											data-dim="w:100%,100%,20px,0px;h:5px,5px,30px,30px;"
+											data-vbility="t,t,f,f"
+											data-disp="inline-block"
+											data-frame_0="tp:600;"
+											data-frame_1="tp:600;"
+											data-frame_999="o:0;tp:600;st:w;sR:8690;"
+											style="z-index:46;display:inline-block;"
+										> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-91" 
+											data-type="image"
+											data-rsp_ch="on"
+											data-text="w:normal;l:22;a:inherit;"
+											data-dim="w:32px,32px,30px,20px;h:32,32px,30,20;"
+											data-disp="inline-block"
+											data-margin="r:10px,5px,5px,5px;"
+											data-frame_0="x:50px;rZ:180deg;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:47;display:inline-block;"
+										><img src="assets/xmr.png" width="128" height="128" data-no-retina> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-92" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:20,15,15,13;l:32,32,30,20;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="r:10px,5px,5px,5px;"
+											data-frame_0="x:40px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:48;font-family:Montserrat;display:inline-block;"
+										>Monero 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-93" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:12,12,10,10;l:32,32,30,20;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="r:0,10px,10px,10px;"
+											data-padding="r:20,0,0,0;"
+											data-frame_0="x:30px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:49;font-family:Montserrat;display:inline-block;"
+										>( XMR ) 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-94" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:15,15,12,12;l:15,15,12,12;fw:700;"
+											data-dim="w:60px,60px,50px,50px;"
+											data-disp="inline-block"
+											data-margin="t:3px,2px,3px,3px;"
+											data-frame_0="x:20px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:50;font-family:Montserrat;display:inline-block;"
+										>1h
+<div class="tp_onehour" style="color:#22b911;">1.19%</div> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-95" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:15,15,12,12;l:15,15,12,12;fw:700;"
+											data-dim="w:60px,60px,50px,50px;"
+											data-disp="inline-block"
+											data-margin="t:3px,2px,3px,3px;"
+											data-frame_0="x:10px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:51;font-family:Montserrat;display:inline-block;"
+										>24h
+<div class="tp_oneday" style="color:#ea1519;">-10.22%</div> 
+										</rs-layer><!--
+									--></rs-column><!--
+
+									--><rs-column
+										id="slider-4-slide-11-layer-96" 
+										class="tp_cryptoqtum"
+										data-type="column"
+										data-xy="xo:100px;yo:100px;"
+										data-text="l:22;"
+										data-rsp_bd="off"
+										data-margin="b:0,0,10px,10px;"
+										data-frame_0="tp:600;"
+										data-frame_1="tp:600;"
+										data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+										style="z-index:52;width:100%;"
+									><!--
+										--><rs-layer
+											id="slider-4-slide-11-layer-97" 
+											class="tp_cur"
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:40,30,30,17;l:40,30,30,20;fw:100;a:left,left,center,center;"
+											data-dim="w:40px,30px,30px,20px;"
+											data-disp="inline-block"
+											data-padding="r:10;b:0,0,10,10;"
+											data-frame_0="y:-100%;o:1;tp:600;"
+											data-frame_0_mask="u:t;y:100%;"
+											data-frame_1="tp:600;st:100;sp:1000;sR:90;"
+											data-frame_1_mask="u:t;"
+											data-frame_999="o:0;tp:600;st:w;sR:7900;"
+											style="z-index:53;font-family:Montserrat;display:inline-block;"
+										>$  
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-98" 
+											class="tp_price"
+											data-type="text"
+											data-rsp_ch="on"
+											data-xy="xo:0,227px,227px,227px;yo:0,298px,298px,298px;"
+											data-text="w:normal;s:40,30,30,17;l:40,30,30,20;fw:700;a:center,center,left,left;"
+											data-dim="w:auto,auto,160px,85px;"
+											data-disp="inline-block"
+											data-margin="r:0,0,20px,5px;"
+											data-padding="b:0,0,10,10;"
+											data-frame_0="y:-100%;o:1;tp:600;"
+											data-frame_0_mask="u:t;y:100%;"
+											data-frame_1="tp:600;st:100;sp:1000;sR:90;"
+											data-frame_1_mask="u:t;"
+											data-frame_999="o:0;tp:600;st:w;sR:7900;"
+											style="z-index:54;font-family:Montserrat;display:inline-block;"
+										>58.66 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-100" 
+											class="tp-shape tp-shapewrapper"
+											data-type="shape"
+											data-rsp_ch="on"
+											data-text="w:normal;a:inherit;"
+											data-dim="w:100%,100%,20px,0px;h:5px,5px,30px,30px;"
+											data-vbility="t,t,f,f"
+											data-disp="inline-block"
+											data-frame_0="tp:600;"
+											data-frame_1="tp:600;"
+											data-frame_999="o:0;tp:600;st:w;sR:8690;"
+											style="z-index:56;display:inline-block;"
+										> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-99" 
+											data-type="image"
+											data-rsp_ch="on"
+											data-text="w:normal;l:22;a:inherit;"
+											data-dim="w:32px,32px,30px,20px;h:32,32px,30,20;"
+											data-disp="inline-block"
+											data-margin="r:10px,5px,5px,5px;"
+											data-frame_0="x:50px;rZ:180deg;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:55;display:inline-block;"
+										><img src="assets/qtum.png" width="128" height="128" data-no-retina> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-101" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:20,15,15,13;l:32,32,30,20;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="r:10px,5px,5px,5px;"
+											data-frame_0="x:40px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:57;font-family:Montserrat;display:inline-block;"
+										>Qtum 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-102" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:12,12,10,10;l:32,32,30,20;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="r:0,10px,10px,10px;"
+											data-padding="r:20,0,0,0;"
+											data-frame_0="x:30px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:58;font-family:Montserrat;display:inline-block;"
+										>( QTUM ) 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-103" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:15,15,12,12;l:15,15,12,12;fw:700;"
+											data-dim="w:60px,60px,50px,50px;"
+											data-disp="inline-block"
+											data-margin="t:3px,2px,3px,3px;"
+											data-frame_0="x:20px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:59;font-family:Montserrat;display:inline-block;"
+										>1h
+<div class="tp_onehour" style="color:#22b911;">1.19%</div> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-104" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:15,15,12,12;l:15,15,12,12;fw:700;"
+											data-dim="w:60px,60px,50px,50px;"
+											data-disp="inline-block"
+											data-margin="t:3px,2px,3px,3px;"
+											data-frame_0="x:10px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:60;font-family:Montserrat;display:inline-block;"
+										>24h
+<div class="tp_oneday" style="color:#ea1519;">-10.22%</div> 
+										</rs-layer><!--
+									--></rs-column><!--
+								--></rs-row><!--
+
+								--><rs-row
+									id="slider-4-slide-11-layer-17" 
+									data-type="row"
+									data-xy="xo:82px;y:m;"
+									data-text="w:normal;l:22;a:inherit;"
+									data-dim="w:1240;"
+									data-cbreak="3"
+									data-rsp_bd="off"
+									data-margin="b:0,0,0px,0px;"
+									data-frame_0="tp:600;"
+									data-frame_1="tp:600;sR:10;"
+									data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+									style="z-index:89;"
+								><!--
+									--><rs-column
+										id="slider-4-slide-11-layer-18" 
+										data-type="column"
+										data-xy="xo:100px;yo:100px;"
+										data-text="w:normal;l:22;a:center;"
+										data-rsp_bd="off"
+										data-column="w:100%;"
+										data-frame_0="tp:600;"
+										data-frame_1="tp:600;"
+										data-frame_999="o:0;tp:600;st:w;sR:8690;sA:9000;"
+										style="z-index:90;width:100%;"
+									><!--
+										--><rs-layer
+											id="slider-4-slide-11-layer-7" 
+											class="set_usd rev-btn"
+											data-type="button"
+											data-color="rgba(255,255,255,1)"
+											data-rsp_ch="on"
+											rel="USD"
+											data-xy="xo:0,0,667px,667px;yo:0,0,606px,606px;"
+											data-text="w:normal;s:15;l:30;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-margin="r:-1px;"
+											data-padding="r:30;l:30;"
+											data-border="bos:solid;boc:#ffffff;bow:1px,1px,1px,1px;bor:30px,0px,0px,30px;"
+											data-frame_0="x:-50px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:94;font-family:Montserrat;cursor:pointer;display:inline-block;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;"
+										>USD 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-8" 
+											class="set_eur rev-btn"
+											data-type="button"
+											data-rsp_ch="on"
+											rel="EUR"
+											data-text="w:normal;s:15;l:30;fw:700;a:inherit;"
+											data-disp="inline-block"
+											data-padding="r:30;l:30;"
+											data-border="bos:solid;boc:#ffffff;bow:1px,1px,1px,1px;bor:0px,30px,30px,0px;"
+											data-frame_0="x:-50px;tp:600;"
+											data-frame_1="tp:600;st:200;sp:1000;sR:190;"
+											data-frame_999="o:0;tp:600;st:w;sR:7800;"
+											style="z-index:95;font-family:Montserrat;cursor:pointer;display:inline-block;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;"
+										>EUR
+ 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-30" 
+											class="tp-shape tp-shapewrapper"
+											data-type="shape"
+											data-rsp_ch="on"
+											data-text="w:normal;a:inherit;"
+											data-dim="w:100%;h:30px;"
+											data-disp="inline-block"
+											data-frame_0="tp:600;"
+											data-frame_1="tp:600;"
+											data-frame_999="o:0;tp:600;st:w;sR:8690;"
+											style="z-index:93;display:inline-block;"
+										> 
+										</rs-layer><!--
+
+										--><a
+											id="slider-4-slide-11-layer-20" 
+											class="rs-layer rev-btn"
+											href="https://www.coinbase.com/join/5943d092a5ee7501f1839b3b" target="_blank" rel="noopener"
+											data-type="button"
+											data-color="rgba(255,255,255,1)"
+											data-rsp_ch="on"
+											data-text="w:normal;l:60;fw:700;a:center;"
+											data-dim="w:300px;"
+											data-disp="inline-block"
+											data-border="boc:#ffffff;bow:2px,2px,2px,2px;bor:30px,30px,30px,30px;"
+											data-frame_0="sX:0.9;sY:0.9;tp:600;blu:10px;"
+											data-frame_1="tp:600;st:300;sp:1000;sR:290;"
+											data-frame_999="o:0;tp:600;st:w;sR:7700;"
+											data-frame_hover="bgc:#1d75b7;boc:#fff;bor:30px,30px,30px,30px;bow:2px,2px,2px,2px;oX:50;oY:50;sp:200;e:power1.inOut;gra:0%;bri:110%;"
+											style="z-index:91;background-color:#1d75b7;font-family:Montserrat;cursor:pointer;display:inline-block;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;"
+										>Join Coinbase 
+										</a><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-31" 
+											class="tp-shape tp-shapewrapper"
+											data-type="shape"
+											data-rsp_ch="on"
+											data-xy="xo:10px;yo:10px;"
+											data-text="w:normal;a:inherit;"
+											data-dim="w:100%;h:20px;"
+											data-disp="inline-block"
+											data-frame_0="tp:600;"
+											data-frame_1="tp:600;"
+											data-frame_999="o:0;tp:600;st:w;sR:8690;"
+											style="z-index:96;display:inline-block;"
+										> 
+										</rs-layer><!--
+
+										--><rs-layer
+											id="slider-4-slide-11-layer-21" 
+											data-type="text"
+											data-rsp_ch="on"
+											data-text="w:normal;s:17;l:22;fw:500;a:inherit;"
+											data-disp="inline-block"
+											data-frame_0="sX:0.9;sY:0.9;tp:600;bri:100%;blu:10px;"
+											data-frame_1="tp:600;st:300;sp:1000;sR:290;"
+											data-frame_999="o:0;tp:600;st:w;sR:7700;"
+											style="z-index:92;font-family:Montserrat;display:inline-block;"
+										><span style="font-weight:700;border-bottom:2px solid #fff;padding-bottom:2px;">Get $10</span> worth of Bitcoin for free! 
+										</rs-layer><!--
+									--></rs-column><!--
+								--></rs-row><!--
+							--></rs-zone><!--
+-->						</rs-slide>
+					</rs-slides>
+				</rs-module>
+		<script type="text/javascript">
+		if(typeof revslider_showDoubleJqueryError === "undefined") {
+			function revslider_showDoubleJqueryError(sliderID) {
+				var err = "<div class='rs_error_message_box'>";
+				err += "<div class='rs_error_message_oops'>Oops...</div>";
+				err += "<div class='rs_error_message_content'>";
+				err += "You have some jquery.js library include that comes after the Slider Revolution files js inclusion.<br>";
+				err += "To fix this, you can:<br>&nbsp;&nbsp;&nbsp; 1. Set 'Module General Options' -> 'Advanced' -> 'jQuery & OutPut Filters' -> 'Put JS to Body' to on";
+				err += "<br>&nbsp;&nbsp;&nbsp; 2. Find the double jQuery.js inclusion and remove it";
+				err += "</div>";
+			err += "</div>";
+				var slider = document.getElementById(sliderID); slider.innerHTML = err; slider.style.display = "block";
+			}
+		}
+		</script>
+			</rs-module-wrap>
+			<!-- END REVOLUTION SLIDER -->
+
+				<script type="text/javascript">
+					
+					var	revapi4,
+						tpj;
+					function revinit_revslider41() {
+					jQuery(function() {
+						tpj = jQuery;
+						revapi4 = tpj("#rev_slider_4_1");
+						if(revapi4==undefined || revapi4.revolution == undefined){
+							revslider_showDoubleJqueryError("rev_slider_4_1");
+						}else{
+							revapi4.revolution({
+								sliderLayout:"fullwidth",
+								visibilityLevels:"1240,1024,778,480",
+								gridwidth:"1240,1024,778,480",
+								gridheight:"900,800,900,800",
+								perspectiveType:"local",
+								responsiveLevels:"1240,1024,778,480",
+								progressBar:{disableProgressBar:true},
+								navigation: {
+									mouseScrollNavigation:false,
+									onHoverStop:false,
+									arrows: {
+										enable:true,
+										style:"uranus",
+										left: {
+											h_offset:0
+										},
+										right: {
+											h_offset:0
+										}
+									},
+									bullets: {
+										enable:true,
+										tmp:"",
+										style:"hermes"
+									}
+								},
+								parallax: {
+									levels:[5,10,15,20,25,30,35,40,45,46,47,48,49,50,51,55],
+									type:"scroll",
+									origo:"slidercenter"
+								},
+								fallbacks: {
+									allowHTML5AutoPlayOnAndroid:true
+								},
+							});
+							/* 	
+	SHORT DOCUMENTATION WITHIN THE SCRIPT 
+ 	MORE TO FIND UNDER THE FAQ PAGE: 
+	https://www.themepunch.com/faq/working-crypto-currency-template/ 
+*/
+
+ 
+// QUICK EDIT THE CURRENCYS AND CURRENCY SYMBOLS HERE
+var fiat_1 = "USD", fiat_1_symb = "$",
+fiat_2 = "EUR", fiat_2_symb = "€";
+	
+
+
+revapi4.bind("revolution.slide.onloaded",function (e) {
+
+
+	// INITIALISE THE CRYPTO CALCULATOR ON THE DIFFERENT SLIDES
+	jQuery('.tp_cryptobtc').each(function() {jQuery(this).cryptoPunch({cur:'BTC', fiat:fiat_1, alternateFiat:fiat_2, fiatSymbol:fiat_1_symb, alternateFiatSymbol:fiat_2_symb});});
+	jQuery('.tp_cryptoeth').each(function() {jQuery(this).cryptoPunch({cur:'ETH', fiat:fiat_1, alternateFiat:fiat_2, fiatSymbol:fiat_1_symb, alternateFiatSymbol:fiat_2_symb});});
+	jQuery('.tp_cryptoltc').each(function() {jQuery(this).cryptoPunch({cur:'LTC', fiat:fiat_1, alternateFiat:fiat_2, fiatSymbol:fiat_1_symb, alternateFiatSymbol:fiat_2_symb});});
+	jQuery('.tp_cryptoxrp').each(function() {jQuery(this).cryptoPunch({cur:'XRP', fiat:fiat_1, alternateFiat:fiat_2, fiatSymbol:fiat_1_symb, alternateFiatSymbol:fiat_2_symb});});
+	jQuery('.tp_cryptomiota').each(function() {jQuery(this).cryptoPunch({cur:'IOT', fiat:fiat_1, alternateFiat:fiat_2, fiatSymbol:fiat_1_symb, alternateFiatSymbol:fiat_2_symb});});
+	jQuery('.tp_cryptodash').each(function() {jQuery(this).cryptoPunch({cur:'DASH', fiat:fiat_1, alternateFiat:fiat_2, fiatSymbol:fiat_1_symb, alternateFiatSymbol:fiat_2_symb});});
+	jQuery('.tp_cryptoneo').each(function() {jQuery(this).cryptoPunch({cur:'NEO', fiat:fiat_1, alternateFiat:fiat_2, fiatSymbol:fiat_1_symb, alternateFiatSymbol:fiat_2_symb});});
+	jQuery('.tp_cryptoxmr').each(function() {jQuery(this).cryptoPunch({cur:'XMR', fiat:fiat_1, alternateFiat:fiat_2, fiatSymbol:fiat_1_symb, alternateFiatSymbol:fiat_2_symb});});
+	jQuery('.tp_cryptoqtum').each(function() {jQuery(this).cryptoPunch({cur:'QTUM', fiat:fiat_1, alternateFiat:fiat_2, fiatSymbol:fiat_1_symb, alternateFiatSymbol:fiat_2_symb});});
+
+  // Initialise the Global Crypto Changer (*Options will be Described in coming Crypto Add On*)
+  jQuery('body').cryptoChange({fiat:fiat_1, alternateFiat:fiat_2});			
+
+
+/* Possible Options CRYPTOPUNCH (These are the Defaults - More Options in Upcoming AddOn):
+cur:"BTC", 
+refresh:10000, 
+cur_selector:".tp_cur",
+price_selector:".tp_price", 
+fiat:"USD",  				
+alternateFiat:"EUR",
+fiatSymbol:"$",
+alternateFiatSybol:"€",
+hour_selector:".tp_onehour", 
+day_selector:".tp_oneday", 
+green:"rgb(34, 185, 17)", 
+red:"rgb(234, 21, 25)",
+timer:0,
+digitNumbers:0,
+lastValue:0,
+lastFormattedValue:0
+*/
+
+  /* Possible Options for CRYPTOCHANGE (These are the Defaults - More Options in Upcoming AddOn):
+  fiat:"USD",
+  alternateFiat:"EUR",
+  usd_selector:".set_usd",
+  eur_selector:".set_eur",
+  global:true
+  */
+
+});
+
+// PLAY STOP UPDATES ON ELEMENTS WHICH ARE NOT VISIBLE
+revapi4.bind("revolution.slide.onchange",function (e,data) {
+jQuery('body').cryptoTogglePlay({within:"rs-slide", check:"active-rs-slide"});
+});
+
+revapi4.bind("revolution.slide.onbeforeswap",function (e,data) {
+jQuery('body').cryptoUpdateInside({container:data.nextslide});
+});
+		
+
+
+/**************************************************************************
+ * jquery.themepunch.Crypto Currency - jQuery Extension for Revolution Slider
+ * @version: 1.1 (17.01.2018)
+ * @requires jQuery v1.7 or later (tested on 1.9)
+ * @author ThemePunch
+ * ONLY USE WITH SLIDER REVOLUTION ! ALL RIGHTS RESERVED
+**************************************************************************/
+!function(t,e){"use strict";function a(e){t(e.to).each(function(){t(this).addClass("selected"),punchgs.TweenLite.to(this.parentNode,.5,{opacity:1})}),t(e.from).each(function(){t(this).removeClass("selected"),punchgs.TweenLite.to(this.parentNode,.5,{opacity:.5})});for(var a in e.ccs)e.ccs[a].data("options").fiat=e.val,e.ccs[a].update()}function i(a){if(clearTimeout(a.timer),!0!==a.resized){if(a.paused)return void(a.timer=setTimeout(function(){i(a)},a.refresh));a.fiat!==a.lastFiat&&(a.lastFormattedValue="-"),a.elements.cur.html(a.fiat===a.alternateFiat?a.alternateFiatSymbol:a.fiatSymbol),a.lastFiat=a.fiat,t.ajax({dataType:"json",url:"https://min-api.cryptocompare.com/data/price?fsym="+a.cur+"&tsyms="+a.fiat+","+a.alternateFiat,success:function(t){var e=r({type:"number",val:t[a.fiat],ref:a.ref,container:a.elements.price,lastFormattedValue:a.lastFormattedValue});a.lastFormattedValue=e.lastFormattedValue,a.lastValue=e.lastValue,n(a),a.timer=setTimeout(function(){i(a)},a.refresh)},error:function(t){a.lastFormattedValue=r({type:"number",val:"Not Available",ref:a.ref,container:a.elements.price,lastFormattedValue:a.lastFormattedValue}),n(a),a.timer=setTimeout(function(){i(a)},a.refresh)}})}else{if(a.lastValue!==e){var o=r({resized:a.resized,type:"number",val:a.lastValue,ref:a.ref,container:a.elements.price,lastFormattedValue:a.lastFormattedValue});a.lastFormattedValue=o.lastFormattedValue,a.lastValue=o.lastValue}a.resized=!1}}function n(a){a.hour_selector===e&&a.day_selector===e||t.ajax({dataType:"json",url:"https://min-api.cryptocompare.com/data/histohour?fsym="+a.cur+"&tsym="+a.fiat+"&limit=24&aggregate=1&e=CCCAGG",success:function(t){if(t.Data.length>0){var i=Math.abs(Math.round((t.Data[t.Data.length-1].close-a.lastValue)/a.lastValue*1e4)/100),n=Math.abs(Math.round((t.Data[0].close-a.lastValue)/a.lastValue*1e4)/100);if(a.hour_selector!==e){var r=a.c.find(a.hour_selector);t.Data[24].close<a.lastValue?(punchgs.TweenLite.set(r,{color:a.green}),r.html(i+"%")):(punchgs.TweenLite.set(r,{color:a.red}),r.html("-"+i+"%"))}if(a.day_selector!==e){var o=a.c.find(a.day_selector);t.Data[1].close<a.lastValue?(punchgs.TweenLite.set(o,{color:a.green}),o.html(n+"%")):(punchgs.TweenLite.set(o,{color:a.red}),o.html("-"+n+"%"))}}},error:function(t){if(a.hour_selector!==e){var i=a.c.find(a.hour_selector);punchgs.TweenLite.set(i,{color:a.red}),i.html("N.A")}if(a.day_selector!==e){var n=a.c.find(a.day_selector);punchgs.TweenLite.set(n,{color:a.red}),n.html("N.A")}}})}function r(t){switch(t.type){case"number":var e=o(t.val);(e.length!=t.lastFormattedValue.length||t.resized)&&c({val:e,container:t.container}),s({val:e,container:t.container}),t.lastValue=t.val}return{lastValue:t.val,lastFormattedValue:e}}function o(t){var e=Math.floor(t),a=""+Math.round(t%1*100),i=e+"";return a=a.length<2?a+"0":a,i=i.replace(/(\d)(?=(\d\d\d)+(?!\d))/g,"$1,")+"."+a}function c(e){var a=parseInt(e.container.css("line-height"),0),i=t('<div class="digit_mask_container" style="line-height:'+a+'px; display:inline-block"></div>'),n=e.container.width()/e.val.length;for(var r in e.val){var o=t('<div class="rc_digital_container digit_container_'+r+'" style="width:'+Math.round(n)+'px;vertical-align:top;display:inline-block; position:relative;  overflow:hidden; text-align:center; vertical-align:center;"></div>'),c=t('<div class="digit_c_inner" style="vertical-align:top;position:absolute;top:0px;left:0px;"></div>');if(","==e.val[r]||"."==e.val[r])c.append('<div class="digit_'+r+'" style="vertical-align:top;position:relative; width:auto">'+e.val[r]+"</div>"),o.width(n/1.2);else for(var s=0;s<10;s++)c.append('<div class="rc_single_digits digit_'+s+'" style="vertical-align:top;position:absolute; left:0px; top:'+s*a+"px;height:"+a+'px">'+s+"</div>");o.append(c),i.append(o)}e.container.html("").append(i)}function s(t){var e=parseInt(t.container.css("line-height"),0);punchgs.TweenLite.set(t.container.find(".rc_digital_container, .rc_single_digits"),{height:e});for(var a=0;a<10;a++)punchgs.TweenLite.set(t.container.find(".rc_single_digits.digit_"+a),{top:a*e});for(var i in t.val){var n=","==t.val[i]||"."==t.val[i],r=(n?t.container.find(".digit_container_"+i+" .digit_c_inner .digit_"+i):t.container.find(".digit_container_"+i+" .digit_c_inner .digit_"+t.val[i])).width(),o=t.container.find(".digit_container_"+i);punchgs.TweenLite.to(o,.5,{width:r}),n||punchgs.TweenLite.to(o.find(".digit_c_inner"),.5,{y:0-e*t.val[i]+"px"})}}t.fn.extend({cryptoPunch:function(a){var n={cur:"BTC",refresh:1e4,cur_selector:".tp_cur",price_selector:".tp_price",fiat:"USD",alternateFiat:"EUR",fiatSymbol:"$",alternateFiatSymbol:"€",hour_selector:".tp_onehour",day_selector:".tp_oneday",green:"rgb(34, 185, 17)",red:"rgb(234, 21, 25)",timer:0,digitNumbers:0,lastValue:0,lastFormattedValue:0},a=t.extend(!0,{},n,a);return this.each(function(){window.cryptoIndex=window.cryptoIndex===e?0:window.cryptoIndex,a.ref="crypto_"+window.cryptoIndex,window.cryptoIndex++,a.c=t(this),a.c.addClass("active-crypto-container"),a.elements={price:a.c.find(a.price_selector),cur:a.c.find(a.cur_selector)},t(window).on("resize",function(){a.elements.price.html(a.lastFormattedValue),clearTimeout(a.rc_cryptoResize),clearTimeout(a.timer),a.rc_cryptoResize=setTimeout(function(){a.resized=!0,i(a)},100)}),i(a),a.c.data("options",a),window.cryptoList=window.cryptoList===e?new Array:window.cryptoList,window.cryptoList.push(a.c)})},pause:function(){t(this).data("options").paused=!0},play:function(){t(this).data("options").paused=!1},update:function(){i(t(this).data("options"))},cryptoChange:function(i){var n={fiat:"USD",alternateFiat:"EUR",usd_selector:".set_usd",eur_selector:".set_eur",global:!0},i=t.extend(!0,{},n,i);return this.each(function(){a({from:i.eur_selector,to:i.usd_selector,val:i.fiat}),(i.linkedTo===e||i.global)&&(i.ccs=window.cryptoList),t(document).on("click",i.usd_selector,function(){a({from:i.eur_selector,to:i.usd_selector,val:i.fiat,ccs:i.ccs})}),t(document).on("click",i.eur_selector,function(){a({from:i.usd_selector,to:i.eur_selector,val:i.alternateFiat,ccs:i.ccs})}),t(i.usd_selector+","+i.eur_selector).hover(function(){punchgs.TweenLite.to(this.parentNode,.5,{opacity:1})},function(){t(this).hasClass("selected")||punchgs.TweenLite.to(this.parentNode,.5,{opacity:.5})})})},cryptoUpdateInside:function(a){a.container.find(".active-crypto-container").each(function(){var a=t(this).data("options");a!==e&&(a.elements.price.html(a.lastFormattedValue),i(a))})},cryptoTogglePlay:function(e){return this.each(function(){for(var a in window.cryptoList)t(window.cryptoList[a]).closest(e.within).hasClass(e.check)?(window.cryptoList[a].play(),window.cryptoList[a].update()):window.cryptoList[a].pause()})}})}(jQuery);
+						}
+						
+					});
+					} // End of RevInitScript
+				var once_revslider41 = false;
+				if (document.readyState === "loading") {document.addEventListener('readystatechange',function() { if((document.readyState === "interactive" || document.readyState === "complete") && !once_revslider41 ) { once_revslider41 = true; revinit_revslider41();}});} else {once_revslider41 = true; revinit_revslider41();}
+				</script>
+<!-- STYLE -->				<style type="text/css">#rev_slider_4_1_wrapper .uranus.tparrows{width:50px; height:50px; background:rgba(255,255,255,0)}#rev_slider_4_1_wrapper .uranus.tparrows:before{width:50px; height:50px; line-height:50px; font-size:40px; transition:all 0.3s;-webkit-transition:all 0.3s}#rev_slider_4_1_wrapper .uranus.tparrows:hover:before{opacity:0.75}#rev_slider_4_1_wrapper .hermes.tp-bullets{}#rev_slider_4_1_wrapper .hermes .tp-bullet{overflow:hidden;  border-radius:50%;  width:16px;  height:16px;  background-color:rgba(0,0,0,0);  box-shadow:inset 0 0 0 2px #ffffff;  -webkit-transition:background 0.3s ease;  transition:background 0.3s ease;  position:absolute}#rev_slider_4_1_wrapper .hermes .tp-bullet:hover{background-color:rgba(0,0,0,0.21)}#rev_slider_4_1_wrapper .hermes .tp-bullet:after{content:' '; position:absolute; bottom:0; height:0; left:0; width:100%; background-color:#ffffff; box-shadow:0 0 1px #ffffff; -webkit-transition:height 0.3s ease; transition:height 0.3s ease}#rev_slider_4_1_wrapper .hermes .tp-bullet.selected:after{height:100%}</style><!-- /STYLE -->
+
+		<body>
+					</body>
+		
+		</html>
+		

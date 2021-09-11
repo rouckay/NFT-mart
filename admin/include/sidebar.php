@@ -51,7 +51,8 @@
                  <h6 class="collapse-header">Members All CRUD Exits:</h6>
                  <a class="collapse-item" href="all_members.php">Member List</a>
                  <a class="collapse-item" href="../signup.php">Add Member</a>
-                 <a class="collapse-item" href="online_members.php">List Of Online Member</a>
+                 <a class="collapse-item" href="mem_pro_list.php">List Member Products</a>
+                 <a class="collapse-item" href="member_list.php">List Of Members</a>
              </div>
          </div>
      </li>

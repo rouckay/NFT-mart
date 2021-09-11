@@ -1,28 +1,27 @@
 <?php
 
 
-
-require_once "header.php";
-
-if (isset($_POST['save_bio'])) {
-
-    $conn = config();
-    if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
-        $user_id = $_SESSION['member_id'];
-        $user_name = $_SESSION['member_user'];
-    } elseif (isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
-        $user_id = $_COOKIE['mem_user_id'];
-        $user_name = $_COOKIE['mem_user_user'];
+$cats_per_page = 6;
+if (isset($_GET['page'])) {
+    $page = $_GET['page'];
+    if ($page == 1) {
+        $page_id = 0;
     } else {
-        $user_id = -1;
-        $user_name = -1;
+        $page_id = ($page * $cats_per_page) - $cats_per_page;
     }
-    $mem_id = $_POST['mem_id'];
-    $bio = $_POST['bio'];
-    $bio_sql = "INSERT INTO mem_bio (bio_detail,bio_user_id) VALUES (:detail, :user_id )";
-    $stmt = $conn->prepare($bio_sql);
-    $stmt->execute([
-        ':detail' => $bio,
-        ':user_id' => $mem_id
-    ]);
+    $total_page = ceil($total_cats / $cats_per_page);
+} else {
+    $page = 1;
+    $page_id = 0;
+}
+
+$category_sql = "SELECT * FROM category WHERE status = :status ORDER BY cat_id DESC LIMIT $page_id,$cats_per_page";
+$stmt = $conn->prepare($category_sql);
+$stmt->execute([
+    ':status' => 'publish'
+]);
+
+
+
+if ($total_cats > $cats_per_page) {
 }

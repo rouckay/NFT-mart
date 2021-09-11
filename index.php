@@ -7,19 +7,13 @@
 =================================-->
 <!-- Current user Info -->
 <?php
-if (isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
-    $user_id = base64_decode($_COOKIE['mem_user_id']);
-    $user_name = base64_decode($_COOKIE['mem_user_name']);
-} elseif (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
-    $user_id = $_SESSION['member_id'];
-    $user_name = $_SESSION['member_user'];
-} else {
-    $user_id = -1;
-    $user_name = -1;
-}
+
+require_once "module/cookie_session.php";
+
 ?>
 <!-- END Current user Info -->
 <section class="hero-area bgimage">
+
     <div class="bg_image_holder">
         <?php
         $conn = config();
@@ -52,8 +46,7 @@ if (isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
                                 <span class="light">Create Your Own</span>
                                 <span class="bold">Digital Product Marketplace</span>
                             </h1>
-                            <p class="tagline">MartPlace is the most powerful, & customizable template for Easy
-                                Digital Downloads Products</p>
+                            <p class="tagline">MartPlace is the most All Digital NFT ART Marketplace</p>
                         </div>
 
                         <!-- start .hero__btn-area-->
@@ -428,17 +421,20 @@ END HERO AREA
                                         $pro_id = $_POST['cart_pro_id'];
                                         $pro_author = $_POST['cart_pro_author'];
                                         $who = $_POST['who_adding_to_cart'];
-                                        // add_to_cart($pro_id, $pro_author, $who);
+                                        // add_to_cart_func($pro_id,$pro_author,$who);
                                     }
                                     ?>
                             <form action="index.php" method="POST">
                                 <input type="hidden" name="cart_pro_id" value="<?php echo $id; ?>">
                                 <input type="hidden" name="cart_pro_author" value="<?php echo $author; ?>">
                                 <input type="hidden" name="who_adding_to_cart" value="<?php echo $user_id; ?>">
-
+                                <!-- Count Total Added To Cart -->
+                                <?php
+                                    $count_total_added = total_added_to_cart_count($id); ?>
                                 <button type="submit" class="btn btn--round btn-sm" name="btn_add_to_cart"><span
                                         class="lnr lnr-cart"></span>
-                                    14 </button>
+                                    <?php echo $count_total_added >= 1 ? "$count_total_added" : ""; ?> </button>
+                                <!-- Count Total Added To Cart -->
                                 </p>
                         </div>
                     </div>

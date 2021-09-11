@@ -148,7 +148,7 @@
                                     $stmt_img->execute();
                                     $total_rows = $stmt_img->rowCount();
                                     if ($total_rows <= 0) {
-                                        $no_image = "Sorry You Do Note Have Home Page Wallpaper Please Upload It!";
+                                        $no_image = "Sorry You Do Not Have Home Page Wallpaper Please Upload It!";
                                     } elseif ($total_rows >= 1) {
                                         while ($rows_img = $stmt_img->fetch(PDO::FETCH_ASSOC)) {
                                             $id = $rows_img['id'];

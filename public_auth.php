@@ -4,6 +4,7 @@
         START BREADCRUMB AREA
     =================================-->
 <?php
+$conn = config();
 $member_exist = "SELECT * FROM members WHERE mem_id = :mem_id_exist";
 $stmt_exist = $conn->prepare($member_exist);
 $stmt_exist->execute([
@@ -64,11 +65,13 @@ if ($rows_mem_exist != "1") {
         <div class="row">
             <div class="col-lg-4 col-md-12">
                 <?php if (isset($_GET['success_send'])) { ?>
-                <span class='alert_icon lnr lnr-warning'></span>
-                <strong>Correct!</strong> Your Message Successfully Sended To saller.
-                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                    <span class='lnr lnr-cross' aria-hidden='true'></span>
-                </button>
+                <div class="alert alert-success">
+                    <span class='alert_icon lnr lnr-warning'></span>
+                    <strong>Correct!</strong> Your Message Successfully Sended To saller.
+                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                        <span class='lnr lnr-cross' aria-hidden='true'></span>
+                    </button>
+                </div>
                 <?php } ?>
                 <aside class="sidebar sidebar_author">
                     <div class="author-card sidebar-card">
