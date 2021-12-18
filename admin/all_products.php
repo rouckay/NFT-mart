@@ -10,7 +10,8 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">All Products</h1>
     <?php if (isset($_GET['successfully_deleted'])) { ?>
-    <div class="alert alert-success"><strong>Deleted</strong> Successfully!</div>
+    <div class="alert alert-success"><span class='alert_icon lnr lnr-checkmark-circle'></span><strong>Deleted</strong>
+        Successfully!</div>
     <?php } ?>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">

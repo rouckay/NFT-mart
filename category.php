@@ -6,10 +6,7 @@
 <section class="search-wrapper">
     <div class="search-area2 ">
         <div class="bg_image_holder">
-            <video autoplay muted loop width="100%" height="100%"
-                style="background-position:center;background-size:cover;">
-                <source src="images/video/pubg.mp4">
-            </video>
+            <img src="img/abstract.jpg" id="imgBack">
         </div>
         <div class="container content_above">
             <div class="row">
@@ -23,8 +20,7 @@
                         <div class="search__field">
                             <form action="#">
                                 <div class="field-wrapper">
-                                    <input class="relative-field rounded" type="text"
-                                        placeholder="Search your products">
+                                    <input class="relative-field rounded" type="text" placeholder="Search your products">
                                     <button class="btn btn--round" type="submit">Search</button>
                                 </div>
                             </form>
@@ -116,48 +112,8 @@
         <div class="row">
             <!-- start .col-md-3 -->
             <div class="col-lg-3">
-                <!-- start aside -->
-                <aside class="sidebar product--sidebar">
-                    <div class="sidebar-card card--category">
-                        <a class="card-title" href="#collapse1" role="button" data-toggle="collapse"
-                            aria-expanded="false" aria-controls="collapse1">
-                            <h4>Categories
-                                <span class="lnr lnr-chevron-down"></span>
-                            </h4>
-                        </a>
-                        <div class="collapse show collapsible-content" id="collapse1">
-                            <ul class="card-content">
-                                <?php include_once('module/category.php'); ?>
-                            </ul>
-                        </div>
-                        <!-- end /.collapsible_content -->
-                    </div>
-
-                    <div class="sidebar-card card--slider">
-                        <a class="card-title" href="#collapse3" role="button" data-toggle="collapse"
-                            aria-expanded="false" aria-controls="collapse3">
-                            <h4>Filter Products
-                                <span class="lnr lnr-chevron-down"></span>
-                            </h4>
-                        </a>
-                        <div class="collapse show collapsible-content" id="collapse3">
-                            <div class="card-content">
-                                <div class="range-slider price-range"></div>
-
-                                <div class="price-ranges">
-                                    <span class="from rounded">$30</span>
-                                    <span class="to rounded">$300</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end /.sidebar-card -->
-                </aside>
-                <!-- end aside -->
+                <?php require_once 'module/category_module.php'; ?>
             </div>
-            <!-- end /.col-md-3 -->
-
-            <!-- start col-md-9 -->
             <div class="col-lg-9">
                 <div class="row">
                     <?php
@@ -168,7 +124,7 @@
                         ':status' => 'publish'
                     ]);
                     $total_cats = $stmt_count->rowCount();
-                    $category_per_page = 2;
+                    $category_per_page = 6;
                     if (isset($_GET['page'])) {
                         $page = $_GET['page'];
                         if ($page == 1) {
@@ -194,54 +150,51 @@
                         $at = $rows['created_at'];
                         $by = $rows['created_by'];
                     ?>
-                    <div class="col-lg-4 col-md-6">
-                        <!-- start .single-product -->
-                        <div class="product product--card product--card-small">
+                        <div class="col-lg-4 col-md-6">
+                            <!-- start .single-product -->
+                            <div class="product product--card product--card-small">
 
-                            <div class="product__thumbnail">
-                                <img width="361px" height="230px"
-                                    src="admin/img/cat_image/<?php echo $name;  ?>/<?php echo $image; ?>"
-                                    alt="Product Image">
-                                <div class="prod_btn">
-                                    <a href="category_products.php?cat_id = <?php echo $id ?>"
-                                        class="transparent btn--sm btn--round">More Info</a>
-                                    <a href="#" class="transparent btn--sm btn--round">Live Demo</a>
+                                <div class="product__thumbnail">
+                                    <img width="361px" height="230px" src="admin/img/cat_image/<?php echo $name;  ?>/<?php echo $image; ?>" alt="Product Image">
+                                    <div class="prod_btn">
+                                        <a href="category_products.php?cat_id = <?php echo $id ?>" class="transparent btn--sm btn--round">More Info</a>
+                                        <a href="#" class="transparent btn--sm btn--round">Live Demo</a>
+                                    </div>
+                                    <!-- end /.prod_btn -->
                                 </div>
-                                <!-- end /.prod_btn -->
-                            </div>
-                            <!-- end /.product__thumbnail -->
+                                <!-- end /.product__thumbnail -->
 
-                            <div class="product-desc">
-                                <a href="#" class="product_title">
-                                    <h4><?php echo $name; ?></h4>
-                                </a>
-                                <ul class="titlebtm">
-                                    <li>
-                                        <img class="auth-img" src="images/auth3.jpg" alt="author image">
-                                        <p>
-                                            <a href="#"><?php echo $by; ?></a>
-                                        </p>
-                                    </li>
-                                    <li class="out_of_class_name">
-                                        <div class="sell">
+                                <div class="product-desc">
+                                    <a href="#" class="product_title">
+                                        <h4><?php echo $name; ?></h4>
+                                    </a>
+                                    <ul class="titlebtm">
+                                        <li>
+                                            <img class="auth-img" src="images/auth3.jpg" alt="author image">
                                             <p>
-                                                <span class="lnr lnr-cart"></span>
-                                                <span>27</span>
+                                                <a href="#"><?php echo $by; ?></a>
                                             </p>
-                                        </div>
-                                        <div class="rating product--rating">
-                                            <ul>
-                                                <!-- rate -->
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
+                                        </li>
+                                        <li class="out_of_class_name">
+                                            <div class="sell">
+                                                <p>
+                                                    <span class="lnr lnr-cart"></span>
+                                                    <span>27</span>
+                                                </p>
+                                            </div>
+                                            <div class="rating product--rating">
+                                                <ul>
+                                                    <!-- rate -->
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
 
+                                </div>
+                                <!-- end /.product-desc -->
                             </div>
-                            <!-- end /.product-desc -->
+                            <!-- end /.single-product -->
                         </div>
-                        <!-- end /.single-product -->
-                    </div>
                     <?php } ?>
                     <!-- end /.col-md-4 -->
                 </div>
@@ -250,34 +203,33 @@
         </div>
         <!-- end /.row -->
         <?php if ($total_cats > $category_per_page) { ?>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="pagination-area categorised_item_pagination">
-                    <nav class="navigation pagination" role="navigation">
-                        <div class="nav-links">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pagination-area categorised_item_pagination">
+                        <nav class="navigation pagination" role="navigation">
+                            <div class="nav-links">
 
-                            <a class="prev page-numbers" href="#">
-                                <span class="lnr lnr-arrow-left"></span>
-                            </a>
+                                <a class="prev page-numbers" href="#">
+                                    <span class="lnr lnr-arrow-left"></span>
+                                </a>
 
-                            <?php
+                                <?php
                                 for ($i = 1; $i <= $total_pages; $i++) {
                                 ?>
-                            <?php if ($i == $page) { ?>
-                            <a class="page-numbers current"
-                                href="category.php?page=<?php echo $id; ?>"><?php echo $i; ?></a>
-                            <?php } else { ?>
-                            <a class="page-numbers" href="category.php?page=<?php echo $i ?>"><?php echo $i ?></a>
-                            <?php }
+                                    <?php if ($i == $page) { ?>
+                                        <a class="page-numbers current" href="category.php?page=<?php echo $id; ?>"><?php echo $i; ?></a>
+                                    <?php } else { ?>
+                                        <a class="page-numbers" href="category.php?page=<?php echo $i ?>"><?php echo $i ?></a>
+                                <?php }
                                 } ?>
-                            <a class="next page-numbers" href="#">
-                                <span class="lnr lnr-arrow-right"></span>
-                            </a>
-                        </div>
-                    </nav>
+                                <a class="next page-numbers" href="#">
+                                    <span class="lnr lnr-arrow-right"></span>
+                                </a>
+                            </div>
+                        </nav>
+                    </div>
                 </div>
             </div>
-        </div>
         <?php } ?>
         <!-- end /.row -->
     </div>

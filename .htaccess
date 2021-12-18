@@ -3,3 +3,5 @@ RewriteCond %{REQUEST_FILENAME} !-F
 RewriteCond %{REQUEST_FILENAME} !-d
 
 RewriteRule ^([a-zA-Z0-9_-]+)/?$ public_auth.php?auth=$1 [QSA]
+
+ErrorDocument 404 http://marketplace/login.php/your-custom-404.php;

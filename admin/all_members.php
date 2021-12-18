@@ -12,6 +12,7 @@
     <?php if (isset($_GET['deleted'])) { ?>
     <div class="alert alert-success" role="alert">
         <span class="alert_icon lnr lnr-success"></span>
+        <span class='alert_icon lnr lnr-checkmark-circle'></span>
         <strong>Oh No!</strong> Member Successfully Deleted.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span class="lnr lnr-cross" aria-hidden="true"></span>

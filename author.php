@@ -41,6 +41,7 @@ if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
     $user = base64_decode($_COOKIE['mem_user_name']);
 } else {
     $mem_id = -1;
+    $user = -1;
 }
 $u_info = "SELECT * FROM members WHERE mem_id =:id";
 $stmt_ad = $conn->prepare($u_info);
@@ -66,9 +67,7 @@ $at = $row_user['created_at'];
                     <div class="author-card sidebar-card">
                         <div class="author-infos">
                             <div class="author_avatar">
-                                <img width="100px" height="100px"
-                                    src="admin/img/member_avatars/<?php echo $user_name; ?>/<?php echo $image; ?>"
-                                    alt="Presenting the broken author avatar :D">
+                                <img width="100px" height="100px" src="admin/img/member_avatars/<?php echo $user_name; ?>/<?php echo $image; ?>" alt="Presenting the broken author avatar :D">
                             </div>
 
                             <div class="author">
@@ -81,24 +80,21 @@ $at = $row_user['created_at'];
                                 <ul class="list-unstyled">
                                     <li>
                                         <span data-toggle="tooltip" data-placement="bottom" title="Diamnond Author">
-                                            <img src="images/svg/author_rank_diamond.svg" alt="" class="svg">
+                                            <img src="images/svg/author_rank_bronze.svg" alt="" class="svg">
                                         </span>
                                     </li>
                                     <li>
-                                        <span data-toggle="tooltip" data-placement="bottom"
-                                            title="Has sold more than $10k">
+                                        <span data-toggle="tooltip" data-placement="bottom" title="Has sold more than $10k">
                                             <img src="images/svg/author_level_3.svg" alt="" class="svg">
                                         </span>
                                     </li>
                                     <li>
-                                        <span data-toggle="tooltip" data-placement="bottom"
-                                            title="Referred 10+ members">
+                                        <span data-toggle="tooltip" data-placement="bottom" title="Referred 10+ members">
                                             <img src="images/svg/affiliate_level_1.svg" alt="" class="svg">
                                         </span>
                                     </li>
                                     <li>
-                                        <span data-toggle="tooltip" data-placement="bottom"
-                                            title="Has Collected 2+ Items">
+                                        <span data-toggle="tooltip" data-placement="bottom" title="Has Collected 2+ Items">
                                             <img src="images/svg/collection_level_1.svg" alt="" class="svg">
                                         </span>
                                     </li>
@@ -108,8 +104,7 @@ $at = $row_user['created_at'];
                                         </span>
                                     </li>
                                     <li>
-                                        <span data-toggle="tooltip" data-placement="bottom"
-                                            title="Weekly Featured Author">
+                                        <span data-toggle="tooltip" data-placement="bottom" title="Weekly Featured Author">
                                             <img src="images/svg/featured_author.svg" alt="" class="svg">
                                         </span>
                                     </li>
@@ -119,8 +114,7 @@ $at = $row_user['created_at'];
                                         </span>
                                     </li>
                                     <li>
-                                        <span data-toggle="tooltip" data-placement="bottom"
-                                            title="The seller is recommended by authority">
+                                        <span data-toggle="tooltip" data-placement="bottom" title="The seller is recommended by authority">
                                             <img src="images/svg/recommended.svg" alt="" class="svg">
                                         </span>
                                     </li>
@@ -130,8 +124,7 @@ $at = $row_user['created_at'];
                                         </span>
                                     </li>
                                     <li>
-                                        <span data-toggle="tooltip" data-placement="bottom"
-                                            title="Helped to resolve copyright issues">
+                                        <span data-toggle="tooltip" data-placement="bottom" title="Helped to resolve copyright issues">
                                             <img src="images/svg/copyright.svg" alt="" class="svg">
                                         </span>
                                     </li>
@@ -181,26 +174,7 @@ $at = $row_user['created_at'];
 
                     </div>
                     <!-- end /.author-card -->
-
-                    <div class="sidebar-card author-menu">
-                        <ul>
-                            <li>
-                                <a href="#" class="active">Profile</a>
-                            </li>
-                            <li>
-                                <a href="author-items.php">Author Items</a>
-                            </li>
-                            <li>
-                                <a href="author-reviews.php">Customer Reviews</a>
-                            </li>
-                            <li>
-                                <a href="author-followers.php">Followers (67)</a>
-                            </li>
-                            <li>
-                                <a href="author-following.php">Following (39)</a>
-                            </li>
-                        </ul>
-                    </div>
+                    <?php require_once './module/author_items_followers.php'; ?>
                     <!-- end /.author-menu -->
 
                     <div class="sidebar-card freelance-status">
@@ -211,63 +185,7 @@ $at = $row_user['created_at'];
                         </div>
                     </div>
                     <!-- end /.author-card -->
-                    <?php
-                    if (isset($_SESSION['member_id']) || isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
-                        if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
-                            $user_id = $_SESSION['member_id'];
-                            $user_name = $_SESSION['member_user'];
-                        } elseif (isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
-                            $user_id = $_COOKIE['mem_user_id'];
-                            $user_name = $_COOKIE['mem_user_user'];
-                        } else {
-                            $user_id = -1;
-                            $user_name = -1;
-                        }
-                        $user_info = "SELECT * FROM members WHERE mem_id = :id";
-                        $stmt_us = $conn->prepare($user_info);
-                        $stmt_us->execute([
-                            ':id' => $user_id
-                        ]);
-                        $rows_us = $stmt_us->fetch(PDO::FETCH_ASSOC);
-                        $mem_user_name = $rows_us['mem_user_name'];
-                        $mem_email = $rows_us['mem_email'];
-                    ?>
-                    <div class="sidebar-card message-card">
-                        <div class="card-title">
-                            <h4>Product Information</h4>
-                        </div>
-                        <?php
-                            if (isset($_POST['send_msg'])) {
-                            } ?>
-                        <div class="message-form">
-                            <form action="author.php" method="POST">
-                                <div class="form-group">
-                                    <textarea name="message" class="text_field" id="author-message"
-                                        placeholder="Your message..."></textarea>
-                                </div>
-
-                                <div class="msg_submit">
-                                    <button type="submit" name="send_msg" class="btn btn--md btn--round">send
-                                        message</button>
-                                </div>
-                            </form>
-                            <?php //} 
-                                ?>
-
-                        </div>
-                        <!-- end /.message-form -->
-                    </div>
-                    <?php } else { ?>
-                    <div class="sidebar-card message-card">
-                        <div class="card-title">
-                            <h3>To Send Message Sign In First!</h3>
-                        </div>
-                        <div class="msg_submit">
-                            <a href="login.php" style="text-align:center" class="btn btn--md btn--round">Sign
-                                In</a>
-                        </div>
-                    </div>
-                    <?php } ?>
+                    <?php require_once './module/message_system.php'; ?>
                     <!-- end /.freelance-status -->
                 </aside>
             </div>
@@ -297,12 +215,12 @@ $at = $row_user['created_at'];
                     } else {
                         $total_found = $rows;
                     ?>
-                    <div class="col-md-4 col-sm-4">
-                        <div class="author-info mcolorbg4">
-                            <p>Total Items</p>
-                            <h3><?php echo $total_found; ?></h3>
+                        <div class="col-md-4 col-sm-4">
+                            <div class="author-info mcolorbg4">
+                                <p>Total Items</p>
+                                <h3><?php echo $total_found; ?></h3>
+                            </div>
                         </div>
-                    </div>
                     <?php } ?>
                     <!-- end /.col-md-4 -->
 
@@ -326,13 +244,13 @@ $at = $row_user['created_at'];
                                         <span class="fa fa-star"></span>
                                     </li>
                                     <li>
-                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star-o"></span>
                                     </li>
                                     <li>
-                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star-o"></span>
                                     </li>
                                     <li>
-                                        <span class="fa fa-star-half-o"></span>
+                                        <span class="fa fa-star-o"></span>
                                     </li>
                                 </ul>
                                 <span class="rating__count">(26)</span>
@@ -354,8 +272,7 @@ $at = $row_user['created_at'];
                             while ($rows_cover = $stmt_cov->fetch(PDO::FETCH_ASSOC)) {
                                 $cover_image = $rows_cover['cover_image']
                             ?>
-                            <img src="admin/img/member_cover_photo/<?php echo $user_name; ?>/<?php echo $cover_image; ?>"
-                                alt="author image">
+                                <img src="admin/img/member_cover_photo/<?php echo $user_name; ?>/<?php echo $cover_image; ?>" alt="author image">
                             <?php } ?>
                         </div>
 
@@ -376,42 +293,51 @@ $at = $row_user['created_at'];
                             $rows_in_db = $stmt_bio->rowCount();
                             if ($rows_in_db != 1) {
                             ?>
-                            <?php
-                                if (isset($_POST['save_bio'])) {
-                                    $mem_id = $_POST['mem_id'];
-                                    $bio = $_POST['bio'];
-                                    add_mem_bio($bio, $user_id);
-                                }
+                                <?php
+                                // if (isset($_POST['save_bio'])) {
+                                //     $mem_id = $_POST['mem_id'];
+                                //     $bio = $_POST['bio'];
+                                //     add_mem_bio($bio, $user_id);
+                                // }
 
                                 ?>
-                            <h3 class="alert alert-danger">You Don't Have Bio Yet</h3>
-                            <br>
-                            <div class="message-form">
-                                <form method="POST" id="bio_form">
-                                    <div class="form-group">
-                                        <input type="text" name="bio" class="text_field" id="bio"
-                                            placeholder="Your Bio...">
-                                        <input type="hidden" name="mem_id" id="mem_id" value="<?php echo $mem_id; ?>">
-                                    </div>
+                                <h3 class="alert alert-danger">You Don't Have Bio Yet</h3>
+                                <br>
+                                <div class="message-form">
+                                    <form method="POST" id="bio_form">
+                                        <div class="form-group">
+                                            <input type="text" name="bio" class="text_field" id="bio" placeholder="Your Bio...">
+                                            <input type="hidden" name="mem_id" id="mem_id" value="<?php echo $mem_id; ?>">
+                                        </div>
 
-                                    <div>
-                                        <button type="submit" name="save_bio" id="save_bio"
-                                            class="btn btn--md btn--round">Save You
-                                            Bio</button>
-                                    </div>
-                                </form>
-                                <?php //} 
+                                        <div>
+                                            <button type="submit" id="save_bio" class="btn btn--md btn--round">Save You
+                                                Bio</button>
+                                        </div>
+                                        <div id="response"></div>
+                                    </form>
+                                    <?php //} 
                                     ?>
 
-                            </div>
+                                </div>
                             <?php } elseif ($rows_in_db == '1') { ?>
-                            <div class="text text-primary"><?php echo $user_bio_detail_from_db;  ?></div>
+                                <div class="text text-primary"><?php echo $user_bio_detail_from_db;  ?></div>
+                                <button id="createBio" class='btn btn-info btn-sm'>Edit Bio</button>
+                                <br />
+                                <hr>
+                                <div id="bioTextBoxHere">
+                                </div>
                             <?php } ?>
                             <!-- END MEMBER Bio text  -->
                         </div>
                     </div>
                 </div>
                 <!-- end /.row -->
+                <div class="product-title-area">
+                    <div class="product__title">
+                    </div>
+                    <?php require_once('phpscripts/medician_list.php');  ?>
+                </div>
 
                 <div class="row">
                     <div class="col-md-12">
@@ -441,33 +367,28 @@ $at = $row_user['created_at'];
                         $tags = $rows_auth_pro['tag'];
                         $author = $rows_auth_pro['author'];
                     ?>
-                    <!-- start .col-md-4 -->
-                    <div class="col-lg-6 col-md-6">
-                        <!-- start .single-product -->
-                        <div class="product product--card">
-                            <!-- Product Template image size 361 X 230 -->
-                            <div class="product__thumbnail">
-                                <img width="361px" height="230px"
-                                    src="admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>"
-                                    alt="Product Image">
-                                <div class="prod_btn">
-                                    <a href="single-product.php?id=<?php echo $mem_id ?>"
-                                        class="transparent btn--sm btn--round">More Info</a>
-                                    <a href="single-product.php?id=<?php echo $mem_id ?>"
-                                        class="transparent btn--sm btn--round">Live Demo</a>
+                        <!-- start .col-md-4 -->
+                        <div class="col-lg-6 col-md-6">
+                            <!-- start .single-product -->
+                            <div class="product product--card">
+                                <!-- Product Template image size 361 X 230 -->
+                                <div class="product__thumbnail">
+                                    <img width="361px" height="230px" src="admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>" alt="Product Image">
+                                    <div class="prod_btn">
+                                        <a href="single-product.php?id=<?php echo $mem_id ?>" class="transparent btn--sm btn--round">More Info</a>
+                                    </div>
+                                    <!-- end /.prod_btn -->
                                 </div>
-                                <!-- end /.prod_btn -->
-                            </div>
-                            <!-- end /.product__thumbnail -->
+                                <!-- end /.product__thumbnail -->
 
-                            <div class="product-desc">
-                                <a href="#" class="product_title">
-                                    <h4><?php echo $name; ?></h4>
-                                </a>
-                                <ul class="titlebtm">
-                                    <li>
-                                        <!-- avatar Code -->
-                                        <?php
+                                <div style="margin-bottom: -75px;" class="product-desc">
+                                    <a href="#" class="product_title">
+                                        <h4><?php echo $name; ?></h4>
+                                    </a>
+                                    <ul class="titlebtm">
+                                        <li>
+                                            <!-- avatar Code -->
+                                            <?php
                                             $u_avatar = "SELECT * FROM members WHERE mem_id =:id";
                                             $stmt_ava = $conn->prepare($u_avatar);
                                             $stmt_ava->execute([
@@ -477,18 +398,16 @@ $at = $row_user['created_at'];
                                                 $author_name = $rows_ava['mem_user_name'];
                                                 $author_image = $rows_ava['mem_image'];
                                             ?>
-                                        <img class="auth-img"
-                                            src="admin/img/member_avatars/<?php echo $author_name; ?>/<?php echo $author_image; ?>"
-                                            alt="author image">
-                                        <p>
-                                            <a href="#"><?php echo $author; ?></a>
-                                        </p>
-                                        <?php } ?>
-                                    </li>
-                                    <li class="product_cat">
-                                        <a href="#">
-                                            <!-- Category Image -->
-                                            <?php $cat_sql = "SELECT * FROM category WHERE cat_id = :cat_id";
+                                                <img class="auth-img" src="admin/img/member_avatars/<?php echo $author_name; ?>/<?php echo $author_image; ?>" alt="author image">
+                                                <p>
+                                                    <a href="#"><?php echo $author; ?></a>
+                                                </p>
+                                            <?php } ?>
+                                        </li>
+                                        <li class="product_cat">
+                                            <a href="#">
+                                                <!-- Category Image -->
+                                                <?php $cat_sql = "SELECT * FROM category WHERE cat_id = :cat_id";
                                                 $stmt_cat = $conn->prepare($cat_sql);
                                                 $stmt_cat->execute([
                                                     ':cat_id' => $category
@@ -497,54 +416,53 @@ $at = $row_user['created_at'];
                                                     $cat_name = $rows_cat['cat_name'];
                                                     $cat_image = $rows_cat['cat_image'];
                                                 ?>
-                                            <img src="admin/img/cat_image/<?php echo $cat_name; ?>/<?php echo $cat_image ?>"
-                                                alt="category image">
-                                            <?php echo $cat_name; ?>
-                                            <?php } ?>
-                                        </a>
-                                    </li>
-                                </ul>
-
-                                <p><?php echo $detail; ?>.</p>
-                            </div>
-                            <!-- end /.product-desc -->
-
-                            <div class="product-purchase">
-                                <div class="price_love">
-                                    <span>$<?php echo $price; ?></span>
-                                </div>
-
-                                <div class="rating product--rating">
-                                    <ul>
-                                        <li>
-                                            <span class="fa fa-star"></span>
-                                        </li>
-                                        <li>
-                                            <span class="fa fa-star"></span>
-                                        </li>
-                                        <li>
-                                            <span class="fa fa-star"></span>
-                                        </li>
-                                        <li>
-                                            <span class="fa fa-star"></span>
-                                        </li>
-                                        <li>
-                                            <span class="fa fa-star-half-o"></span>
+                                                    <img src="admin/img/cat_image/<?php echo $cat_name; ?>/<?php echo $cat_image ?>" alt="category image">
+                                                    <?php echo $cat_name; ?>
+                                                <?php } ?>
+                                            </a>
                                         </li>
                                     </ul>
-                                </div>
 
-                                <div class="sell">
-                                    <p>
-                                        <span class="lnr lnr-cart"></span>
-                                        <span>50</span>
-                                    </p>
+                                    <p><?php echo $detail; ?>.</p>
                                 </div>
+                                <!-- end /.product-desc -->
+
+                                <div class="product-purchase">
+                                    <div class="price_love">
+                                        <span>$<?php echo $price; ?></span>
+                                    </div>
+
+                                    <div class="rating product--rating">
+                                        <ul>
+                                            <li>
+                                                <span class="fa fa-star"></span>
+                                            </li>
+                                            <li>
+                                                <span class="fa fa-star"></span>
+                                            </li>
+                                            <li>
+                                                <span class="fa fa-star"></span>
+                                            </li>
+                                            <li>
+                                                <span class="fa fa-star"></span>
+                                            </li>
+                                            <li>
+                                                <span class="fa fa-star-half-o"></span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="sell">
+                                        <p>
+                                            <span class="lnr lnr-cart"></span>
+                                            <span>50</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <!-- end /.product-purchase -->
                             </div>
-                            <!-- end /.product-purchase -->
+                            <!-- end /.single-product -->
                         </div>
-                        <!-- end /.single-product -->
-                    </div>
                     <?php } ?>
                     <!-- end /.col-md-4 -->
                 </div>
@@ -561,48 +479,58 @@ $at = $row_user['created_at'];
         END AUTHOR AREA
     =================================-->
 <script>
-// $(document).ready(function() {
-//     $('#save_bio').click(function() {
-//         $('#save_bio').attr('disabled', 'disabled');
-//         $('#bio_form')[0].reset();
-//         var bio = $('#bio').val();
-//         var mem_id = $('#mem_id').val();
-//         $.ajax({
-//             url: 'admin/include/user_functions.php',
-//             method: 'POST',
-//             data: {
-//                 bio: bio,
-//                 mem_id: mem_id
-//             },
-//             success: function(dataResault) {
-//                 var dataResault = JSON.parse(dataResault);
-//             }
-//         });
-//     });
-// });
+    // BIO insertion
+    $(document).ready(function() {
+        $('#save_bio').click(function(e) {
+            e.preventDefault();
+            var mem_id = $('#mem_id').val();
+            var bio = $('#bio').val();
+            $.ajax({
+                url: 'phpscripts/Add_Member_BIO.php',
+                method: 'POST',
+                data: {
+                    mem_id: mem_id,
+                    bio: bio
+                }
+            }).done(function(response) {
+                $('#response').html(response);
+                $('#bio_form')[0].reset();
+            })
+        });
+    })
+
+    // END BIO insertion
+    // Update BIO
+    var createBio = document.getElementById('createBio');
+    var place = document.getElementById('bioTextBoxHere');
+    createBio.addEventListener('click', function() {
+        var input = document.createElement('input');
+        var submit = document.createElement('button');
+        input.setAttribute('class', 'form-control input-group')
+        place.appendChild(input);
+    });
+
+
+    // $(document).ready(function() {
+    //     $('#save_bio').click(function() {
+    //         $('#save_bio').attr('disabled', 'disabled');
+    //         $('#bio_form')[0].reset();
+    //         var bio = $('#bio').val();
+    //         var mem_id = $('#mem_id').val();
+    //         $.ajax({
+    //             url: 'admin/include/user_functions.php',
+    //             method: 'POST',
+    //             data: {
+    //                 bio: bio,
+    //                 mem_id: mem_id
+    //             },
+    //             success: function(dataResault) {
+    //                 var dataResault = JSON.parse(dataResault);
+    //             }
+    //         });
+    //     });
+    // });
 </script>
 
 
-<!--================================
-        START CALL TO ACTION AREA
-    =================================-->
-<section class="call-to-action bgimage">
-    <div class="bg_image_holder">
-        <img src="images/calltobg.jpg" alt="">
-    </div>
-    <div class="container content_above">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="call-to-wrap">
-                    <h1 class="text--white">Ready to Join Our Marketplace!</h1>
-                    <h4 class="text--white">Over 25,000 designers and developers trust the MartPlace.</h4>
-                    <a href="#" class="btn btn--lg btn--round btn--white callto-action-btn">Join Us Today</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!--================================
-        END CALL TO ACTION AREA
-    =================================-->
 <?php require_once "footer.php"; ?>

@@ -11,10 +11,10 @@ while ($rows = $stmt->fetch(PDO::FETCH_ASSOC)) {
     $at = $rows['created_at'];
     $by = $rows['created_by'];
 ?>
-<li>
-    <a href="category_products.php?cat_id=<?php echo $id;  ?>">
-        <span class="lnr lnr-chevron-right"></span><?php echo $name; ?>
+    <li>
+        <a href="category_products.php?cat_id=<?php echo $id;  ?>">
+            <span class="lnr lnr-chevron-right"></span><?php echo $name; ?>
 
-    </a>
-</li>
+        </a>
+    </li>
 <?php } ?>

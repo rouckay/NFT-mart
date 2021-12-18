@@ -103,9 +103,9 @@
                             <!-- Collect the nav links, forms, and other content for toggling -->
                             <div class="collapse navbar-collapse" id="navbarNav">
                                 <ul class="navbar-nav">
-                                    <!-- <li class="has_dropdown">
+                                    <li class="has_dropdown">
                                         <a href="index.php">HOME</a>
-                                    </li> -->
+                                    </li>
                                     <!-- <li class="has_dropdown">
                                         <a href="about.php">About Us</a>
                                     </li> -->
@@ -113,20 +113,10 @@
                                         <a href="products.php">Marketplace</a>
                                     </li>
                                     <li class="has_dropdown">
-                                        <a href="#">categories</a>
-                                        <div class="dropdowns dropdown--menu">
-                                            <ul>
-                                                <li>
-                                                    <a href="category.php">Call Of Dutty Skin</a>
-                                                </li>
-                                                <li>
-                                                    <a href="category.php">PUBG Skins</a>
-                                                </li>
-                                                <li>
-                                                    <a href="category.php">Free Fire Skins</a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                        <a href="category.php">categories</a>
+                                    </li>
+                                    <li>
+                                        <a href="auction.php">Auction</a>
                                     </li>
                                     <li>
                                         <a href="contact.php">contact</a>

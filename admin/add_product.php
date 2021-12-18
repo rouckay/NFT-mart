@@ -56,7 +56,8 @@
 
             <?php
             if (isset($success_added)) {
-                echo "<p class='alert alert-success'>{$success_added}</p>'";
+                echo "<p class='alert alert-success'><span class='alert_icon lnr lnr-checkmark-circle'></span>
+                {$success_added}</p>'";
             }
             ?>
             <form action="add_product.php" method="POST" enctype="multipart/form-data">

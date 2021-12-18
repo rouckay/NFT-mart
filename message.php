@@ -397,6 +397,7 @@ if (isset($_GET['msg_id'])) {
         <!-- end /.row -->
     </div>
 </section>
+
 <script>
 $(document).ready(function() {
     $('#btn_viewed').click(function() {

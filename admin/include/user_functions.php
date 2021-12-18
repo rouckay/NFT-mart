@@ -65,23 +65,23 @@ function mem_sign($mem_sign)
             }
             header("location:index.php");
         } else { ?>
-<div class="alert alert-danger" role="alert">
-    <span class="alert_icon lnr lnr-warning"></span>
-    <strong>Oh No!</strong> The Password Is Wrong.
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span class="lnr lnr-cross" aria-hidden="true"></span>
-    </button>
-</div>
-<?php  } ?>
-<?php
+            <div class="alert alert-danger" role="alert">
+                <span class="alert_icon lnr lnr-warning"></span>
+                <strong>Oh No!</strong> The Password Is Wrong.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span class="lnr lnr-cross" aria-hidden="true"></span>
+                </button>
+            </div>
+        <?php  } ?>
+    <?php
     } elseif ($rows != 1) { ?>
-<div class="alert alert-danger" role="alert">
-    <span class="alert_icon lnr lnr-warning"></span>
-    <strong>Oh No!</strong> User Not Found!
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span class="lnr lnr-cross" aria-hidden="true"></span>
-    </button>
-</div>
+        <div class="alert alert-danger" role="alert">
+            <span class="alert_icon lnr lnr-warning"></span>
+            <strong>Oh No!</strong> User Not Found!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span class="lnr lnr-cross" aria-hidden="true"></span>
+            </button>
+        </div>
 <?php    }
 }
 //Check if the member is Signed in or if it's not back to index
@@ -447,32 +447,32 @@ function check_social($rows)
 }
 // END Social Media Check
 // Add To Favourite
-if (isset($_POST['btn_add_fav'])) {
-    // check_mem();
+function add_to_favourite($fav_pro_id, $fav_pro_author, $mem_id)
+{
     $conn = config();
-    if (isset($_SESSION['member_id'])) {
-        $id = $_SESSION['member_id'];
-    } elseif (isset($_COOKIE['mem_user_id'])) {
-        $id = base64_decode($_COOKIE['mem_user_id']);
-    } else {
-        header("location:../../login.php?login_to_add_to_fav");
-    }
     $fav_pro_id = $_POST['pro_id'];
     $fav_pro_author = $_POST['pro_author'];
-    $fav_add_sql = "INSERT INTO favourite (pro_id, pro_author , mem_id) VALUES (:pro_id, :pro_author, :mem_id)";
-    $stmt_add_fav = $conn->prepare($fav_add_sql);
-    $stmt_add_fav->execute([
-        ':pro_id' => $fav_pro_id,
-        ':pro_author' => $fav_pro_author,
-        ':mem_id' => $id
+
+    $sql_check_dublicate = "SELECT * FROM favourite WHERE pro_id = :pro_id";
+    $stmt_dublicate = $conn->prepare($sql_check_dublicate);
+    $stmt_dublicate->execute([
+        ':pro_id' => $fav_pro_id
     ]);
-    // $update_pro = "UPDATE mem_products SET mem_fav_pro = :fav_data WHERE mem_pro_id = :id";
-    // $stmt_up = $conn->prepare($update_pro);
-    // $stmt_up->execute([
-    //     ':id' => $fav_data,
-    //     ':fav_data' => $user . "_" . "fav"
-    // ]);
-    header("location:../../favourites.php?items_added");
+    $rows_dublicate = $stmt_dublicate->rowCount();
+
+    if ($rows_dublicate >= 1) {
+    } else {
+        $fav_add_sql = "INSERT INTO favourite (pro_id, pro_author , mem_id) VALUES (:pro_id, :pro_author, :mem_id)";
+        $stmt_add_fav = $conn->prepare($fav_add_sql);
+        $stmt_add_fav->execute([
+            ':pro_id' => $fav_pro_id,
+            ':pro_author' => $fav_pro_author,
+            ':mem_id' => $mem_id
+        ]);
+        $success = 'added';
+    }
+    // header('location=./favourites.php.php?Added_successfully');
+    header("location:favourites.php?success_msg");
 }
 // upload Background Image For Home Page
 function background_image_add($name, $image)
@@ -673,7 +673,7 @@ if (isset($_POST['btn_add_to_cart'])) {
             ':pro_author' => $pro_author,
             ':owner' => $who
         ]);
-        header('location:index.php');
+        header('location:cart.php');
     }
 }
 // END Add To Cart 
@@ -790,6 +790,21 @@ function mem_pro_author($author)
     return $author_info;
 }
 // ENDMember Author Info That Was For Single Products Page
+// Member Author Info That Was For Single Products Page
+function mem_pro_author_by_id($mem_user_id)
+{
+    $conn = config();
+    $sql_pro_author = "SELECT * FROM members WHERE mem_id=:id";
+    $stmt = $conn->prepare($sql_pro_author);
+    $stmt->execute([
+        ':id' => $mem_user_id
+    ]);
+    $rows_pro_author = $stmt->fetch(PDO::FETCH_ASSOC);
+    $author_info[] = $rows_pro_author;
+
+    return $author_info;
+}
+// ENDMember Author Info That Was For Single Products Page
 // Author Products For Single Products
 function mem_pro_for_single_pro($author)
 {
@@ -853,25 +868,89 @@ function count_comments($pro_id)
 }
 // Count Comments
 // insert Replay First
-function insert_replay($com_id)
+function insert_replay($com_id, $author, $mem_id, $replay)
 {
     $conn = config();
-    $inserting = "INSERT INTO replay () VALUES ()";
+    $inserting = "INSERT INTO replay (com_pro_id,com_pro_author, com_sender_id, com_replay) VALUES (:com_pro_id, :com_pro_auth, :com_sender_id, :com_replay)";
+    $stmt = $conn->prepare($inserting);
+    $stmt->execute([
+        ':com_pro_id' => $com_id,
+        ':com_pro_auth' => $author,
+        ':com_sender_id' => $mem_id,
+        ':com_replay' => $replay
+    ]);
+    if ($inserting) {
+        header("refresh:1url:single-product.php");
+    }
 }
 // END insert Replay First
-// Insert Comment
-function add_comment($pro_id, $comment, $author, $mem_id)
+// Fetch Replay Of Comment
+function get_replay($com_id)
 {
     $conn = config();
-    $add_com_sql = "INSERT INTO comments (com_pro_id, com_pro_author, com_detail, com_sender_id, com_date) VALUES (:pro_id, :com_pro_auth, :detail, :sender_id, :date)";
-    $stmt = $conn->prepare($add_com_sql);
+    $get_replay_sql = "SELECT * FROM replay WHERE com_pro_id = :com_pro_id";
+    $stmt = $conn->prepare($get_replay_sql);
     $stmt->execute([
-        ':pro_id' => $pro_id,
-        ':com_pro_auth' => $author,
-        ':detail' => $comment,
-        ':sender_id' => $mem_id,
-        ':date' => date('M n, Y') . "at" . date('h: i A')
+        ':com_pro_id' => $com_id
     ]);
+    while ($rows_replay = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $result[] = $rows_replay;
+    }
+    return $result;
 }
-// END Insert Comment
+// END Fetch Replay Of Comment
+
+// Fetch All Author Products
+function all_author_products()
+{
+    if (isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
+        $user_id = base64_decode($_COOKIE['mem_user_id']);
+        $user_name = base64_decode($_COOKIE['mem_user_name']);
+    } elseif (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
+        $user_id = $_SESSION['member_id'];
+        $user_name = $_SESSION['member_user'];
+    } else {
+        $user_id = -1;
+        $user_name = -1;
+    }
+    $conn = config();
+    $slq_author_product = 'SELECT * FROM mem_products WHERE author = :author';
+    $stmt = $conn->prepare($slq_author_product);
+    $stmt->execute([
+        ':author' => $user_name
+    ]);
+    while ($res = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $result[] = $res;
+    }
+    return $result;
+}
+// member_info_for_images
+// Home Page Featured Popular Products
+function popular_pro()
+{
+    $conn =  config();
+    $home_pro_sql = "SELECT * FROM mem_products ORDER BY mem_pro_id DESC LIMIT 0,1";
+    $stmt_pro = $conn->prepare($home_pro_sql);
+    $stmt_pro->execute();
+    while ($row_home_pro = $stmt_pro->fetch(PDO::FETCH_ASSOC)) {
+        $resulter[] = $row_home_pro;
+    }
+    return $resulter;
+}
+// END Home Page Featured Popular Products
+// Fetch Parchased Products List
+function fetchParchased($buyer_id)
+{
+    $conn = config();
+    $sql_par = "SELECT * FROM parchased WHERE buyer_id = :buyer_id";
+    $stmt_par = $conn->prepare($sql_par);
+    $stmt_par->execute([
+        ':buyer_id' => $buyer_id
+    ]);
+    while ($row_par = $stmt_par->fetch(PDO::FETCH_ASSOC)) {
+        $resultPar[] = $row_par;
+    }
+    return $resultPar;
+}
+// END Fetch Parchased Products List
 ?>

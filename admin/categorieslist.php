@@ -13,6 +13,7 @@
     ?>
     <div class="alert alert-success" role="alert">
         <span class="alert_icon lnr lnr-success"></span>
+        <span class='alert_icon lnr lnr-checkmark-circle'></span>
         <strong>Yes!</strong> You Have Successfully Deleted Category.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span class="lnr lnr-cross" aria-hidden="true"></span>
@@ -21,6 +22,7 @@
     <?php  } elseif (isset($_GET['update_success'])) { ?>
     <div class="alert alert-success" role="alert">
         <span class="alert_icon lnr lnr-success"></span>
+        <span class='alert_icon lnr lnr-checkmark-circle'></span>
         <strong>Oh Yes!</strong> Category Successfully Update.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span class="lnr lnr-cross" aria-hidden="true"></span>
@@ -91,7 +93,7 @@
                             <th><?php echo $total_pro;
                                     ?></th>
                             <th><?php if ($status == 'publish') {
-                                        echo "<p class='alert alert-success'>$status</p>";
+                                        echo "<p class='alert alert-success'><span class='alert_icon lnr lnr-checkmark-circle'></span>$status</p>";
                                     } elseif ($status == 'draft') {
                                         echo "<p class='alert alert-danger'>$status</p>";
                                     } ?></th>

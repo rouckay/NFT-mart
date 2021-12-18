@@ -112,6 +112,7 @@
             <?php
             if (isset($_GET['success_msg'])) {
                 echo "<div class='alert alert-success' role='alert'>
+                <span class='alert_icon lnr lnr-checkmark-circle'></span>
                 <span class='alert_icon lnr lnr-success'></span>
                  '<strong>Correct!</strong> Done, Your Profile Updated Successfully.
                             <button type='button' class='close' data-dismiss='alert' aria-label='Close'>

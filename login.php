@@ -37,13 +37,13 @@
         <div class="row">
             <div class="col-lg-6 offset-lg-3">
                 <?php if (isset($_GET['login_first'])) { ?>
-                <div class='alert alert-warning' role='alert'>
-                    <span class='alert_icon lnr lnr-warning'></span>
-                    <strong>Dear User!</strong> For That You Have To Login First!
-                    <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                        <span class='lnr lnr-cross' aria-hidden='true'></span>
-                    </button>
-                </div>
+                    <div class='alert alert-warning' role='alert'>
+                        <span class='alert_icon lnr lnr-warning'></span>
+                        <strong>Dear User!</strong> For That You Have To Login First!
+                        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                            <span class='lnr lnr-cross' aria-hidden='true'></span>
+                        </button>
+                    </div>
                 <?php } ?>
                 <?php if (isset($_POST['btn_mem_sign'])) {
                     $mem_sign = $_POST['frm'];
@@ -60,14 +60,12 @@
                         <div class="login--form">
                             <div class="form-group">
                                 <label for="user_name">Username</label>
-                                <input id="user_name" name="frm[user_name]" type="text" class="text_field"
-                                    placeholder="Enter your username...">
+                                <input id="user_name" name="frm[user_name]" type="text" class="text_field" placeholder="Enter your username...">
                             </div>
 
                             <div class="form-group">
                                 <label for="pass">Password</label>
-                                <input id="pass" type="password" name="frm[password]" class="text_field"
-                                    placeholder="Enter your password...">
+                                <input id="pass" type="password" name="frm[password]" class="text_field" placeholder="Enter your password...">
                             </div>
 
                             <div class="form-group">

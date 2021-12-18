@@ -17,7 +17,7 @@
                             if (isset($_GET['cat_id'])) {
                                 $cat_id = $_GET['cat_id'];
                                 $conn = config();
-                                $category_pro_sql = "SELECT * FROM category WHERE status = :status AND cat_id = :id";
+                                $category_pro_sql = "SELECT * FROM mem_products WHERE status = :status AND category_id = :id";
                                 $stmt_cat_title = $conn->prepare($category_pro_sql);
                                 $stmt_cat_title->execute([
                                     ':id' => $cat_id,
@@ -28,37 +28,36 @@
                                 if ($rows_found <= 0) {
                                     $error_not_found = "Sorry there is no product in this Product";
                                 } else {
-                                    //
+                                    $founded_products = 'Ther is Some Products inside of this Category';
                                 }
 
                             ?>
-                            <h3>
-                                <span>Total Products ( <?php echo $rows_found; ?> ) In </span>
-                                <?php echo $fetch_data['cat_name']; ?>
-                            </h3>
+                                <h3>
+                                    <span>Total Products ( <?php echo $rows_found; ?> ) </span>
+                                    <!-- <?php echo $fetch_data['cat_name']; ?> -->
+                                </h3>
                         </div>
                         <div class="search__field">
                             <form action="#">
                                 <div class="field-wrapper">
-                                    <input class="relative-field rounded" type="text"
-                                        placeholder="Search your products">
+                                    <input class="relative-field rounded" type="text" placeholder="Search your products">
                                     <button class="btn btn--round" type="submit">Search</button>
                                 </div>
                             </form>
                         </div>
-                        <?php } else {
+                    <?php } else {
                                 header('location:category.php');
                             } ?>
-                        <div class="breadcrumb">
-                            <ul>
-                                <li>
-                                    <a href="#">Home</a>
-                                </li>
-                                <li class="active">
-                                    <a href="#">All Products</a>
-                                </li>
-                            </ul>
-                        </div>
+                    <div class="breadcrumb">
+                        <ul>
+                            <li>
+                                <a href="#">Home</a>
+                            </li>
+                            <li class="active">
+                                <a href="#">All Products</a>
+                            </li>
+                        </ul>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -136,44 +135,7 @@
         <div class="row">
             <!-- start .col-md-3 -->
             <div class="col-lg-3">
-                <!-- start aside -->
-                <aside class="sidebar product--sidebar">
-                    <div class="sidebar-card card--category">
-                        <a class="card-title" href="#collapse1" role="button" data-toggle="collapse"
-                            aria-expanded="false" aria-controls="collapse1">
-                            <h4>Categories
-                                <span class="lnr lnr-chevron-down"></span>
-                            </h4>
-                        </a>
-                        <div class="collapse show collapsible-content" id="collapse1">
-                            <ul class="card-content">
-                                <?php include_once('module/category.php'); ?>
-                            </ul>
-                        </div>
-                        <!-- end /.collapsible_content -->
-                    </div>
-
-                    <div class="sidebar-card card--slider">
-                        <a class="card-title" href="#collapse3" role="button" data-toggle="collapse"
-                            aria-expanded="false" aria-controls="collapse3">
-                            <h4>Filter Products
-                                <span class="lnr lnr-chevron-down"></span>
-                            </h4>
-                        </a>
-                        <div class="collapse show collapsible-content" id="collapse3">
-                            <div class="card-content">
-                                <div class="range-slider price-range"></div>
-
-                                <div class="price-ranges">
-                                    <span class="from rounded">$30</span>
-                                    <span class="to rounded">$300</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end /.sidebar-card -->
-                </aside>
-                <!-- end aside -->
+                <?php include_once('module/category_module.php'); ?>
             </div>
             <!-- end /.col-md-3 -->
 
@@ -184,84 +146,81 @@
 
 
                     <?php
+
                     $cat_id = $_GET['cat_id'];
                     $conn = config();
-                    $category_pro_sql = "SELECT * FROM products WHERE pro_category_id = :id";
+                    $category_pro_sql = "SELECT * FROM mem_products WHERE category_id = :id";
                     $stmt = $conn->prepare($category_pro_sql);
                     $stmt->execute([
                         ':id' => $cat_id
                     ]);
                     while ($rows_data = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                        $id = $rows_data['pro_id'];
-                        $name = $rows_data['pro_name'];
-                        $image = $rows_data['pro_image'];
-                        $total_pro = $rows_data['pro_detail'];
+                        $id = $rows_data['mem_pro_id'];
+                        $name = $rows_data['mem_pro_name'];
+                        $image = $rows_data['mem_pro_image'];
+                        $total_pro = $rows_data['mem_pro_detail'];
 
                     ?>
-                    <div class="col-lg-4 col-md-6">
-                        <?php if (isset($error_not_found)) { ?>
-                        <div class="alert alert-danger" role="alert">
-                            <span class="alert_icon lnr lnr-warning"></span>
-                            <strong>Oh No!</strong> <?php echo $error_not_found; ?>.
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span class="lnr lnr-cross" aria-hidden="true"></span>
-                            </button>
-                        </div>
-                        <?php } ?>
-                        <!-- start .single-product -->
-                        <div class="product product--card product--card-small">
-                            <div class="product__thumbnail">
-                                <!-- Image & video Show -->
-                                <?php
+                        <div class="col-lg-4 col-md-6">
+                            <?php if (isset($error_not_found)) { ?>
+                                <div class="alert alert-danger" role="alert">
+                                    <span class="alert_icon lnr lnr-warning"></span>
+                                    <strong>Oh No!</strong> <?php echo $error_not_found; ?>.
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span class="lnr lnr-cross" aria-hidden="true"></span>
+                                    </button>
+                                </div>
+                            <?php } ?>
+                            <!-- start .single-product -->
+                            <div class="product product--card product--card-small">
+                                <div class="product__thumbnail">
+                                    <!-- Image & video Show -->
+                                    <?php
                                     $exp = explode(".", $image);
                                     $ext = end($exp);
                                     if ($ext == "jpg" or $ext == "png" or $ext == "jpeg") { ?>
-                                <img height="230px" width="361px"
-                                    src="./admin/img/product/<?php echo $name; ?>/<?php echo $image; ?>"
-                                    alt="Product Image">
+                                        <img height="230px" width="361px" src="./admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>" alt="Product Image">
 
-                                <?php } else { ?>
-                                <video width="100%" height="100%" autoplay muted loop>
-                                    <source src="./admin/img/product/<?php echo $name; ?>/<?php echo $image; ?>">
-                                </video>
-                                <?php } ?>
-                                <!-- END Image & video Show -->
-                                <div class="prod_btn">
-                                    <a href="single-product.php?id=<?php echo $id; ?>"
-                                        class="transparent btn--sm btn--round">More Info</a>
-                                    <a href="single-product.php?id=<?php echo $id; ?>"
-                                        class="transparent btn--sm btn--round">Live Demo</a>
+                                    <?php } else { ?>
+                                        <video width="100%" height="100%" autoplay muted loop>
+                                            <source src="./admin/img/product/<?php echo $name; ?>/<?php echo $image; ?>">
+                                        </video>
+                                    <?php } ?>
+                                    <!-- END Image & video Show -->
+                                    <div class="prod_btn">
+                                        <a href="single-product.php?id=<?php echo $id; ?>" class="transparent btn--sm btn--round">More Info</a>
+                                        <a href="single-product.php?id=<?php echo $id; ?>" class="transparent btn--sm btn--round">Live Demo</a>
+                                    </div>
+                                    <!-- end /.prod_btn -->
                                 </div>
-                                <!-- end /.prod_btn -->
+                                <!-- end /.product__thumbnail -->
+
+                                <div class="product-desc">
+                                    <a href="#" class="product_title">
+                                        <h4><?php echo $name; ?></h4>
+                                    </a>
+                                    <ul class="titlebtm">
+
+                                        <li class="out_of_class_name">
+                                            <div class="sell">
+                                                <p>
+                                                    <span class="lnr lnr-cart"></span>
+                                                    <span>27</span>
+                                                </p>
+                                            </div>
+                                            <div class="rating product--rating">
+                                                <ul>
+                                                    <!-- rate -->
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                </div>
+                                <!-- end /.product-desc -->
                             </div>
-                            <!-- end /.product__thumbnail -->
-
-                            <div class="product-desc">
-                                <a href="#" class="product_title">
-                                    <h4><?php echo $name; ?></h4>
-                                </a>
-                                <ul class="titlebtm">
-
-                                    <li class="out_of_class_name">
-                                        <div class="sell">
-                                            <p>
-                                                <span class="lnr lnr-cart"></span>
-                                                <span>27</span>
-                                            </p>
-                                        </div>
-                                        <div class="rating product--rating">
-                                            <ul>
-                                                <!-- rate -->
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-
-                            </div>
-                            <!-- end /.product-desc -->
+                            <!-- end /.single-product -->
                         </div>
-                        <!-- end /.single-product -->
-                    </div>
                     <?php } ?>
                     <!-- end /.col-md-4 -->
                 </div>

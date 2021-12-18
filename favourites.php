@@ -32,6 +32,12 @@
 <!--================================
         START FILTER AREA
     =================================-->
+<?php
+// if (isset($_GET['already_exist'])) {
+//     echo $dublicate_product_err_msg = "<div class='alert alert-danger'>This Item Is Already Exist! </div>";
+// }
+// elseif($_GET['items_add'])
+?>
 <div class="filter-area">
     <div class="container">
         <div class="row">
@@ -67,8 +73,7 @@
 
                     <div class="pull-right">
                         <div class="filter__option filter--dropdown">
-                            <a href="#" id="drop2" class="dropdown-trigger dropdown-toggle" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="true">
+                            <a href="#" id="drop2" class="dropdown-trigger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                 Filter By
                                 <span class="lnr lnr-chevron-down"></span>
                             </a>
@@ -163,7 +168,7 @@
             ]);
             $count_fav = $stmt_fav_tab->rowCount();
             if ($count_fav == 0) { ?>
-            <div class="alert alert-info"><strong>Sorry,</strong>You Did Not Added Your Favourite Products</div>
+                <div class="alert alert-info"><strong>Sorry,</strong>You Did Not Added Your Favourite Products</div>
             <?php } ?>
             <?php
             while ($rows_tab = $stmt_fav_tab->fetch(PDO::FETCH_ASSOC)) {
@@ -171,7 +176,7 @@
                 $pro_author = $rows_tab['pro_author'];
                 $pro_id = $rows_tab['pro_id'];
             ?>
-            <?php
+                <?php
 
 
                 $fav_pro_sql = "SELECT * FROM mem_products WHERE author = :author AND mem_pro_id = :pro_id";
@@ -192,62 +197,55 @@
                     $author = $rows_fav_fetched['author'];
 
                 ?>
-            <div class="col-lg-4 col-md-6">
-                <div class="product product--card">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="product product--card product--card-small">
 
-                    <div class="product__thumbnail">
-                        <!-- product Image size in this page = 361px X 230px -->
-                        <img width="361px" height="230px" style="background-position: center;background-size:cover;"
-                            src="admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>"
-                            alt="<?php echo $name; ?>">
-                        <div class="prod_btn">
-                            <a href="single-product.php?id=<?php echo $id; ?>"
-                                class="transparent btn--sm btn--round">More Info</a>
-                            <a href="single-product.php?id=<?php echo $id; ?>"
-                                class="transparent btn--sm btn--round">Live Demo</a>
-                        </div>
-                        <!-- end /.prod_btn -->
-                    </div>
-                    <!-- end /.product__thumbnail -->
+                            <div class="product__thumbnail">
+                                <!-- product Image size in this page = 361px X 230px -->
+                                <img width="361px" height="230px" style="background-position: center;background-size:cover;" src="admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>" alt="<?php echo $name; ?>">
+                                <div class="prod_btn">
+                                    <a href="single-product.php?id=<?php echo $id; ?>" class="transparent btn--sm btn--round">More Info</a>
+                                </div>
+                                <!-- end /.prod_btn -->
+                            </div>
+                            <!-- end /.product__thumbnail -->
 
-                    <div class="product-desc">
-                        <a href="#" class="product_title">
-                            <h4><?php echo $name; ?></h4>
-                        </a>
-                        <ul class="titlebtm">
-                            <li>
-                                <img class="auth-img"
-                                    src="admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>"
-                                    alt="author image">
-                                <p>
-                                    <a href="#"><?php echo $author; ?></a>
-                                </p>
-                            </li>
-                            <li class="product_cat">
-                                <a href="#">
-                                    <span class="lnr lnr-book"></span><?php echo $category; ?></a>
-                            </li>
-                        </ul>
+                            <div class="product-desc">
+                                <a href="#" class="product_title">
+                                    <h4><?php echo $name; ?></h4>
+                                </a>
+                                <ul class="titlebtm">
+                                    <li>
+                                        <img class="auth-img" src="admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>" alt="author image">
+                                        <p>
+                                            <a href="#"><?php echo $author; ?></a>
+                                        </p>
+                                    </li>
+                                    <li class="product_cat">
+                                        <a href="#">
+                                            <span class="lnr lnr-book"></span><?php echo $category; ?></a>
+                                    </li>
+                                </ul>
 
-                        <p><?php echo $detail; ?>.</p>
-                    </div>
-                    <!-- end /.product-desc -->
+                                <p><?php echo substr($detail, 0, 75); ?>.</p>
+                            </div>
+                            <!-- end /.product-desc -->
 
-                    <div class="product-purchase">
-                        <div class="price_love">
-                            <span>$<?php echo $price; ?></span>
-                        </div>
-                        <div class="sell">
-                            <p>
-                                <span class="lnr lnr-cart"></span>
-                                <span>16</span>
-                            </p>
+                            <div class="product-purchase">
+                                <div class="price_love">
+                                    <span>$<?php echo $price; ?></span>
+                                </div>
+                                <div class="sell">
+                                    <p>
+                                        <span class="lnr lnr-cart"></span>
+                                        <span>16</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <!-- end /.product-purchase -->
                         </div>
                     </div>
-                    <!-- end /.product-purchase -->
-                </div>
-            </div>
-            <?php } ?>
+                <?php } ?>
             <?php } ?>
             <!-- end /.single-product -->
             <!-- end /.col-md-4 -->

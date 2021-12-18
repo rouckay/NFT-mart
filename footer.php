@@ -173,10 +173,76 @@
 <!--================================
     END FOOTER AREA
 =================================-->
+<!-- All Modals -->
+<div class="modal fade rating_modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="rating_modal">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h3 class="modal-title" id="rating_modal">Rating this Item</h3>
+                <h4>Product Enquiry Extension</h4>
+                <p>by
+                    <a href="author.html">AazzTech</a>
+                </p>
+            </div>
+            <!-- end /.modal-header -->
+
+            <div class="modal-body">
+                <form action="#">
+                    <ul>
+                        <li>
+                            <p>Your Rating</p>
+                            <div class="right_content btn btn--round btn--white btn--md">
+                                <select name="rating" class="give_rating">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                        </li>
+
+                        <li>
+                            <p>Rating Causes</p>
+                            <div class="right_content">
+                                <div class="select-wrap">
+                                    <select name="review_reason">
+                                        <option value="design">Design Quality</option>
+                                        <option value="customization">Customization</option>
+                                        <option value="support">Support</option>
+                                        <option value="performance">Performance</option>
+                                        <option value="documentation">Well Documented</option>
+                                    </select>
+
+                                    <span class="lnr lnr-chevron-down"></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="rating_field">
+                        <label for="rating_field">Comments</label>
+                        <textarea name="rating_field" id="rating_field" class="text_field" placeholder="Please enter your rating reason to help the author"></textarea>
+                        <p class="notice">Your review will be ​publicly visible​ and the author may reply to your comments. </p>
+                    </div>
+                    <button type="submit" class="btn btn--round btn--default">Submit Rating</button>
+                    <button class="btn btn--round modal_close" data-dismiss="modal">Close</button>
+                </form>
+                <!-- end /.form -->
+            </div>
+            <!-- end /.modal-body -->
+        </div>
+    </div>
+</div>
+<!-- END All Modals -->
+
+
 
 <!-- Modal 2 -->
-<div class="modal fade rating_modal item_remove_modal" id="myModal2" tabindex="-1" role="dialog"
-    aria-labelledby="myModal2">
+<div class="modal fade rating_modal item_remove_modal" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModal2">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -221,6 +287,8 @@
 <script src="js/main.js"></script>
 <script src="js/jquery.js"></script>
 <script src="js/map.js"></script>
+<script src="js/myFrontEndScript.js"></script>
+<script src="js/myJquery.js"></script>
 <!-- endinject -->
 </body>
 
