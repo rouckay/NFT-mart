@@ -54,10 +54,10 @@ if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
                 <div class="product_archive added_to__cart">
                     <div class="title_area">
                         <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-4">
                                 <h4>Product Details</h4>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <h4 class="add_info">Category</h4>
                             </div>
                             <div class="col-md-2">
@@ -65,6 +65,9 @@ if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
                             </div>
                             <div class="col-md-2">
                                 <h4>Remove</h4>
+                            </div>
+                            <div class="col-md-2">
+                                <h4>Check Out</h4>
                             </div>
                         </div>
                     </div>
@@ -105,10 +108,11 @@ if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
                                             <div class="product__description">
                                                 <img width="150px" height="120px" src="admin/img/member_product/<?php echo $cart_mem_pro_info['mem_pro_name'] ?>/<?php echo $cart_mem_pro_info['mem_pro_image'] ?>" alt="<?php echo $cart_mem_pro_info['mem_pro_name'] ?>">
                                                 <div class="short_desc">
-                                                    <a href="#">
+                                                    <a href="">
                                                         <h4><?php echo $cart_mem_pro_info['mem_pro_name']; ?></h4>
                                                     </a>
                                                     <p><?php echo $cart_mem_pro_info['mem_pro_detail'] ?></p>
+                                                    <input type="number" id="amount" class='form-control' placeholder="Please Select The Amount!" value="1">
                                                 </div>
                                             </div>
                                             <!-- end /.product__description -->
@@ -128,7 +132,7 @@ if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
                                                         $cat_image = $fetch_cat['cat_image'];
                                                     ?>
                                                         <li>
-                                                            <a href="#">
+                                                            <a href="">
                                                                 <p><?php echo $cat_name;  ?></p>
                                                         </li>
                                                     <?php } ?>
@@ -152,10 +156,14 @@ if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
                                                     <form action="cart.php" method="POST">
                                                         <input type="hidden" name="cart_id" value="<?php echo $cart_mem_pro_info['mem_pro_id']; ?>">
                                                         <input type="hidden" name="who_added" value="<?php echo $mem_id ?>">
-                                                        <button type="submit" name="btn_del_cart" class="remove_from_cart btn--round">
+                                                        <button type="submit" name="btn_del_cart" style="border:none;background-color:white;" class="remove_from_cart btn-round">
                                                             <span class="lnr lnr-trash"></span>
                                                         </button>
+
                                                     </form>
+                                                </div>
+                                                <div class="col-lg-4 col-md-3 v_middle">
+                                                    <button id="buyBtn" class="btn btn-round btn--sm checkout_link">Checkout</button>
                                                 </div>
                                                 <!-- end /.item_action -->
                                             </div>
@@ -168,10 +176,11 @@ if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
                             </div>
                         <?php } ?>
                         <div id='resp'></div>
+
                         <div class="row">
                             <div class="col-md-6 offset-md-6">
                                 <div class="cart_calculation">
-                                    <div class="cart--subtotal">
+                                    <!-- <div class="cart--subtotal">
                                         <p>
                                             <span>Cart Subtotal</span>$0
                                         </p>
@@ -180,10 +189,7 @@ if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
                                         <p>
                                             <span>total</span>$0
                                         </p>
-                                    </div>
-
-                                    <button id="buyBtn" class="btn btn--round btn--md checkout_link">Proceed To
-                                        Checkout</button>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -208,10 +214,12 @@ if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
             var pro_id = $('#pro_id').val();
             var author = $('#author').val();
             var buyer_id = $('#buyer_id').val();
+            var amount = $('#amount').val();
             $.post('phpscripts/buy.php', {
                 pro_id: pro_id,
                 author: author,
-                buyer_id: buyer_id
+                buyer_id: buyer_id,
+                amount: amount
             }, function(resp) {
                 $('#resp').html(resp);
             })

@@ -13,14 +13,14 @@ require_once "module/cookie_session.php";
 ?>
 <?php
 
+
 if (isset($_SESSION['member_id'])) {
     $mem_id = $_SESSION['member_id'];
 } elseif (isset($_COOKIE['mem_user_id'])) {
     $mem_id = base64_decode($_COOKIE['mem_user_id']);
 } else {
-    header("location:login.php?login_to_add_to_fav");
+    $mem_id = -1;
 }
-
 ?>
 <!-- END Current user Info -->
 <section class="hero-area bgimage">

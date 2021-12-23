@@ -32,14 +32,12 @@
 </head>
 <!-- class  -->
 
-<body
-    class="<?php echo  $curr_page == "dashboard-manage-item.php" ? "preload dashboard-edit" : "preload home1 mutlti-vendor";  ?>">
+<body class="<?php echo  $curr_page == "dashboard-manage-item.php" ? "preload dashboard-edit" : "preload home1 mutlti-vendor";  ?>">
 
     <!-- ================================
     START MENU AREA
 ================================= -->
-    <!-- start menu-area -->
-    <div class="menu-area">
+    <div class="menu-area" id="menu-area">
         <!-- start .top-menu-area -->
         <div class="top-menu-area">
             <!-- start .container -->
@@ -49,13 +47,9 @@
                     <!-- start .col-md-3 -->
                     <div class="col-lg-3 col-md-3 col-6 v_middle">
                         <div class="logo">
-                            <a href="index.php">
-                                <img src="img/marketplace.png" alt="logo image" class="img-fluid">
-                            </a>
+                            <img src="img/marketplace.png" alt="logo image" id="logo" class="img-fluid">
                         </div>
                     </div>
-                    <!-- end /.col-md-3 -->
-
                     <!-- start .col-md-5 -->
                     <div class="col-lg-8 offset-lg-1 col-md-9 col-6 v_middle">
                         <!-- start .author-area -->
@@ -96,8 +90,7 @@
                         </div>
 
                         <nav class="navbar navbar-expand-md navbar-light mainmenu__menu">
-                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
                             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -123,18 +116,25 @@
                                     </li>
                                 </ul>
                             </div>
-                            <!-- /.navbar-collapse -->
                         </nav>
                     </div>
-                    <!-- end /.col-md-12 -->
                 </div>
-                <!-- end /.row-->
             </div>
-            <!-- start .container -->
         </div>
-        <!-- end /.mainmenu-->
     </div>
-    <!-- end /.menu-area -->
-    <!--================================
-    END MENU AREA
-=================================-->
+    <script>
+        var menuArea = document.querySelector('#menu-area');
+        var logo = document.querySelector('#logo');
+
+        // logo.onclick = function() {
+        // menuArea.classList = 'menu-area menu--style3';
+        // }
+
+        logo.addEventListener('mouseover', function() {
+            menuArea.classList = 'menu-area menu--style3';
+            // menuArea.classList = 'menu-area';
+        })
+        logo.addEventListener('mouseout', function() {
+            menuArea.classList = 'menu-area';
+        })
+    </script>

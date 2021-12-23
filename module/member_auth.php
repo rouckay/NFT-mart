@@ -26,7 +26,9 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
                 <li class="has_dropdown">
                     <div class="icon_wrap">
                         <span class="lnr lnr-alarm"></span>
-                        <span class="notification_count noti">25</span>
+                        <?php $pro_notif =  productNotif($user_name);
+                        echo $pro_notif >= 1 ? "<span class='notification_count noti'>$pro_notif</span>" : '';
+                        ?>
                     </div>
 
                     <div class="dropdowns notification--dropdown">
@@ -76,6 +78,7 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
                         $user = base64_decode($_COOKIE['mem_user_name']);
                     } else {
                         $mem_id = -1;
+                        $user = -1;
                     }
 
 
@@ -108,7 +111,6 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
                                 $msg_detail = $rows_msg['msg_detail'];
                                 $msg_date = $rows_msg['msg_date'];
                             ?>
-                                <?php  ?>
                                 <a href="message.php?msg_id=<?php echo $msg_id; ?>" class="message">
                                     <div class="message__actions_avatar">
                                         <?php
@@ -165,28 +167,28 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
 
                         <!-- END Cart Badge -->
                     </div>
-                    <div class="dropdowns dropdown--cart">
-                        <div class="cart_area">
-                            <?php
+                    <?php
 
-                            while ($rows_cart = $stmt_cart->fetch(PDO::FETCH_ASSOC)) {
-                                $cart_product = $rows_cart['pro_id'];
-                                $cart_owner = $rows_cart['pro_author'];
+                    while ($rows_cart = $stmt_cart->fetch(PDO::FETCH_ASSOC)) {
+                        $cart_product = $rows_cart['pro_id'];
+                        $cart_owner = $rows_cart['pro_author'];
 
-                                $sql_pro_cart = "SELECT * FROM mem_products WHERE mem_pro_id=:mem_pro_id AND author = :author_cart";
-                                $stmt_pro = $conn->prepare($sql_pro_cart);
-                                $stmt_pro->execute([
-                                    ':mem_pro_id' => $cart_product,
-                                    ':author_cart' => $cart_owner
-                                ]); ?>
+                        $sql_pro_cart = "SELECT * FROM mem_products WHERE mem_pro_id=:mem_pro_id AND author = :author_cart";
+                        $stmt_pro = $conn->prepare($sql_pro_cart);
+                        $stmt_pro->execute([
+                            ':mem_pro_id' => $cart_product,
+                            ':author_cart' => $cart_owner
+                        ]); ?>
 
-                                <?php
-                                while ($rows_product = $stmt_pro->fetch(PDO::FETCH_ASSOC)) {
-                                    $pro_cart_id = $rows_product['mem_pro_id'];
-                                    $name = $rows_product['mem_pro_name'];
-                                    $image = $rows_product['mem_pro_image'];
-                                    $price = $rows_product['price'];
-                                ?>
+                        <?php
+                        while ($rows_product = $stmt_pro->fetch(PDO::FETCH_ASSOC)) {
+                            $pro_cart_id = $rows_product['mem_pro_id'];
+                            $name = $rows_product['mem_pro_name'];
+                            $image = $rows_product['mem_pro_image'];
+                            $price = $rows_product['price'];
+                        ?>
+                            <div class="dropdowns dropdown--cart">
+                                <div class="cart_area">
                                     <div class="cart_product">
                                         <div class="product__info">
                                             <div class="thumbn">
@@ -209,10 +211,10 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
 
                                             <div class="info">
                                                 <a class="title" href="single-product.php"><?php echo $name; ?></a>
-                                                <div class="cat">
+                                                <!-- <div class="cat">
                                                     <a href="#">
                                                         <img src="images/catword.png" alt="">Wordpress</a>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
 
@@ -223,19 +225,19 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
                                             <p>$60</p>
                                         </div>
                                     </div>
-                            <?php }
-                            } ?>
-                            <div class="total">
-                                <p>
-                                    <span>Total :</span>$80
-                                </p>
+                                    <div class="total">
+                                        <!-- <p>
+                                            <span>Total :</span>$80
+                                        </p> -->
+                                    </div>
+                                    <div class="cart_action">
+                                        <a class="go_cart" href="cart.php">View Cart</a>
+                                        <a class="go_checkout" href="dashboard-withdrawal.php">white list</a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="cart_action">
-                                <a class="go_cart" href="cart.php">View Cart</a>
-                                <a class="go_checkout" href="checkout.php">Checkout</a>
-                            </div>
-                        </div>
-                    </div>
+                    <?php }
+                    } ?>
                 </li>
             </ul>
         </div>
@@ -355,16 +357,17 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
                         <a href="notification.php">
                             <div class="icon_wrap">
                                 <span class="lnr lnr-alarm"></span>
-                                <span class="notification_count noti">25</span>
+                                <?php echo $pro_notif >= 1 ? "<span class='notification_count noti'>$pro_notif</span>" : ''; ?>
                             </div>
                         </a>
                     </li>
 
                     <li>
+
                         <a href="message.php">
                             <div class="icon_wrap">
                                 <span class="lnr lnr-envelope"></span>
-                                <span class="notification_count msg">6</span>
+                                <?php echo $count_msg >= 1 ? "<span class='notification_count msg'>$count_msg</span>" : ''; ?>
                             </div>
                         </a>
                     </li>
@@ -373,13 +376,14 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
                         <a href="cart.php">
                             <div class="icon_wrap">
                                 <span class="lnr lnr-cart"></span>
-                                <span class="notification_count purch">2</span>
+                                <?php echo $count_rows_in_cart >= 1 ? "<span class='notification_count purch'>  $count_rows_in_cart </span>"
+                                    : ''; ?>
                             </div>
                         </a>
                     </li>
                 </ul>
             </div>
-            <!--start .author__notification_area -->
+            <!--END mobile Notification .author__notification_area -->
 
             <div class="dropdowns dropdown--author">
                 <ul>

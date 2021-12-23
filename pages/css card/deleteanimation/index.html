@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=+, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Different Ways to Delete Items <span class="button reset-button">Reset</span></h1>
+    <p class="desc">Click the <i class="fal fa-times"></i> cross button on each card to delete it, and watch the
+        animation.
+        <a href="https://fjolt.com/article/css-delete-item-ui-animations">Read the article here</a>.
+    </p>
+    <div class="item-holder">
+        <div class="item">
+            <div class="image"></div>
+            <div class="delete" data-delete="zoom"><i class="far fa-times"></i></div>
+            <div class="text">
+                <h2>Zoom Delete</h2>
+                <p>Click the cross above to delete this item..</p>
+            </div>
+            <div class="animation-assets"></div>
+        </div>
+        <div class="item shred">
+            <div class="image"></div>
+            <div data-delete="shredder" class="delete"><i class="far fa-times"></i></div>
+            <div class="text">
+                <h2>The Shredder</h2>
+                <p>Click the cross above to delete this item..</p>
+            </div>
+            <div class="animation-assets"></div>
+        </div>
+        <div class="item">
+            <div class="image"></div>
+            <div data-delete="analogue" class="delete"><i class="far fa-times"></i></div>
+            <div class="text">
+                <h2>Analogue TV</h2>
+                <p>Click the cross above to delete this item..</p>
+            </div>
+            <div class="animation-assets"></div>
+        </div>
+        <div class="item">
+            <div class="image"></div>
+            <div data-delete="fall" class="delete"><i class="far fa-times"></i></div>
+            <div class="text">
+                <h2>Fall</h2>
+                <p>Click the cross above to delete this item..</p>
+            </div>
+            <div class="animation-assets"></div>
+        </div>
+    </div>
+    <script defer src="https://kit.fontawesome.com/628c8d2499.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700&display=swap" rel="stylesheet">
+    <script src="script.js"></script>
+</body>
+
+</html>

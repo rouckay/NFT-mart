@@ -1,8 +1,32 @@
 <?php $curr_page = basename(__FILE__); ?>
 <?php require_once "header.php"; ?>
-<!--================================
-        START BREADCRUMB AREA
-    =================================-->
+<?php
+check_mem();
+session_cookie($mem_id, $user);
+?>
+<!-- Buyer Author info -->
+<?php
+$buyer_info =  fetch_mem_info_by_id($mem_id);
+foreach ($buyer_info  as $buyer_data) {
+    $member_name = $buyer_data['mem_name'];
+}
+?>
+<!-- END Buyer Author info -->
+<!-- Seller Info -->
+<?php
+
+// $ownerFuncBuyer =  showProductForOwner($user);
+// foreach ($ownerFuncBuyer as $Buyer_info) {
+//     echo  $user = $Buyer_info['with_buyer_id'];
+// }
+// $seller_info = fetch_mem_info_by_id($user);
+// foreach ($seller_info as $seller_data) {
+//     $buyer_name = $seller_data['mem_name'];
+// }
+
+?>
+<!-- END Seller Info -->
+
 <section class="breadcrumb-area">
     <div class="container">
         <div class="row">
@@ -165,68 +189,109 @@
                             <h3>Withdrawal History</h3>
                         </div>
                         <div class="table-responsive">
-                            <table class="table withdraw__table">
+                            <table class="table withdraw__table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Date</th>
-                                        <th>Payment Method</th>
+                                        <th>Name</th>
+                                        <th>Image</th>
                                         <th>Amount</th>
+                                        <th>Price</th>
+                                        <th>Product Author</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
 
                                 <tbody>
-                                    <tr>
-                                        <td>09 Jul 2019</td>
-                                        <td>Payoneer</td>
-                                        <td class="bold">$568.50</td>
-                                        <td class="pending">
-                                            <span>Pending</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>20 May 2019</td>
-                                        <td>Payoneer</td>
-                                        <td class="bold">$1300.50</td>
-                                        <td class="paid">
-                                            <span>Paid</span>
-                                        </td>
-                                    </tr>
+                                    <?php
+                                    $Retrive_with = fetch_Withdrawal($mem_id);
+                                    foreach ($Retrive_with as $withdrawal_data) {
+                                        $product_id =  $withdrawal_data['with_pro_id'];
+                                        $product_withdrawal_date = $withdrawal_data['with_date'];
+                                        $who_want_to_by = $withdrawal_data['with_buyer_id'];
+                                        $with_auth = $withdrawal_data['with_pro_author'];
+                                        $amount = $withdrawal_data['amount'];
+                                        $status = $withdrawal_data['status'];
+                                        $productRetrive = showProductsById($product_id);
+                                        foreach ($productRetrive as $pro_data) {
+                                            $pro_name =  $pro_data['mem_pro_name'];
+                                            $image =  $pro_data['mem_pro_image'];
+                                            $price =  $pro_data['price'];
 
+                                    ?>
+                                            <tr>
+                                                <td><?php echo $pro_name; ?></td>
+                                                <td><img height="80px" width="80px" src="admin/img/member_product/<?php echo $pro_name; ?>/<?php echo $image; ?>"></td>
+                                                <td class="bold"><?php echo $amount; ?></td>
+                                                <td class="bold">$<?php echo $price; ?></td>
+                                                <td class="bold"><?php echo $with_auth; ?></td>
+                                                <td class="<?php echo $status == 'approved' ? 'paid' : 'pending'; ?>">
+                                                    <span><?php echo $status == 'approved' ? 'Paid' : 'Pending'; ?></span>
+                                                </td>
+                                            </tr>
+                                    <?php }
+                                    } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row bg-success">
+                <div class="col-md-12 ">
+                    <div class="withdraw_module withdraw_history">
+                        <div class="withdraw_table_header">
+                            <h3 class='text-success'>People They Want to Buy your Products Just Approved It</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table withdraw__table table-striped">
+                                <div id="response"></div>
+                                <thead>
                                     <tr>
-                                        <td>16 Dec 2016</td>
-                                        <td>Local Bank (USD) - Account ending in 5790</td>
-                                        <td class="bold">$2380</td>
-                                        <td class="paid">
-                                            <span>Paid</span>
-                                        </td>
+                                        <th>Name</th>
+                                        <th>Image</th>
+                                        <th>Price</th>
+                                        <th>Who Want To Buy</th>
+                                        <th>Status</th>
+                                        <th>Save</th>
                                     </tr>
+                                </thead>
 
-                                    <tr>
-                                        <td>09 Jul 2019</td>
-                                        <td>Payoneer</td>
-                                        <td class="bold">$568.50</td>
-                                        <td class="pending">
-                                            <span>Pending</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>20 May 2019</td>
-                                        <td>Payoneer</td>
-                                        <td class="bold">$1300.50</td>
-                                        <td class="paid">
-                                            <span>Paid</span>
-                                        </td>
-                                    </tr>
+                                <tbody>
+                                    <?php
+                                    $ownerFunc =  showProductForOwner($user);
+                                    foreach ($ownerFunc as $ownerPro_info) {
+                                        // $Owner_pro_id = $ownerPro_info['with_pro_id'];
+                                        $product_id = $ownerPro_info['with_pro_id'];
+                                        $mem_id = $ownerPro_info['with_buyer_id'];
+                                        $buyer_info = fetch_mem_info_by_id($mem_id);
+                                        foreach ($buyer_info as $buyer_name_fetch) {
+                                            $buyer_name = $buyer_name_fetch['mem_name'];
 
-                                    <tr>
-                                        <td>16 Dec 2016</td>
-                                        <td>Local Bank (USD) - Account ending in 5790</td>
-                                        <td class="bold">$2380</td>
-                                        <td class="paid">
-                                            <span>Paid</span>
-                                        </td>
-                                    </tr>
+                                            $productRetrive = showProductsById($product_id);
+                                            foreach ($productRetrive as $pro_data) {
+                                                $pro_name =  $pro_data['mem_pro_name'];
+                                                $image =  $pro_data['mem_pro_image'];
+                                                $price =  $pro_data['price']; ?>
+                                                <tr>
+                                                    <td><?php echo $pro_name; ?></td>
+                                                    <td><img height="80px" width="80px" src="admin/img/member_product/<?php echo $pro_name; ?>/<?php echo $image; ?>"></td>
+                                                    <td class="bold">$<?php echo $price; ?></td>
+                                                    <td class="bold"><?php echo $buyer_name; ?></td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-danger" id="btn_deny">Deny</button>
+                                                        <input type="hidden" id="with_pro_id" value="<?php echo $product_id; ?>">
+                                                        <input type="hidden" id="buyer_id" value="<?php echo $mem_id; ?>">
+                                                        <input type="hidden" id="buyer_name" value="<?php echo $buyer_name; ?>">
+                                                        <!-- <input type="text" id="amount" value="<?php // echo $amount; 
+                                                                                                    ?>"> -->
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-success" id="btn_approve">Approve</button>
+                                                    </td>
+                                                </tr>
+                                    <?php }
+                                        }
+                                    } ?>
                                 </tbody>
                             </table>
                         </div>
@@ -234,11 +299,30 @@
                 </div>
             </div>
         </div>
-        <!-- end /.container -->
     </div>
-    <!-- end /.dashboard_menu_area -->
 </section>
-<!--================================
-            END DASHBOARD AREA
-    =================================-->
+
+<script>
+    $(document).ready(function() {
+        $('#btn_approve').click(function() {
+            var with_pro_id = $('#with_pro_id').val();
+            var buyer_id = $('#buyer_id').val();
+            var amount = $('#amount').val();
+            var buyer_name = $('#buyer_name').val();
+            $.ajax({
+                url: 'phpscripts/withdrawal_process.php',
+                method: 'POST',
+                data: {
+                    with_pro_id: with_pro_id,
+                    buyer_id: buyer_id,
+                    buyer_name: buyer_name
+                },
+                success: function(response) {
+                    $('#response').html(response);
+                }
+            })
+        });
+    });
+</script>
+
 <?php require_once "footer.php"; ?>

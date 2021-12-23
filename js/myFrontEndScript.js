@@ -16,3 +16,4 @@ $(document).ready(function () {
         $('#comment')[0].reset();
     })
 });
+

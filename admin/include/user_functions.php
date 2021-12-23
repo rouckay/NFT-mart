@@ -8,7 +8,7 @@ session_start();
 // if (isset($_COOKIE['mem_user_id']) & isset($_COOKIE['mem_user_name']) & $_SESSION['member_user']) {
 // }
 
-
+$conn = config();
 
 
 function user_login($data)
@@ -461,6 +461,10 @@ function add_to_favourite($fav_pro_id, $fav_pro_author, $mem_id)
     $rows_dublicate = $stmt_dublicate->rowCount();
 
     if ($rows_dublicate >= 1) {
+        echo '<script>alert("This Product is Already In Your Favourite List")</script>';
+        // header("location:favourites.php?AlreadyExist");
+    } elseif ($mem_id == -1) {
+        header('location:login.php?login_to_add_to_fav');
     } else {
         $fav_add_sql = "INSERT INTO favourite (pro_id, pro_author , mem_id) VALUES (:pro_id, :pro_author, :mem_id)";
         $stmt_add_fav = $conn->prepare($fav_add_sql);
@@ -470,9 +474,9 @@ function add_to_favourite($fav_pro_id, $fav_pro_author, $mem_id)
             ':mem_id' => $mem_id
         ]);
         $success = 'added';
+        header("location:favourites.php?success_msg");
     }
     // header('location=./favourites.php.php?Added_successfully');
-    header("location:favourites.php?success_msg");
 }
 // upload Background Image For Home Page
 function background_image_add($name, $image)
@@ -790,6 +794,20 @@ function mem_pro_author($author)
     return $author_info;
 }
 // ENDMember Author Info That Was For Single Products Page
+// fetch_member Info By Id
+function fetch_mem_info_by_id($mem_id)
+{
+    $conn = config();
+    $sql_pro_author = "SELECT * FROM members WHERE mem_id=:mem_id";
+    $stmt = $conn->prepare($sql_pro_author);
+    $stmt->execute([
+        ':mem_id' => $mem_id
+    ]);
+    $rows_pro_author = $stmt->fetch(PDO::FETCH_ASSOC);
+    $author_info[] = $rows_pro_author;
+    return $author_info;
+}
+// END fetch_member Info By Id
 // Member Author Info That Was For Single Products Page
 function mem_pro_author_by_id($mem_user_id)
 {
@@ -953,4 +971,84 @@ function fetchParchased($buyer_id)
     return $resultPar;
 }
 // END Fetch Parchased Products List
+// Fetch WithDrawal Products that is in Pendding
+function fetch_Withdrawal($mem_id)
+{
+    // error_reporting(0);
+    $conn = config();
+    $retrive_withdrawal = "SELECT * FROM withdrawal WHERE with_buyer_id = :with_buyer_id";
+    $stmt_with = $conn->prepare($retrive_withdrawal);
+    $stmt_with->execute([
+        ':with_buyer_id' => $mem_id
+    ]);
+    $rowsWithD = $stmt_with->rowCount();
+    if ($rowsWithD >= 1) {
+        while ($row_withdrawal = $stmt_with->fetch(PDO::FETCH_ASSOC)) {
+            $result_with[] = $row_withdrawal;
+        }
+        return $result_with;
+    } else {
+    }
+}
+// END Fetch WithDrawal Products that is in Pendding
+// Show WithDrawal For Owner of product
+function showProductForOwner($user)
+{
+    $conn = config();
+    $retrive_withdrawal = "SELECT * FROM withdrawal WHERE with_pro_author = :with_pro_author";
+    $stmt_with = $conn->prepare($retrive_withdrawal);
+    $stmt_with->execute([
+        ':with_pro_author' => $user
+    ]);
+    while ($row_withdrawal = $stmt_with->fetch(PDO::FETCH_ASSOC)) {
+        $result_with[] = $row_withdrawal;
+    }
+    return $result_with;
+}
+// END Fetch WithDrawal Products that is in Pendding
+// Show Member Product By Id 
+function showProductsById($product_id)
+{
+    $conn = config();
+    $sql = "SELECT * FROM mem_products WHERE mem_pro_id= :mem_pro_id ";
+    $stmt_pro = $conn->prepare($sql);
+    $stmt_pro->execute([
+        ':mem_pro_id' => $product_id
+    ]);
+    while ($row_products = $stmt_pro->fetch(PDO::FETCH_ASSOC)) {
+        $resultPro[] = $row_products;
+    }
+    return $resultPro;
+}
+// END Show Member Product By Id 
+// Show Member Product with Author and Id 
+function showProductWithAuthorandId($product_id, $user)
+{
+    $conn = config();
+    $sql = "SELECT * FROM mem_products WHERE mem_pro_id= :mem_pro_id AND author = :author";
+    $stmt_pro = $conn->prepare($sql);
+    $stmt_pro->execute([
+        ':mem_pro_id' => $product_id,
+        ':author'
+    ]);
+    while ($row_products = $stmt_pro->fetch(PDO::FETCH_ASSOC)) {
+        $resultPro[] = $row_products;
+    }
+    return $resultPro;
+}
+// END Show Member Product By Id 
+// Notify User If SomeOne Want to Buy their Products
+function productNotif($user_name)
+{
+    $conn = config();
+    $sql_pro_notif = "SELECT * FROM withdrawal WHERE with_pro_author = :with_pro_author AND status = :status";
+    $stmt_notif = $conn->prepare($sql_pro_notif);
+    $stmt_notif->execute([
+        ':with_pro_author' => $user_name,
+        ':status' => 'pending'
+    ]);
+    $rows = $stmt_notif->rowCount();
+    return $rows;
+}
+// END Notify User If SomeOne Want to Buy their Products
 ?>

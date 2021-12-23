@@ -1,4 +1,6 @@
-<?php require_once 'header.php'; ?>
+<?php
+$curr_page = basename(__FILE__);
+require_once 'header.php'; ?>
 <!--================================
         START BREADCRUMB AREA
     =================================-->
