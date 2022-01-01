@@ -4,7 +4,7 @@ ob_start();
 include_once('functions.php');
 session_start();
 // Chech The User For Login
-
+// error_reporting(0);
 // if (isset($_COOKIE['mem_user_id']) & isset($_COOKIE['mem_user_name']) & $_SESSION['member_user']) {
 // }
 
@@ -308,7 +308,7 @@ function uploader_mem_pro($item_data, $image)
     // } else {
     move_uploaded_file($from, $to);
     // }
-    $insert_pro_sql = "INSERT INTO mem_products (mem_pro_name,mem_pro_detail, mem_pro_image,category_id,tag,at,author,price) VALUES (:name,:detail,:image,:category,:tag,:at,:author,:price)";
+    $insert_pro_sql = "INSERT INTO mem_products (mem_pro_name,mem_pro_detail, mem_pro_image,category_id,tag,at,author,price, expireDate) VALUES (:name,:detail,:image,:category,:tag,:at,:author,:price, :expireDate)";
     $stmt_pro_upl = $conn->prepare($insert_pro_sql);
     $stmt_pro_upl->execute([
         ':name' => $item_data['name'],
@@ -318,7 +318,8 @@ function uploader_mem_pro($item_data, $image)
         ':tag' => $item_data['tag'],
         ':at' => date('M n, Y') . "at" . date('h: i A'),
         ':author' => $user_name,
-        ':price' => $item_data['price']
+        ':price' => $item_data['price'],
+        ':expireDate' => $item_data['expireDate']
     ]);
     if ($insert_pro_sql) {
         header("location:dashboard-upload.php?success_added");
@@ -919,23 +920,13 @@ function get_replay($com_id)
 // END Fetch Replay Of Comment
 
 // Fetch All Author Products
-function all_author_products()
+function all_author_products($user)
 {
-    if (isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
-        $user_id = base64_decode($_COOKIE['mem_user_id']);
-        $user_name = base64_decode($_COOKIE['mem_user_name']);
-    } elseif (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
-        $user_id = $_SESSION['member_id'];
-        $user_name = $_SESSION['member_user'];
-    } else {
-        $user_id = -1;
-        $user_name = -1;
-    }
     $conn = config();
-    $slq_author_product = 'SELECT * FROM mem_products WHERE author = :author';
+    $slq_author_product = 'SELECT *, DATEDIFF(expireDate, CURDATE()) AS duration FROM mem_products WHERE author = :author';
     $stmt = $conn->prepare($slq_author_product);
     $stmt->execute([
-        ':author' => $user_name
+        ':author' => $user
     ]);
     while ($res = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $result[] = $res;
@@ -956,7 +947,7 @@ function popular_pro()
     return $resulter;
 }
 // END Home Page Featured Popular Products
-// Fetch Parchased Products List
+// Fetch Parchased Products List For Buyer
 function fetchParchased($buyer_id)
 {
     $conn = config();
@@ -970,7 +961,21 @@ function fetchParchased($buyer_id)
     }
     return $resultPar;
 }
-// END Fetch Parchased Products List
+// END Fetch Parchased Products List For Buyer
+function fetchParchasedwithSeller($user)
+{
+    $conn = config();
+    $sql_par = "SELECT * FROM parchased WHERE pro_author = :pro_author";
+    $stmt_par = $conn->prepare($sql_par);
+    $stmt_par->execute([
+        ':pro_author' => $user
+    ]);
+    while ($row_par = $stmt_par->fetch(PDO::FETCH_ASSOC)) {
+        $resultPar[] = $row_par;
+    }
+    return $resultPar;
+}
+// END Fetch Parchased Products List For Buyer
 // Fetch WithDrawal Products that is in Pendding
 function fetch_Withdrawal($mem_id)
 {
@@ -992,18 +997,23 @@ function fetch_Withdrawal($mem_id)
 }
 // END Fetch WithDrawal Products that is in Pendding
 // Show WithDrawal For Owner of product
-function showProductForOwner($user)
+function showProductForOwnerwithdrawal($user)
 {
     $conn = config();
+    // $thereIsNoProducts;
     $retrive_withdrawal = "SELECT * FROM withdrawal WHERE with_pro_author = :with_pro_author";
     $stmt_with = $conn->prepare($retrive_withdrawal);
     $stmt_with->execute([
         ':with_pro_author' => $user
     ]);
-    while ($row_withdrawal = $stmt_with->fetch(PDO::FETCH_ASSOC)) {
-        $result_with[] = $row_withdrawal;
+    $rows_product = $stmt_with->rowCount();
+    if ($rows_product >= 1) {
+        while ($row_withdrawal = $stmt_with->fetch(PDO::FETCH_ASSOC)) {
+            $result_with[] = $row_withdrawal;
+        }
+        return $result_with;
+    } else {
     }
-    return $result_with;
 }
 // END Fetch WithDrawal Products that is in Pendding
 // Show Member Product By Id 
@@ -1049,6 +1059,37 @@ function productNotif($user_name)
     ]);
     $rows = $stmt_notif->rowCount();
     return $rows;
+    $with_pro = $rows['with_pro_id'];
 }
 // END Notify User If SomeOne Want to Buy their Products
+// ProductNotification Description
+function NotificationDescription($with_pro)
+{
+    $conn = config();
+    $sql_notifDescription = "SELECT * from mem_products WHERE mem_pro_id = :mem_pro_id";
+    $stmt_pro_notif = $conn->prepare($sql_notifDescription);
+    $stmt_pro_notif->execute([
+        ':mem_pro_id' => $with_pro
+    ]);
+    while ($rows = $stmt_pro_notif->fetch(PDO::FETCH_ASSOC)) {
+        $result[] = $rows;
+    }
+    return $result;
+}
+// END ProductNotification Description
+// product Notification
+function proNotif($user)
+{
+    $conn = config();
+    $sql_noti = "SELECT * FROM withdrawal WHERE with_pro_author=:author ";
+    $stmt_with = $conn->prepare($sql_noti);
+    $stmt_with->execute([
+        ':author' => $user
+    ]);
+    while ($rows = $stmt_with->fetch(PDO::FETCH_ASSOC)) {
+        $resault[] = $rows;
+    }
+    return $resault;
+}
+// END product Notification
 ?>

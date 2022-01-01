@@ -182,7 +182,7 @@
                                                 <li>
                                                     <form action="edit_mem_product.php" method="POST">
                                                         <input type="hidden" name="pro_id" value="<?php echo $id; ?>">
-                                                        <a href="edit_mem_product.php" type="submit" name="btn_edit_pro" class="fa fa-edit btn-primary btn--round btn-sm">
+                                                        <a href="edit_mem_product.php" type="submit" name="btn_edit_pro" class="fa fa-edit">
                                                             Edit </a>
                                                     </form>
                                                 </li>
@@ -193,7 +193,7 @@
                                                     } ?>
                                                     <form method="POST" action="dashboard-manage-item.php">
                                                         <input type="hidden" name="pro_id" value="<?php echo $id; ?>">
-                                                        <button class="fa fa-hidden btn-primary btn--round btn-sm" type="submit" name="hide_pro">
+                                                        <button class="fa fa-hidden" style="border: none;color:blue" id="hidePro" type="submit" name="hide_pro">
                                                             <span class="lnr lnr-eye"></span> Hide</button>
                                                     </form>
                                                 </li>
@@ -208,7 +208,7 @@
                                                     <form action="dashboard-manage-item.php" method="POST">
                                                         <input type="hidden" name="pro_id" value="<?php echo $id; ?>">
                                                         <input type="hidden" name="author" value="<?php echo $by; ?>">
-                                                        <button class="fa fa-trash btn-danger btn--round btn-sm" type="submit" name="delete_mem_pro" class="delete"> Delete</button>
+                                                        <button class="fa fa-trash" style="border: none;color:red" type="submit" id="delete_mem_pro" name="delete_mem_pro" class="delete"> Delete</button>
                                                     </form>
                                                 </li>
                                             </ul>
@@ -306,19 +306,15 @@
                             </div>
                         </nav>
                     </div>
-                    <!-- end /.pagination-area -->
                 </div>
-                <!-- end /.col-md-12 -->
             </div>
-            <!-- end /.row -->
         </div>
-        <!-- end /.container -->
     </div>
-    <!-- end /.dashboard_menu_area -->
 </section>
-
-
-<!--================================
-            END DASHBOARD AREA
-    =================================-->
+<script>
+    const delete_mem_pro = document.querySelector('#delete_mem_pro');
+    const hidePro = document.querySelector('#hidePro');
+    delete_mem_pro.setAttribute('style', 'border:none; color:red')
+    hidePro.setAttribute('style', 'border:none; color:blue')
+</script>
 <?php require_once "footer.php"; ?>

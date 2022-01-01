@@ -112,7 +112,7 @@
                                                 $id = $rows_cat['cat_id'];
                                                 $cat_name = $rows_cat['cat_name'];
                                             ?>
-                                            <option value="<?php echo $id; ?>"><?php echo  $cat_name; ?></option>
+                                                <option value="<?php echo $id; ?>"><?php echo  $cat_name; ?></option>
                                             <?php } ?>
                                         </select>
                                         <span class="lnr lnr-chevron-down"></span>
@@ -123,17 +123,61 @@
                                     <label for="product_name">Product Name
                                         <span>(Max 100 characters)</span>
                                     </label>
-                                    <input type="text" name="frm[name]" required id="product_name" class="text_field"
-                                        placeholder="Enter your product name here...">
+                                    <input type="text" name="frm[name]" required id="product_name" class="text_field" placeholder="Enter your product name here...">
                                 </div>
                                 <div class="form-group">
                                     <label for="product_name">Product Details
                                         <span>(Max 500 characters)</span>
                                     </label>
-                                    <input type="text" name="frm[detail]" required id="product_name" class="text_field"
-                                        placeholder="Enter your product name here...">
+                                    <input type="text" name="frm[detail]" required id="product_name" class="text_field" placeholder="Enter your product name here...">
+                                </div>
+                                <div class="form-group">
+                                    <label for="product_name">Expire Date
+                                        <span>(Max 500 characters)</span>
+                                    </label>
+                                    <input type="date" name="frm[expireDate]" required id="product_name" class="text_field" placeholder="Enter your product name here...">
                                 </div>
 
+                                <div class="form-group">
+                                    <div class="upload_wrapper">
+                                        <p>Upload Image
+                                            <span>(JPEG or PNG 100x100px)</span>
+                                        </p>
+
+                                        <div class="custom_upload">
+                                            <label for="thumbnail">
+                                                <input type="file" required name="image" id="thumbnail" class="files">
+                                                <span class="btn  btn--sm">Choose Image</span>
+                                            </label>
+                                        </div>
+                                        <!-- end /.custom_upload -->
+
+                                        <div class="progress_wrapper">
+                                            <div class="labels clearfix">
+                                                <!-- <p>Thumbnail.jpg</p> -->
+                                                <span id="valueShower"></span>
+                                            </div>
+                                            <div class="progress">
+                                                <div class="progress-bar" id="progressUpload" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                                    <span class="sr-only"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="tags">Item Tags
+                                        <span>(Max 10 tags)</span>
+                                    </label>
+                                    <textarea name="frm[tag]" name="tags" id="tags" class="text_field" placeholder="Enter your item tags here..."></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rlicense">Regular License</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">$</span>
+                                        <input required type="text" name="frm[price]" id="rlicense" class="text_field" placeholder="00.00">
+                                    </div>
+                                </div>
                                 <!-- <div class="form-group no-margin">
                                     <p class="label">Product Description</p>
                                     <div id="trumbowyg-demo"></div>
@@ -144,60 +188,15 @@
                         <!-- end /.upload_modules -->
 
                         <div class="upload_modules module--upload">
-                            <div class="modules__title">
-                                <h3>Upload Files</h3>
-                            </div>
-                            <!-- end /.module_title -->
 
-                            <div class="modules__content">
-                                <div class="form-group">
-                                    <div class="upload_wrapper">
-                                        <p>Upload Thumbnail
-                                            <span>(JPEG or PNG 100x100px)</span>
-                                        </p>
-
-                                        <div class="custom_upload">
-                                            <label for="thumbnail">
-                                                <input type="file" required name="image" id="thumbnail" class="files">
-                                                <span class="btn btn--round btn--sm">Choose File</span>
-                                            </label>
-                                        </div>
-                                        <!-- end /.custom_upload -->
-
-                                        <div class="progress_wrapper">
-                                            <div class="labels clearfix">
-                                                <p>Thumbnail.jpg</p>
-                                                <span data-width="89">89%</span>
-                                            </div>
-                                            <div class="progress">
-                                                <div class="progress-bar" role="progressbar" aria-valuenow="70"
-                                                    aria-valuemin="0" aria-valuemax="100" style="width: 89%;">
-                                                    <span class="sr-only">70% Complete</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- end /.progress_wrapper -->
-
-                                        <span class="lnr upload_cross lnr-cross"></span>
-                                    </div>
-                                    <!-- end /.upload_wrapper -->
-                                </div>
-                                <!-- end /.form-group -->
-                            </div>
-                            <!-- end /.upload_modules -->
                         </div>
-                        <!-- end /.upload_modules -->
 
-                        <div class="upload_modules">
-                            <div class="modules__title">
-                                <h3>Others Information</h3>
-                            </div>
-                            <!-- end /.module_title -->
+                        <!-- <div class="upload_modules"> -->
 
-                            <div class="modules__content">
+                        <!-- <div class="modules__content"> -->
 
-                                <div class="row">
-                                    <!-- <div class="col-md-6">
+                        <!-- <div class="row"> -->
+                        <!-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="columns">Columns</label>
                                             <div class="select-wrap select-wrap2">
@@ -211,21 +210,21 @@
                                             </div>
                                         </div>
                                     </div> -->
-                                    <!-- end /.col-md-6 -->
+                        <!-- end /.col-md-6 -->
 
-                                    <!-- <div class="col-md-6">
+                        <!-- <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="dimension">Item Dimensions</label>
                                             <input disabled type="text" id="dimension" class="text_field"
                                                 placeholder="Ex: 1920x6000.">
                                         </div>
                                     </div> -->
-                                    <!-- end /.col-md-6 -->
-                                </div>
-                                <!-- end /.row -->
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <!-- <div class="form-group radio-group">
+                        <!-- end /.col-md-6 -->
+                        <!-- </div> -->
+                        <!-- end /.row -->
+                        <!-- <div class="row"> -->
+                        <!-- <div class="col-md-6"> -->
+                        <!-- <div class="form-group radio-group">
                                             <p class="label">High Resolution</p>
                                             <div class="custom-radio">
                                                 <input disabled type="radio" id="yes" class="" name="high_res">
@@ -239,11 +238,11 @@
                                                     <span class="circle"></span>no</label>
                                             </div>
                                         </div> -->
-                                    </div>
-                                    <!-- end /.col-md-6 -->
+                        <!-- </div> -->
+                        <!-- end /.col-md-6 -->
 
-                                    <div class="col-md-6">
-                                        <!-- <div class="form-group radio-group">
+                        <!-- <div class="col-md-6"> -->
+                        <!-- <div class="form-group radio-group">
                                             <p class="label">Retina Ready</p>
                                             <div class="custom-radio">
                                                 <input disabled type="radio" id="ryes" class="" name="retina">
@@ -257,52 +256,13 @@
                                                     <span class="circle"></span>no</label>
                                             </div>
                                         </div> -->
-                                    </div>
-                                    <!-- end /.col-md-6 -->
-                                </div>
-                                <!-- end /.row -->
+                        <!-- </div> -->
+                        <!-- </div> -->
 
-                                <div class="form-group">
-                                    <label for="tags">Item Tags
-                                        <span>(Max 10 tags)</span>
-                                    </label>
-                                    <textarea name="frm[tag]" name="tags" id="tags" class="text_field"
-                                        placeholder="Enter your item tags here..."></textarea>
-                                </div>
-                            </div>
-                            <!-- end /.upload_modules -->
-                        </div>
-                        <!-- end /.upload_modules -->
-
-                        <div class="upload_modules with--addons">
-                            <div class="modules__title">
-                                <h3>Others Information</h3>
-                            </div>
-                            <!-- end /.module_title -->
-
-                            <div class="modules__content">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="rlicense">Regular License</label>
-                                            <div class="input-group">
-                                                <span class="input-group-addon">$</span>
-                                                <input required type="text" name="frm[price]" id="rlicense"
-                                                    class="text_field" placeholder="00.00">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- end /.col-md-6 -->
-                                </div>
-                                <!-- end /.row -->
-                            </div>
-                            <!-- end /.modules__content -->
-                        </div>
-                        <!-- end /.upload_modules -->
+                        <!-- </div> -->
+                        <!-- </div> -->
                         <!-- submit button -->
-                        <button type="submit" name="btn_uploade" class="btn btn--round btn--fullwidth btn--lg">Submit
-                            Your Item for
-                            Review</button>
+                        <button type="submit" name="btn_uploade" class="btn btn--round btn--fullwidth btn--lg">Save</button>
                     </form>
                 </div>
                 <!-- end /.col-md-8 -->
@@ -375,20 +335,31 @@
                                 </ul>
                             </div>
                         </div>
-                        <!-- end /.sidebar-card -->
                     </aside>
-                    <!-- end /.sidebar -->
                 </div>
-                <!-- end /.col-md-4 -->
             </div>
-            <!-- end /.row -->
         </div>
-        <!-- end /.container -->
     </div>
-    <!-- end /.dashboard_menu_area -->
 </section>
-<!--================================
-            END DASHBOARD AREA
-    =================================-->
+<script>
+    const progressUp = document.querySelector('#progressUpload');
+    const valueShower = document.querySelector('#valueShower');
+    const btnUpload = document.querySelector('#thumbnail');
 
+    btnUpload.addEventListener('click', progress);
+
+    function progress() {
+        var progressNum = 0;
+
+        function progr() {
+            progressNum++;
+            progressUp.setAttribute('style', `width: ${progressNum}%`);
+            valueShower.innerHTML = progressNum + ' %';
+            if (progressNum == 100) {
+                clearInterval(inter);
+            }
+        }
+        var inter = setInterval(progr, 100);
+    }
+</script>
 <?php require_once "footer.php";  ?>

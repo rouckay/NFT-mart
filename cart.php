@@ -20,11 +20,8 @@
                 </div>
                 <h1 class="page-title">Shopping Cart</h1>
             </div>
-            <!-- end /.col-md-12 -->
         </div>
-        <!-- end /.row -->
     </div>
-    <!-- end /.container -->
 </section>
 <!--================================
         END BREADCRUMB AREA
@@ -86,8 +83,6 @@ if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
                     <!-- Row Count Of Cart -->
                     <?php $count_cart_pro =  count_row_cart($mem_id);
                     if ($count_cart_pro >= 1) {
-
-
                     ?>
                         <!-- Reffered mem_id to buyerId -->
                         <?php $buyer_id = $mem_id;  ?>
@@ -111,13 +106,14 @@ if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
                                                     <a href="">
                                                         <h4><?php echo $cart_mem_pro_info['mem_pro_name']; ?></h4>
                                                     </a>
-                                                    <p><?php echo $cart_mem_pro_info['mem_pro_detail'] ?></p>
-                                                    <input type="number" id="amount" class='form-control' placeholder="Please Select The Amount!" value="1">
+                                                    <p><?php echo "<span class='btn btn-sm btn--round btn-success'>Author: <span class='lnr lnr-user'> </span>{$cart_mem_pro_info['author']}</span>";  ?></p>
+                                                    <p><?php echo substr($cart_mem_pro_info['mem_pro_detail'], 0, 20) ?></p>
+                                                    <label for="">Amount:</label>
+                                                    <input type="number" id="amount" class='form-control' value="1">
                                                 </div>
                                             </div>
                                             <!-- end /.product__description -->
                                         </div>
-                                        <!-- end /.col-md-5 -->
 
                                         <div class="col-lg-3 col-md-2 v_middle">
                                             <div class="product__additional_info">
@@ -222,6 +218,7 @@ if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
                 amount: amount
             }, function(resp) {
                 $('#resp').html(resp);
+                location.href = "./cart.php";
             })
         });
     })

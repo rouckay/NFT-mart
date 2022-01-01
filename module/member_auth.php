@@ -30,41 +30,45 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
                         echo $pro_notif >= 1 ? "<span class='notification_count noti'>$pro_notif</span>" : '';
                         ?>
                     </div>
-
                     <div class="dropdowns notification--dropdown">
-
                         <div class="dropdown_module_header">
                             <h4>My Notifications</h4>
                             <a href="notification.php">View All</a>
                         </div>
+                        <?php
+                        $user = $user_name;
+                        $notif = proNotif($user);
+                        foreach ($notif as $notif_data) {
+                            $product_id = $notif_data['with_pro_id'];
+                            $proFromTbl = showProductsById($product_id);
+                            foreach ($proFromTbl as $proTblInfo) {
+                                $pro_name = $proTblInfo['mem_pro_name'];
+                                $pro_image = $proTblInfo['mem_pro_image'];
+                        ?>
 
-                        <div class="notifications_module">
-
-                            <!-- end /.notifications -->
-
-                            <div class="notification">
-                                <div class="notification__info">
-                                    <div class="info_avatar">
-                                        <img src="images/notification_head2" alt="">
-                                    </div>
-                                    <div class="info">
-                                        <p>
-                                            <span>Mahmood</span> commented on
-                                            <a href="#">MartPlace Extension Bundle</a>
-                                        </p>
-                                        <p class="time">Just now</p>
+                                <div class="notifications_module">
+                                    <div class="notification">
+                                        <div class="notification__info">
+                                            <div class="info_avatar">
+                                                <img width="100px" height="50px" src="admin/img/member_product/<?php echo $pro_name; ?>/<?php echo $pro_image; ?>" alt="<?php echo $pro_name; ?>">
+                                            </div>
+                                            <div class="info">
+                                                <p>
+                                                    <span><?php echo $pro_name; ?></span><a href="dashboard-withdrawal.php#productConfirmPlace">Someone Want TO buy This</a>
+                                                </p>
+                                                <p class="time"><?php echo $notif_data['with_date'] ?></p>
+                                            </div>
+                                        </div>
+                                        <div class="notification__icons ">
+                                            <span class="lnr lnr-cart purchased noti_icon"></span>
+                                        </div>
                                     </div>
                                 </div>
-                                <!-- end /.notifications -->
-
-                                <div class="notification__icons ">
-                                    <span class="lnr lnr-bubble commented noti_icon"></span>
-                                </div>
-                                <!-- end /.notifications -->
-                            </div>
-                        </div>
-                        <!-- end /.dropdown -->
+                        <?php  }
+                        }
+                        ?>
                     </div>
+
                 </li>
 
                 <li class="has_dropdown">
@@ -168,7 +172,6 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
                         <!-- END Cart Badge -->
                     </div>
                     <?php
-
                     while ($rows_cart = $stmt_cart->fetch(PDO::FETCH_ASSOC)) {
                         $cart_product = $rows_cart['pro_id'];
                         $cart_owner = $rows_cart['pro_author'];

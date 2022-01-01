@@ -1,6 +1,3 @@
-<!--================================
-    START FOOTER AREA
-=================================-->
 <footer class="footer-area">
     <div class="footer-big section--padding">
         <!-- start .container -->
@@ -9,9 +6,9 @@
                 <div class="col-lg-3 col-md-6">
                     <div class="info-footer">
                         <div class="info__logo">
-                            <img src="img/Marketplacefooter.png" alt="footer logo">
+                            <img src="img/marketplaceWhiteLogo.png" alt="footer logo">
                         </div>
-                        <p class="info--text">The Future Of the Gameing.</p>
+                        <p class="info--text">Dr.Najit In Your Home.</p>
                         <ul class="info-contact">
                             <li>
                                 <span class="lnr lnr-phone info-icon"></span>
@@ -19,7 +16,7 @@
                             </li>
                             <li>
                                 <span class="lnr lnr-envelope info-icon"></span>
-                                <span class="info">info@worldToken.com</span>
+                                <span class="info">info@nijat.com</span>
                             </li>
                             <li>
                                 <span class="lnr lnr-map-marker info-icon"></span>
@@ -104,7 +101,6 @@
                             </form>
                         </div>
 
-                        <!-- start .social -->
                         <div class="social social--color--filled">
                             <ul>
                                 <li>
@@ -139,26 +135,19 @@
                                 </li>
                             </ul>
                         </div>
-                        <!-- end /.social -->
                     </div>
-                    <!-- end /.newsletter -->
                 </div>
-                <!-- end /.col-md-4 -->
             </div>
-            <!-- end /.row -->
         </div>
-        <!-- end /.container -->
     </div>
-    <!-- end /.footer-big -->
-
     <div class="mini-footer">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <div class="copyright-text">
-                        <p>&copy; 2019
-                            <a href="#">MartPlace</a>. All rights reserved. Created by
-                            <a href="#">Arya Dev</a>
+                        <p>&copy; <span id='year'></span>
+                            <a href="#">Nijat</a>. All rights reserved. Created by
+                            <a href="#">Qalam University Developers &#128170; with &#128151;</a>
                         </p>
                     </div>
 
@@ -263,6 +252,12 @@
     </div>
 </div>
 <!--//////////////////// JS GOES HERE ////////////////-->
+
+<script>
+    var year = document.querySelector('#year');
+    const d = new Date();
+    year.innerHTML = d.getFullYear();
+</script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0C5etf1GVmL_ldVAichWwFFVcDfa1y_c"></script>
 <!-- inject:js -->

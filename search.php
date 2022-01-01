@@ -7,7 +7,7 @@
 if (isset($_POST['btn_s']) || isset($_POST['main_menu_search'])) {
     $conn = config();
     $result = $_POST['s_text'];
-    $s_sql = "SELECT * FROM products WHERE pro_id LIKE :id OR pro_name LIKE :name OR pro_detail LIKE :detail OR pro_price LIKE :price OR pro_category_id LIKE :category";
+    $s_sql = "SELECT * FROM mem_products WHERE mem_pro_id LIKE :id OR mem_pro_name LIKE :name OR mem_pro_detail LIKE :detail OR price LIKE :price OR category_id LIKE :category";
     $stmt_s = $conn->prepare($s_sql);
     $stmt_s->execute([
         ':id' => '%' . $result . '%',
@@ -22,58 +22,47 @@ if (isset($_POST['btn_s']) || isset($_POST['main_menu_search'])) {
         $no_product = "Please Enter Try Another Keyword for Search!";
     }
 ?>
-<section class="search-wrapper">
-    <div class="search-area2 bgimage">
-        <div class="bg_image_holder">
-            <img src="img/NFT.jpg" alt="">
-        </div>
-        <div class="container content_above">
-            <div class="row">
-                <div class="col-md-8 offset-md-2">
-                    <div class="search">
-                        <div class="search__title">
-                            <h3>
-                                <span> Total Result ( <?php echo $rows; ?></span> ) Founded<br>Searched For (
-                                <?php echo $result; ?>
-                                )
-                            </h3>
-                        </div>
-                        <div class="search__field">
-                            <form action="#">
-                                <div class="field-wrapper">
-                                    <input class="relative-field rounded" type="text"
-                                        placeholder="Search your products">
-                                    <button class="btn btn--round" type="submit">Search</button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="breadcrumb">
-                            <ul>
-                                <li>
-                                    <a href="#">Home</a>
-                                </li>
-                                <li class="active">
-                                    <a href="#">All Products</a>
-                                </li>
-                            </ul>
+    <section class="search-wrapper">
+        <div class="search-area2 bgimage">
+            <div class="bg_image_holder">
+                <img src="img/abstract.jpg" alt="">
+            </div>
+            <div class="container content_above">
+                <div class="row">
+                    <div class="col-md-8 offset-md-2">
+                        <div class="search">
+                            <div class="search__title">
+                                <h3>
+                                    <span> Total Result ( <?php echo $rows; ?></span> ) Founded<br>Searched For (
+                                    <?php echo $result; ?>
+                                    )
+                                </h3>
+                            </div>
+                            <div class="search__field">
+                                <form action="#">
+                                    <div class="field-wrapper">
+                                        <input class="relative-field rounded" type="text" placeholder="Search your products">
+                                        <button class="btn btn--round" type="submit">Search</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="breadcrumb">
+                                <ul>
+                                    <li>
+                                        <a href="#">Home</a>
+                                    </li>
+                                    <li class="active">
+                                        <a href="#">All Products</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- end /.row -->
         </div>
-        <!-- end /.container -->
-    </div>
-    <!-- end /.search-area2 -->
-</section>
+    </section>
 <?php } ?>
-<!--================================
-        END SEARCH AREA
-    =================================-->
-
-<!--================================
-        START FILTER AREA
-    =================================-->
 <div class="filter-area">
     <div class="container">
         <div class="row">
@@ -113,33 +102,17 @@ if (isset($_POST['btn_s']) || isset($_POST['main_menu_search'])) {
                         </div>
                     </div>
                 </div>
-                <!-- end filter-bar -->
             </div>
-            <!-- end /.col-md-12 -->
         </div>
-        <!-- end filter-bar -->
     </div>
 </div>
-<!--================================
-        END FILTER AREA
-    =================================-->
-
-
-<!--================================
-        START PRODUCTS AREA
-    =================================-->
 <section class="products section--padding2">
-    <!-- start container -->
     <div class="container">
-        <!-- start .row -->
         <div class="row">
-            <!-- start .col-md-3 -->
             <div class="col-lg-3">
-                <!-- start aside -->
                 <aside class="sidebar product--sidebar">
                     <div class="sidebar-card card--category">
-                        <a class="card-title" href="#collapse1" role="button" data-toggle="collapse"
-                            aria-expanded="false" aria-controls="collapse1">
+                        <a class="card-title" href="#collapse1" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse1">
                             <h4>Categories
                                 <span class="lnr lnr-chevron-down"></span>
                             </h4>
@@ -149,12 +122,10 @@ if (isset($_POST['btn_s']) || isset($_POST['main_menu_search'])) {
                                 <?php include_once('module/category.php'); ?>
                             </ul>
                         </div>
-                        <!-- end /.collapsible_content -->
                     </div>
 
                     <div class="sidebar-card card--slider">
-                        <a class="card-title" href="#collapse3" role="button" data-toggle="collapse"
-                            aria-expanded="false" aria-controls="collapse3">
+                        <a class="card-title" href="#collapse3" role="button" data-toggle="collapse" aria-expanded="false" aria-controls="collapse3">
                             <h4>Filter Products
                                 <span class="lnr lnr-chevron-down"></span>
                             </h4>
@@ -170,28 +141,24 @@ if (isset($_POST['btn_s']) || isset($_POST['main_menu_search'])) {
                             </div>
                         </div>
                     </div>
-                    <!-- end /.sidebar-card -->
                 </aside>
-                <!-- end aside -->
             </div>
-            <!-- end /.col-md-3 -->
 
-            <!-- start col-md-9 -->
             <div class="col-lg-9">
                 <div class="row">
                     <?php if (isset($no_product)) { ?>
-                    <div class="alert alert-danger" role="alert">
-                        <span class="alert_icon lnr lnr-warning"></span>
-                        <strong>Oh No!</strong> <?php echo $no_product; ?>.
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span class="lnr lnr-cross" aria-hidden="true"></span>
-                        </button>
-                    </div>
+                        <div class="alert alert-danger" role="alert">
+                            <span class="alert_icon lnr lnr-warning"></span>
+                            <strong>Oh No!</strong> <?php echo $no_product; ?>.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span class="lnr lnr-cross" aria-hidden="true"></span>
+                            </button>
+                        </div>
                     <?php  } ?>
                     <?php
                     if (isset($_POST['btn_s']) || isset($_POST['main_menu_search'])) {
                         $conn = config();
-                        $s_sql = "SELECT * FROM products WHERE pro_id LIKE :id OR pro_name LIKE :name OR pro_detail LIKE :detail OR pro_price LIKE :price OR pro_category_id LIKE :category";
+                        $s_sql = "SELECT * FROM mem_products WHERE mem_pro_id LIKE :id OR mem_pro_name LIKE :name OR mem_pro_detail LIKE :detail OR price LIKE :price OR category_id LIKE :category";
                         $stmt_s = $conn->prepare($s_sql);
                         $stmt_s->execute([
                             ':id' => '%' . $result . '%',
@@ -201,75 +168,115 @@ if (isset($_POST['btn_s']) || isset($_POST['main_menu_search'])) {
                             ':category' => '%' . $result . '%'
                         ]);
                         while ($pros = $stmt_s->fetch(PDO::FETCH_ASSOC)) {
-                            $id = $pros['pro_id'];
-                            $name = $pros['pro_name'];
-                            $detail = $pros['pro_detail'];
-                            $category = $pros['pro_category_id'];
-                            $by = $pros['pro_author'];
-                            $image = $pros['pro_image'];
+                            $id = $pros['mem_pro_id'];
+                            $name = $pros['mem_pro_name'];
+                            $detail = $pros['mem_pro_detail'];
+                            $category = $pros['category_id'];
+                            $by = $pros['author'];
+                            $image = $pros['mem_pro_image'];
 
                     ?>
 
-                    <div class="col-lg-4 col-md-6">
-                        <!-- start .single-product -->
-                        <div class="product product--card product--card-small">
-                            <div class="product__thumbnail">
-                                <!-- Image & video Show -->
-                                <?php
+                            <div class="col-lg-4 col-md-6">
+                                <!-- start .single-product -->
+                                <div class="product product--card product--card-small">
+                                    <div class="product__thumbnail">
+                                        <!-- Image & video Show -->
+                                        <?php
                                         $exp = explode(".", $image);
                                         $ext = end($exp);
                                         if ($ext == "jpg" or $ext == "png" or $ext == "jpeg") { ?>
-                                <img height="230px" width="361px"
-                                    src="./admin/img/product/<?php echo $name; ?>/<?php echo $image; ?>"
-                                    alt="Product Image">
+                                            <img height="230px" width="361px" src="./admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>" alt="Product Image">
 
-                                <?php } else { ?>
-                                <video width="100%" height="100%" autoplay muted loop>
-                                    <source src="./admin/img/product/<?php echo $name; ?>/<?php echo $image; ?>">
-                                </video>
-                                <?php } ?>
-                                <!-- END Image & video Show -->
-                                <div class="prod_btn">
-                                    <a href="single-product.php?id=<?php echo $id; ?>"
-                                        class="transparent btn--sm btn--round">More Info</a>
-                                    <a href="single-product.php?id=<?php echo $id; ?>"
-                                        class="transparent btn--sm btn--round">Live Demo</a>
+                                        <?php } else { ?>
+                                            <video width="100%" height="100%" autoplay muted loop>
+                                                <source src="./admin/img/product/<?php echo $name; ?>/<?php echo $image; ?>">
+                                            </video>
+                                        <?php } ?>
+                                        <!-- END Image & video Show -->
+                                        <div class="prod_btn">
+                                            <a href="single-product.php?id=<?php echo $id; ?>" class="transparent btn--sm btn--round">More Info</a>
+                                            <a href="single-product.php?id=<?php echo $id; ?>" class="transparent btn--sm btn--round">Live Demo</a>
+                                        </div>
+                                        <!-- end /.prod_btn -->
+                                    </div>
+                                    <!-- end /.product__thumbnail -->
+
+                                    <div class="product-desc">
+                                        <a href="#" class="product_title">
+                                            <h4><?php echo $name; ?></h4>
+                                        </a>
+                                        <ul class="titlebtm">
+                                            <li>
+                                                <img class="auth-img" src="images/auth3.jpg" alt="author image">
+                                                <p>
+                                                    <a href="#"><?php echo $by; ?></a>
+                                                </p>
+                                            </li>
+                                            <li class="out_of_class_name">
+                                                <div class="sell">
+                                                    <p>
+                                                        <span class="lnr lnr-cart"></span>
+                                                        <span>27</span>
+                                                    </p>
+                                                </div>
+                                                <div class="rating product--rating">
+                                                    <ul>
+                                                        <!-- rate -->
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+
+                                    </div>
                                 </div>
-                                <!-- end /.prod_btn -->
                             </div>
-                            <!-- end /.product__thumbnail -->
+                            <div class="wrapper">
+                                <div class="card-rotate-bg"></div>
 
-                            <div class="product-desc">
-                                <a href="#" class="product_title">
-                                    <h4><?php echo $name; ?></h4>
-                                </a>
-                                <ul class="titlebtm">
-                                    <li>
-                                        <img class="auth-img" src="images/auth3.jpg" alt="author image">
-                                        <p>
-                                            <a href="#"><?php echo $by; ?></a>
-                                        </p>
-                                    </li>
-                                    <li class="out_of_class_name">
-                                        <div class="sell">
-                                            <p>
-                                                <span class="lnr lnr-cart"></span>
-                                                <span>27</span>
-                                            </p>
-                                        </div>
-                                        <div class="rating product--rating">
-                                            <ul>
-                                                <!-- rate -->
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
+                                <div class="card">
 
+                                    <div class="card-head">
+                                        <img style="height: 200px;" src="admin/img/member_product/<?php // echo $name 
+                                                                                                    ?>/<?php // echo $image 
+                                                                                                    ?>" alt="" class="product-img">
+                                        <button class="bid-btn">GO Detail Page</button>
+                                    </div>
+                                    <div class="card-body">
+
+                                        <div class="wrapper-flex mb">
+
+                                            <div class="bid-info">
+                                                <div class="img-box">
+                                                    <img src="admin/img/member_product/<?php  //echo $name 
+                                                                                        ?>/<?php echo $image ?>" alt="" class="product-img">
+                                                    <img src="admin/img/member_product/<?php  //echo $name 
+                                                                                        ?>/<?php echo $image ?>" alt="" class="product-img">
+                                                    <img src="admin/img/member_product/<?php  //echo $name 
+                                                                                        ?>/<?php echo $image ?>" alt="" class="product-img">
+                                                </div>
+                                                <a href="#">10+ Place Bid.</a>
+                                            </div>
+                                            <button class="share-btn">
+                                                <ion-icon name="ellipsis-horizontal"></ion-icon>
+                                            </button>
+                                        </div>
+                                        <h4 class="product-name">Hi</h4>
+                                        <a href="#"><?php // echo $name 
+                                                    ?></a>
+                                        </h4>
+                                        <a href="#" class="latest-bid"><?php // echo substr($detail, 0, 10) 
+                                                                        ?></a>
+                                        <div class="wrapper-flex">
+                                            <div class="last-bid"><?php // echo $price 
+                                                                    ?></div>
+                                            <div class="react">
+                                                <ion-icon name="heart-outline"></ion-icon> <span>322</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <!-- end /.product-desc -->
-                        </div>
-                        <!-- end /.single-product -->
-                    </div>
                     <?php }
                     } else {
                         header('location:index.php');

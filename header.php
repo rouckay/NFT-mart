@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="css/slick.css">
     <link rel="stylesheet" href="css/trumbowyg.min.css">
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="css/NFTcard.css">
     <link rel="stylesheet" href="style.css">
     <!-- endinject -->
     <!-- Favicon -->

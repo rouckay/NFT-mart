@@ -322,7 +322,9 @@ $at = $row_user['created_at'];
                                 </div>
                             <?php } elseif ($rows_in_db == '1') { ?>
                                 <div class="text text-primary"><?php echo $user_bio_detail_from_db;  ?></div>
+                                <input type="hidden" id="mem_idUpBio" value="<?php echo $mem_id; ?>">
                                 <button id="createBio" class='btn btn-info btn-sm'>Edit Bio</button>
+                                <div id="responseUpdateBio"></div>
                                 <br />
                                 <hr>
                                 <div id="bioTextBoxHere">
@@ -503,13 +505,38 @@ $at = $row_user['created_at'];
     // Update BIO
     var createBio = document.getElementById('createBio');
     var place = document.getElementById('bioTextBoxHere');
-    createBio.addEventListener('click', function() {
+    createBio.addEventListener('click', addBioFun);
+
+    function addBioFun(e) {
+        e.preventDefault();
         var input = document.createElement('input');
         var submit = document.createElement('button');
-        input.setAttribute('class', 'form-control input-group')
+        input.classList = 'form-control form-group';
+        input.id = "bioUpdateTextBox"
         place.appendChild(input);
-    });
-
+        submit.innerHTML = "Save BIO";
+        submit.id = 'updateBio';
+        place.appendChild(submit);
+        submit.classList = 'btn btn-sm btn-info';
+        $(document).ready(function() {
+            $('#updateBio').click(function(e) {
+                e.preventDefault();
+                var mem_idUpBio = $('#mem_idUpBio').val();
+                var bioUpdateTextBox = $('#bioUpdateTextBox').val();
+                $.ajax({
+                    url: 'phpscripts/updateBio.php',
+                    method: 'POST',
+                    data: {
+                        mem_idUpBio: mem_idUpBio,
+                        bioUpdateTextBox: bioUpdateTextBox
+                    },
+                    success: function(responseUpdateBio) {
+                        $('#responseUpdateBio').html(responseUpdateBio);
+                    }
+                })
+            });
+        })
+    }
 
     // $(document).ready(function() {
     //     $('#save_bio').click(function() {

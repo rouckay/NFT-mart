@@ -1,17 +1,14 @@
 <!DOCTYPE html>
 <html>
 <title>HTML Tutorial</title>
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <body>
 
     <!-- Display login status -->
     <div id="status"></div>
-
     <!-- Facebook login or logout button -->
     <a href="javascript:void(0);" onclick="fbLogin();" id="fbLink"><img src="images/fb-login-btn.png" /></a>
-
     <!-- Display user's profile info -->
     <div class="ac-data" id="userData"></div>
     <script>

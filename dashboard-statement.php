@@ -1,9 +1,10 @@
 <?php
 $curr_page = basename(__FILE__);
 require_once 'header.php'; ?>
-<!--================================
-        START BREADCRUMB AREA
-    =================================-->
+<?php
+session_cookie($mem_id, $user);
+$buyer_id = $mem_id;
+?>
 <section class="breadcrumb-area">
     <div class="container">
         <div class="row">
@@ -23,57 +24,16 @@ require_once 'header.php'; ?>
                 </div>
                 <h1 class="page-title">Sales Statements</h1>
             </div>
-            <!-- end /.col-md-12 -->
         </div>
-        <!-- end /.row -->
     </div>
-    <!-- end /.container -->
 </section>
-<!--================================
-        END BREADCRUMB AREA
-    =================================-->
-
-<!--================================
-            START DASHBOARD AREA
-    =================================-->
 <section class="dashboard-area">
     <div class="dashboard_menu_area">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
                     <ul class="dashboard_menu">
-                        <li>
-                            <a href="dashboard.html">
-                                <span class="lnr lnr-home"></span>Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="dashboard-setting.html">
-                                <span class="lnr lnr-cog"></span>Setting</a>
-                        </li>
-                        <li>
-                            <a href="dashboard-purchase.html">
-                                <span class="lnr lnr-cart"></span>Purchase</a>
-                        </li>
-                        <li>
-                            <a href="dashboard-add-credit.html">
-                                <span class="lnr lnr-dice"></span>Add Credits</a>
-                        </li>
-                        <li class="active">
-                            <a href="dashboard-statement.html">
-                                <span class="lnr lnr-chart-bars"></span>Statements</a>
-                        </li>
-                        <li>
-                            <a href="dashboard-upload.html">
-                                <span class="lnr lnr-upload"></span>Upload Items</a>
-                        </li>
-                        <li>
-                            <a href="dashboard-manage-item.html">
-                                <span class="lnr lnr-briefcase"></span>Manage Items</a>
-                        </li>
-                        <li>
-                            <a href="dashboard-withdrawal.html">
-                                <span class="lnr lnr-briefcase"></span>Withdrawals</a>
-                        </li>
+                        <?php require_once('module/dashboard_nav.php') ?>
                     </ul>
                     <!-- end /.dashboard_menu -->
                 </div>
@@ -202,171 +162,106 @@ require_once 'header.php'; ?>
                                     <th>Action</th>
                                 </tr>
                             </thead>
-
                             <tbody>
-                                <tr>
-                                    <td>09 Jul 2019</td>
-                                    <td>MP810094</td>
-                                    <td class="author">AazzTech</td>
-                                    <td class="detail">
-                                        <a href="single-product.html">Visibility Manager Subscriptions</a>
-                                    </td>
-                                    <td class="type">
-                                        <span class="sale">Sale</span>
-                                    </td>
-                                    <td>$49</td>
-                                    <td class="earning">$24.50</td>
-                                    <td class="action">
-                                        <a href="invoice.html">view</a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>03 Jul 2019</td>
-                                    <td>MP810094</td>
-                                    <td class="author">Markober</td>
-                                    <td class="detail">
-                                        <a href="single-product.html">Martplace Coffee Shop</a>
-                                    </td>
-                                    <td class="type">
-                                        <span class="purchase">Purchase</span>
-                                    </td>
-                                    <td>$30</td>
-                                    <td class="earning subtract">-$30</td>
-                                    <td class="action">
-                                        <a href="invoice.html">view</a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>09 Jul 2019</td>
-                                    <td>MP810094</td>
-                                    <td class="author">Themexylum</td>
-                                    <td class="detail">
-                                        <a href="single-product.html">MartPlace Extension Bundle</a>
-                                    </td>
-                                    <td class="type">
-                                        <span class="sale">Sale</span>
-                                    </td>
-                                    <td>$49</td>
-                                    <td class="earning">$24.50</td>
-                                    <td class="action">
-                                        <a href="invoice.html">view</a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>05 Apr 2019</td>
-                                    <td>MP810094</td>
-                                    <td class="author">AazzTech</td>
-                                    <td class="detail">
-                                        <a href="single-product.html">Stack - Responsive Bootstrap 4 Admin Template</a>
-                                    </td>
-                                    <td class="type">
-                                        <span class="sale">Sale</span>
-                                    </td>
-                                    <td>$20</td>
-                                    <td class="earning">$10</td>
-                                    <td class="action">
-                                        <a href="invoice.html">view</a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>25 Dec 2016</td>
-                                    <td>MP810394</td>
-                                    <td class="author text-center" colspan="2">Via Payoneer</td>
-                                    <td class="type">
-                                        <span class="credited">Credited</span>
-                                    </td>
-                                    <td>$49</td>
-                                    <td class="earning">$24.50</td>
-                                    <td class="action">
-                                        <a href="invoice.html">view</a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>09 Jul 2019</td>
-                                    <td>MP810094</td>
-                                    <td class="author text-center" colspan="2">Via Paypal</td>
-                                    <td class="type">
-                                        <span class="withdrawal">Withdraw</span>
-                                    </td>
-                                    <td>$350</td>
-                                    <td class="earning subtract">-$350</td>
-                                    <td class="action">
-                                        <a href="invoice.html">view</a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>0 Feb 2019</td>
-                                    <td>MP810094</td>
-                                    <td class="author">Artcorner</td>
-                                    <td class="detail">
-                                        <a href="single-product.html">Rida - Applanding Onepage </a>
-                                    </td>
-                                    <td class="type">
-                                        <span class="purchase">Purchase</span>
-                                    </td>
-                                    <td>$30</td>
-                                    <td class="earning subtract">-$30</td>
-                                    <td class="action">
-                                        <a href="invoice.html">view</a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>26 May 2016</td>
-                                    <td>MP81024</td>
-                                    <td class="author">Awesomaiya</td>
-                                    <td class="detail">
-                                        <a href="single-product.html">Table Generator extension bundle</a>
-                                    </td>
-                                    <td class="type">
-                                        <span class="sale">Sale</span>
-                                    </td>
-                                    <td>$49</td>
-                                    <td class="earning">$24.50</td>
-                                    <td class="action">
-                                        <a href="invoice.html">view</a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>26 Aug 2019</td>
-                                    <td>MP810654</td>
-                                    <td class="author">Codepoets</td>
-                                    <td class="detail">
-                                        <a href="single-product.html">Kamla One page portfolio</a>
-                                    </td>
-                                    <td class="type">
-                                        <span class="sale">Sale</span>
-                                    </td>
-                                    <td>$49</td>
-                                    <td class="earning">$24.50</td>
-                                    <td class="action">
-                                        <a href="invoice.html">view</a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>09 Jul 2019</td>
-                                    <td>MP810094</td>
-                                    <td class="author">Designing</td>
-                                    <td class="detail">
-                                        <a href="single-product.html">Ajaxified karma loader</a>
-                                    </td>
-                                    <td class="type">
-                                        <span class="purchase">Purchased</span>
-                                    </td>
-                                    <td>$29</td>
-                                    <td class="earning">-$29</td>
-                                    <td class="action">
-                                        <a href="invoice.html">view</a>
-                                    </td>
-                                </tr>
+                                <!-- purchased -->
+                                <?php
+                                $purchased =  fetchParchased($buyer_id);
+                                foreach ($purchased as $purchasedInfo) {
+                                    $product_id = $purchasedInfo['pro_id'];
+                                    $purchased_pro_author = $purchasedInfo['pro_author'];
+                                    $purchased_pro_Date = $purchasedInfo['date'];
+                                    $fromProTble = showProductsById($product_id);
+                                    foreach ($fromProTble as $proTbleInfo) {
+                                        $proName = $proTbleInfo['mem_pro_name'];
+                                        $proPrice = $proTbleInfo['price'];
+                                ?>
+                                        <tr>
+                                            <td><?php echo $purchased_pro_Date; ?></td>
+                                            <td>MP810094</td>
+                                            <td class="author"><?php echo $purchased_pro_author ?></td>
+                                            <td class="detail">
+                                                <a href="single-product.html"><?php echo $proName; ?></a>
+                                            </td>
+                                            <td class="type">
+                                                <span class="purchase">Purchased</span>
+                                            </td>
+                                            <td>$<?php echo $proPrice; ?></td>
+                                            <td class="earning">-$29</td>
+                                            <td class="action">
+                                                <a href="invoice.html">view</a>
+                                            </td>
+                                        </tr>
+                                <?php }
+                                } ?>
+                                <!-- END purchased -->
+                                <!-- Selled -->
+                                <?php
+                                $selled =  fetchParchasedwithSeller($user);
+                                foreach ($selled as $selledInfo) {
+                                    $product_id = $selledInfo['pro_id'];
+                                    $purchased_pro_author = $selledInfo['pro_author'];
+                                    $purchased_pro_Date = $selledInfo['date'];
+                                    // Mem Name ID
+                                    $author = $user;
+                                    $mem_info = mem_pro_author($author);
+                                    foreach ($mem_info as $MemData) {
+                                        $mem_name = $MemData['mem_name'];
+                                        $fromProTble = showProductsById($product_id);
+                                        foreach ($fromProTble as $proTbleInfo) {
+                                            $proName = $proTbleInfo['mem_pro_name'];
+                                            $proPrice = $proTbleInfo['price'];
+                                ?>
+                                            <tr>
+                                                <td><?php echo $purchased_pro_Date; ?></td>
+                                                <td>MP810094</td>
+                                                <td class="author"><?php echo $mem_name; ?></td>
+                                                <td class="detail">
+                                                    <a href="single-product.html"><?php echo $proName; ?></a>
+                                                </td>
+                                                <td class="type">
+                                                    <span class="sale">Sale</span>
+                                                </td>
+                                                <td>$<?php echo $proPrice; ?></td>
+                                                <td class="earning">-$29</td>
+                                                <td class="action">
+                                                    <a href="invoice.html">view</a>
+                                                </td>
+                                            </tr>
+                                <?php }
+                                    }
+                                } ?>
+                                <!-- END Selled -->
+                                <!-- withdrawal -->
+                                <?php
+                                $withdrawal =  proNotif($user);
+                                foreach ($withdrawal as $withdrawalInfo) {
+                                    $product_id = $withdrawalInfo['with_pro_id'];
+                                    $purchased_pro_author = $withdrawalInfo['with_pro_author'];
+                                    $purchased_pro_Date = $withdrawalInfo['with_date'];
+                                    $fromProTble = showProductsById($product_id);
+                                    foreach ($fromProTble as $proTbleInfo) {
+                                        $proName = $proTbleInfo['mem_pro_name'];
+                                        $proPrice = $proTbleInfo['price'];
+                                ?>
+                                        <tr>
+                                            <td><?php echo $purchased_pro_Date; ?></td>
+                                            <td>MP810094</td>
+                                            <td class="author"><?php echo $purchased_pro_author ?></td>
+                                            <td class="detail">
+                                                <a href="single-product.html"><?php echo $proName; ?></a>
+                                            </td>
+                                            <td class="type">
+                                                <span class="withdrawal">withdrawal</span>
+                                            </td>
+                                            <td>$<?php echo $proPrice; ?></td>
+                                            <td class="earning">-$29</td>
+                                            <td class="action">
+                                                <a href="invoice.html">view</a>
+                                            </td>
+                                        </tr>
+                                <?php }
+                                } ?>
+                                <!-- END Withdawal -->
                             </tbody>
                         </table>
 

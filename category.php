@@ -158,7 +158,6 @@
                                     <img width="361px" height="230px" src="admin/img/cat_image/<?php echo $name;  ?>/<?php echo $image; ?>" alt="Product Image">
                                     <div class="prod_btn">
                                         <a href="category_products.php?cat_id = <?php echo $id ?>" class="transparent btn--sm btn--round">More Info</a>
-                                        <a href="#" class="transparent btn--sm btn--round">Live Demo</a>
                                     </div>
                                     <!-- end /.prod_btn -->
                                 </div>

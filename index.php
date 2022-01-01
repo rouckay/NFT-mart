@@ -22,6 +22,19 @@ if (isset($_SESSION['member_id'])) {
     $mem_id = -1;
 }
 ?>
+<?php
+$conn = config();
+if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
+    $mem_id = $_SESSION['member_id'];
+    $user = $_SESSION['member_user'];
+} elseif (isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
+    $mem_id = base64_decode($_COOKIE['mem_user_id']);
+    $user = base64_decode($_COOKIE['mem_user_name']);
+} else {
+    $mem_id = -1;
+    $user = -1;
+}
+?>
 <!-- END Current user Info -->
 <section class="hero-area bgimage">
 
@@ -122,9 +135,7 @@ END HERO AREA
                     <h1>Our Featured
                         <span class="highlighted">Products</span>
                     </h1>
-                    <p>Laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis omnis fugats.
-                        Lid
-                        est laborum dolo rumes fugats untras.</p>
+                    <p>This Is the Most Popular Featured Product In Market Today, So Any Seller Product can be Most Popular Featured Product by selling Most Of that Products In This Market.</p>
                 </div>
             </div>
             <!-- end /.col-md-12 -->
@@ -361,7 +372,7 @@ END HERO AREA
                         <div class="col-lg-4 col-md-6">
                             <!-- start .single-product -->
                             <div class="product product--card " style="border-radius:15px 15px 15px 15px;">
-                                <div class="product__thumbnail">
+                                <div style="border-radius: 40px;" class="product__thumbnail">
                                     <!-- Image & video Show -->
                                     <?php
                                     $exp = explode(".", $image);
@@ -440,7 +451,9 @@ END HERO AREA
                                     </div>
                                     <div class="sell">
                                         <p>
+
                                             <?php
+
                                             if (isset($_POST['btn_add_to_cart'])) {
                                                 $pro_id = $_POST['cart_pro_id'];
                                                 $pro_author = $_POST['cart_pro_author'];
@@ -452,8 +465,13 @@ END HERO AREA
                                             <input type="hidden" id="cart_pro_author" name="cart_pro_author" value="<?php echo $author; ?>">
                                             <input type="hidden" id="who_adding_to_cart" name="who_adding_to_cart" value="<?php echo $user_id; ?>">
                                             <!-- Count Total Added To Cart -->
-
-                                            <button id="btn_add_to_cart" name="btn_add_to_cart" class="btn btn--round btn--bordered btn-sm btn-success"><span class="lnr lnr-cart">$<?php echo $price; ?></span> </button>
+                                            <?php
+                                            if ($user == $author) { ?>
+                                                <div class="btn btn--round btn--bordered btn-sm btn-success"><span>&#10004;</span></div>
+                                            <?php } else { ?>
+                                                <button id="btn_add_to_cart" name="btn_add_to_cart" class="btn btn--round btn--bordered btn-sm btn-success"><span class="lnr lnr-cart">$<?php echo $price; ?></span> </button>
+                                            <?php }
+                                            ?>
                                             <!-- Count Total Added To Cart -->
                                             </p>
                                     </div>
@@ -463,9 +481,10 @@ END HERO AREA
                                 <!-- end /.product-purchase -->
                             </div>
                             <!-- end /.single-product -->
+                            <!-- New Style Started -->
+                            <!-- ENDED Style Started -->
                         </div>
                     <?php } ?>
-                    <!-- end /.col-md-4 -->
                 </div>
             </div>
         </div>
@@ -474,9 +493,6 @@ END HERO AREA
     <!-- end /.container -->
 
 </section>
-<!--================================
-    END PRODUCTS AREA
-=================================-->
 
 <section class="promotion-area">
     <div class="container">
@@ -485,9 +501,7 @@ END HERO AREA
                 <div class="promotion-img">
                     <img width="555px" height="420px" src="admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>" alt="Promotion image">
                 </div>
-                <!-- end /.promotion-img -->
             </div>
-            <!-- end /.col-md-6 -->
 
             <div class="col-lg-5 offset-lg-1 col-md-6 v_middle">
                 <div class="promotion-content">
@@ -498,213 +512,80 @@ END HERO AREA
                     <p><?php echo $detail; ?>!</p>
                     <a href="single-product.php?id=<?php echo $id; ?>" class="btn btn--lg btn--round">View Details</a>
                 </div>
-                <!-- end /.promotion-content -->
-            </div>
-            <!-- end /.col-md-5 -->
-        </div>
-        <!-- end /.row -->
-    </div>
-    <!-- end /.container -->
-</section>
-<!--================================
-    START COUNTER UP AREA
-=================================-->
-<section class="counter-up-area bgimage">
-    <div class="bg_image_holder">
-        <img width="1920px" height="350px" src="img/abstract.jpg" alt="">
-    </div>
-    <!-- start .container -->
-    <div class="container content_above">
-        <!-- start .col-md-12 -->
-        <div class="col-md-12">
-            <div class="counter-up">
-                <div class="counter mcolor2">
-                    <span class="lnr lnr-briefcase"></span>
-                    <span class="count">38,436</span>
-                    <p>items for sale</p>
-                </div>
-                <div class="counter mcolor3">
-                    <span class="lnr lnr-cloud-download"></span>
-                    <span class="count">38,436</span>
-                    <p>total Sales</p>
-                </div>
-                <div class="counter mcolor1">
-                    <span class="lnr lnr-smile"></span>
-                    <span class="count">38,436</span>
-                    <p>appy customers</p>
-                </div>
-                <div class="counter mcolor4">
-                    <span class="lnr lnr-users"></span>
-                    <span class="count">38,436</span>
-                    <p>members</p>
-                </div>
             </div>
         </div>
-        <!-- end /.col-md-12 -->
     </div>
-    <!-- end /.container -->
 </section>
-
-<!--================================
-    END COUNTER UP AREA
-=================================-->
 <section class="why_choose section--padding">
-    <!-- start container -->
     <div class="container">
-        <!-- start row -->
         <div class="row">
-            <!-- start col-md-12 -->
             <div class="col-md-12">
                 <div class="section-title">
                     <h1>Why Choose
                         <span class="highlighted">MartPlace</span>
                     </h1>
-                    <p>Laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis omnis
-                        fugats. Lid
-                        est laborum dolo rumes fugats untras.</p>
+                    <p>This Market Will Boost your Product In the Whole Afghanistan All Your Products can be seen in 34 Provence Of Afghanistan,If Someone Loved Your Product They Can Buy your Products And We Will Deliver your Product To Buyer.</p>
                 </div>
             </div>
-            <!-- end /.col-md-12 -->
         </div>
-        <!-- end /.row -->
 
-        <!-- start row -->
         <div class="row">
-            <!-- start .col-md-4 -->
             <div class="col-lg-4 col-md-6">
-                <!-- start .reason -->
                 <div class="feature2">
                     <span class="feature2__count">01</span>
                     <div class="feature2__content">
                         <span class="lnr lnr-license pcolor"></span>
                         <h3 class="feature2-title">One Time Payment</h3>
-                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the
-                            mattis,
-                            leo quam aliquet diam congue is laoreet elit metus.</p>
+                        <p>You Can Pay Once For Every Product, That will Never Happen to Dublicate Payment We have Analyzer to Analyize Every Transsiction to Check.</p>
                     </div>
-                    <!-- end /.feature2__content -->
                 </div>
-                <!-- end /.feature2 -->
             </div>
-            <!-- end /.col-md-4 -->
 
-            <!-- start .col-md-4 -->
             <div class="col-lg-4 col-md-6">
-                <!-- start .feature2 -->
                 <div class="feature2">
                     <span class="feature2__count">02</span>
                     <div class="feature2__content">
                         <span class="lnr lnr-magic-wand scolor"></span>
                         <h3 class="feature2-title">Quality Products</h3>
-                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the
-                            mattis,
-                            leo quam aliquet diam congue is laoreet elit metus.</p>
+                        <p>We Have Maney Seller They Selling Their Products And They Rating Each Products And Puting Comment on it, That Find Best Products.</p>
                     </div>
-                    <!-- end /.feature2__content -->
                 </div>
-                <!-- end /.feature2 -->
             </div>
-            <!-- end /.col-md-4 -->
 
-            <!-- start .col-md-4 -->
             <div class="col-lg-4 col-md-6">
-                <!-- start .feature2 -->
                 <div class="feature2">
                     <span class="feature2__count">03</span>
                     <div class="feature2__content">
                         <span class="lnr lnr-lock mcolor1"></span>
                         <h3 class="feature2-title">100% Secure Paymentt</h3>
-                        <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the
-                            mattis,
-                            leo quam aliquet diam congue is laoreet elit metus.</p>
-                    </div>
-                    <!-- end /.feature2__content -->
-                </div>
-                <!-- end /.feature2 -->
-            </div>
-        </div>
-        <!-- end /.row -->
-    </div>
-    <!-- end /.container -->
-</section>
-<!--================================
-    END COUNTER UP AREA
-=================================-->
-
-<!--================================
-    START SELL BUY
-=================================-->
-<section class="proposal-area">
-
-    <!-- start container-fluid -->
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6 no-padding">
-                <div class="proposal proposal--left bgimage">
-                    <div class="bg_image_holder">
-                        <img src="images/bbg.png" alt="prop image">
-                    </div>
-                    <div class="content_above">
-                        <div class="proposal__icon ">
-                            <img src="images/buy.png" alt="Buy icon">
-                        </div>
-                        <div class="proposal__content ">
-                            <h1 class="text--white">Sell Your Products</h1>
-                            <p class="text--white">Nunc placerat mi id nisi interdum mollis. Praesent pharetra,
-                                justo ut scelerisque the mattis,
-                                leo quam aliquet diamcongue is laoreet elit metus.</p>
-                        </div>
-                        <a href="#" class="btn--round btn btn--lg btn--white">Become an Author</a>
+                        <p>We Using HesabPay As Payment Method The Most Secure Method For Paying Money In The Afghanistan.</p>
                     </div>
                 </div>
-                <!-- end /.proposal -->
-            </div>
-
-            <div class="col-md-6 no-padding">
-                <div class="proposal proposal--right">
-                    <div class="bg_image_holder">
-                        <img src="images/sbg.png" alt="this is magic">
-                    </div>
-                    <div class="content_above">
-                        <div class="proposal__icon">
-                            <img src="images/sell.png" alt="Sell icon">
-                        </div>
-                        <div class="proposal__content ">
-                            <h1 class="text--white">Start Shopping Today</h1>
-                            <p class="text--white">Nunc placerat mi id nisi interdum mollis. Praesent pharetra,
-                                justo ut scelerisque the mattis,
-                                leo quam aliquet diamcongue is laoreet elit metus.</p>
-                        </div>
-                        <a href="#" class="btn--round btn btn--lg btn--white">Start Shopping</a>
-                    </div>
-                </div>
-                <!-- end /.proposal -->
             </div>
         </div>
     </div>
-    <!-- start container-fluid -->
 </section>
 <script>
-    $(document).ready(function() {
-        $('#btn_add_to_cart').click(function(e) {
-            e.preventDefault();
-            var cart_pro_id = $('#cart_pro_id').val();
-            var cart_pro_author = $('#cart_pro_author').val();
-            var who_adding_to_cart = $('#who_adding_to_cart').val();
-            $.ajax({
-                    url: 'phpscripts/add_to_cartAjax.php',
-                    method: 'post',
-                    data: {
-                        cart_pro_id: cart_pro_id,
-                        cart_pro_author: cart_pro_author,
-                        who_adding_to_cart: who_adding_to_cart
-                    }
-                })
-                .done(function(resp) {
-                    $('#response').html(resp);
-                })
-        });
-    });
+    // $(document).ready(function() {
+    //     $('#btn_add_to_cart').click(function(e) {
+    //         e.preventDefault();
+    //         var cart_pro_id = $('#cart_pro_id').val();
+    //         var cart_pro_author = $('#cart_pro_author').val();
+    //         var who_adding_to_cart = $('#who_adding_to_cart').val();
+    //         $.ajax({
+    //                 url: 'phpscripts/add_to_cartAjax.php',
+    //                 method: 'post',
+    //                 data: {
+    //                     cart_pro_id: cart_pro_id,
+    //                     cart_pro_author: cart_pro_author,
+    //                     who_adding_to_cart: who_adding_to_cart
+    //                 }
+    //             })
+    //             .done(function(resp) {
+    //                 $('#response').html(resp);
+    //             })
+    //     });
+    // });
 </script>
 <!-- Footer -->
 
