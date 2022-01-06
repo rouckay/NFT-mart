@@ -216,26 +216,38 @@ $buyer_id = $mem_id;
                                                         <P class="rate_it">Rate Now</P>
                                                         <div class="rating product--rating">
                                                             <ul>
-                                                                <li>
+                                                                <li value="1">
                                                                     <span class="fa fa-star-o"></span>
                                                                 </li>
-                                                                <li>
+                                                                <li value="2">
                                                                     <span class="fa fa-star-o"></span>
                                                                 </li>
-                                                                <li>
+                                                                <li value="3">
                                                                     <span class="fa fa-star-o"></span>
                                                                 </li>
-                                                                <li>
+                                                                <li value="4">
                                                                     <span class="fa fa-star-o"></span>
                                                                 </li>
-                                                                <li>
+                                                                <li value="5">
                                                                     <span class="fa fa-star-o"></span>
                                                                 </li>
                                                             </ul>
+                                                            <li>
+                                                            </li>
                                                         </div>
                                                     </a>
+                                                    <div class="right_content btn btn--round btn--white btn--md">
+                                                        <select id="UlRate" class="give_rating">
+                                                            <option id="one" value="1">1</option>
+                                                            <option id="two" value="2">2</option>
+                                                            <option id="three" value="3">3</option>
+                                                            <option id="four" value="4">4</option>
+                                                            <option id="five" value="5">5</option>
+                                                        </select>
+                                                    </div>
                                                     <!-- end /.rating_btn -->
                                                 </div>
+
                                                 <!-- end /.item_action -->
                                             </div>
                                             <!-- end /.product__price_download -->
@@ -276,7 +288,42 @@ $buyer_id = $mem_id;
     </div>
     <!-- end /.dashboard_menu_area -->
 </section>
-<!--================================
-            END DASHBOARD AREA
-    =================================-->
+<script>
+    var UlRate = document.querySelector('#UlRate');
+    var one = document.querySelector('#one');
+    var two = document.querySelector('#two');
+    var three = document.querySelector('#three');
+    var four = document.querySelector('#four');
+    var five = document.querySelector('#five');
+    var oneStar = UlRate.children[0];
+    var twoStar = UlRate.children[1];
+    var threeStar = UlRate.children[2];
+    var fourStar = UlRate.children[3];
+    var fiveStar = UlRate.children[4];
+    one.onclick = function() {
+        console.log('Hi I am One');
+    }
+    two.onclick = function() {
+        console.log('Hi I am One');
+    }
+    three.onclick = function() {
+        console.log('Hi I am One');
+    }
+    four.onclick = function() {
+        console.log('Hi I am One');
+    }
+    console.log(UlRate.children[0]);
+    // EventListener
+    // UlRate.onclick = function() {
+    //     console.log('HI Motherfucker LI')
+    //     if (oneStar.onclick) {
+    //         console.log('one')
+    //     }
+    // }
+    one.on
+
+    function oneFunc() {
+        alert('hei');
+    }
+</script>
 <?php require_once 'footer.php';  ?>

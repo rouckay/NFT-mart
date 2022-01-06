@@ -306,9 +306,30 @@ function uploader_mem_pro($item_data, $image)
     // header("refresh:4;url=dashboard-upload.php");
     // die;
     // } else {
+    // ***************************Resizing Image To Thumbnail*********************************
+    $maxDimW = 361;
+    $maxDimH = 230;
+    // list($width, $height, $type, $attr) = getimagesize($_FILES['image']['tmp_name']);
+    $target_filename = $_FILES['image']['tmp_name'];
+    $fn = $_FILES['image']['tmp_name'];
+    $size = getimagesize($fn);
+    $ratio = $size[0] / $size[1];
+    if ($ratio > 1) {
+        $width = $maxDimW;
+        $height = $maxDimH / $ratio;
+    } else {
+        $width = $maxDimW * $ratio;
+        $height = $maxDimH;
+    }
+    $src = imagecreatefromstring(file_get_contents($fn));
+    $dst = imagecreatetruecolor($width, $height);
+    imagecopyresampled($dst, $src, 0, 0, 0, 0, $width, $height, $size[0], $size[1]);
+
+    imagejpeg($dst, $target_filename);
+    // **********************Resizing Image To Thumbnail******************
     move_uploaded_file($from, $to);
     // }
-    $insert_pro_sql = "INSERT INTO mem_products (mem_pro_name,mem_pro_detail, mem_pro_image,category_id,tag,at,author,price, expireDate) VALUES (:name,:detail,:image,:category,:tag,:at,:author,:price, :expireDate)";
+    $insert_pro_sql = "INSERT INTO mem_products (mem_pro_name,mem_pro_detail, mem_pro_image,category_id,tag,at,author,price ,pro_amount, expireDate) VALUES (:name,:detail,:image,:category,:tag,:at,:author,:price, :pro_amount, :expireDate)";
     $stmt_pro_upl = $conn->prepare($insert_pro_sql);
     $stmt_pro_upl->execute([
         ':name' => $item_data['name'],
@@ -319,6 +340,7 @@ function uploader_mem_pro($item_data, $image)
         ':at' => date('M n, Y') . "at" . date('h: i A'),
         ':author' => $user_name,
         ':price' => $item_data['price'],
+        ':pro_amount' => $item_data['amount'],
         ':expireDate' => $item_data['expireDate']
     ]);
     if ($insert_pro_sql) {
@@ -328,6 +350,18 @@ function uploader_mem_pro($item_data, $image)
     }
 }
 // END Upload Member Product
+// Update Member Products
+function updateMemPro($item_data)
+{
+    $conn = config();
+    $item_data = $_POST['frm'];
+    $sqlUpdate = "UPDATE mem_products SET  WHERE mem_pro_id = :pro_id";
+    $stmt_up_pro = $conn->prepare($sqlUpdate);
+    $stmt_up_pro->execute([
+        ':pro_id'
+    ]);
+}
+// END Update Member Products
 // Update Member Information
 function update_member_info($up_data, $id)
 {
@@ -959,7 +993,7 @@ function fetchParchased($buyer_id)
     while ($row_par = $stmt_par->fetch(PDO::FETCH_ASSOC)) {
         $resultPar[] = $row_par;
     }
-    return $resultPar;
+    return $resultPar ?? 0;
 }
 // END Fetch Parchased Products List For Buyer
 function fetchParchasedwithSeller($user)
@@ -973,7 +1007,7 @@ function fetchParchasedwithSeller($user)
     while ($row_par = $stmt_par->fetch(PDO::FETCH_ASSOC)) {
         $resultPar[] = $row_par;
     }
-    return $resultPar;
+    return $resultPar ?? 0;
 }
 // END Fetch Parchased Products List For Buyer
 // Fetch WithDrawal Products that is in Pendding
@@ -986,14 +1020,11 @@ function fetch_Withdrawal($mem_id)
     $stmt_with->execute([
         ':with_buyer_id' => $mem_id
     ]);
-    $rowsWithD = $stmt_with->rowCount();
-    if ($rowsWithD >= 1) {
-        while ($row_withdrawal = $stmt_with->fetch(PDO::FETCH_ASSOC)) {
-            $result_with[] = $row_withdrawal;
-        }
-        return $result_with;
-    } else {
+    while ($row_withdrawal = $stmt_with->fetch(PDO::FETCH_ASSOC)) {
+        $result_with[] = $row_withdrawal;
     }
+    // **************IF $result_with was Empty Then Set Value 0 To It***********
+    return $result_with ?? 0;
 }
 // END Fetch WithDrawal Products that is in Pendding
 // Show WithDrawal For Owner of product
@@ -1089,7 +1120,27 @@ function proNotif($user)
     while ($rows = $stmt_with->fetch(PDO::FETCH_ASSOC)) {
         $resault[] = $rows;
     }
-    return $resault;
+    return $resault ?? 0;
 }
 // END product Notification
+// Add To New Arrivels
+function addToNewArrivel($arr_pro_id)
+{
+    $conn = config();
+    $sql = "INSERT INTO newArrived (arr_pro_id)VALUE(:arrProId)";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([
+        ':arrProId' => $arr_pro_id
+    ]);
+}
+// END Add To New Arrivels
+function delet_arr($pro_id)
+{
+    $conn = config();
+    $sql = "DELETE FROM newArrived WHERE arr_pro_id = :pro_id";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([
+        ':pro_id' => $pro_id
+    ]);
+}
 ?>

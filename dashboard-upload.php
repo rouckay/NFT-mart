@@ -97,47 +97,50 @@
                             <!-- end /.module_title -->
 
                             <div class="modules__content">
-                                <div class="form-group">
-                                    <label for="category">Select Category</label>
-                                    <div class="select-wrap select-wrap2">
-                                        <select name="frm[category]" required id="category" class="text_field">
-                                            <?php
-                                            $conn = config();
-                                            $cat_sql = "SELECT * FROM category WHERE status = :status";
-                                            $stmt_uplo = $conn->prepare($cat_sql);
-                                            $stmt_uplo->execute([
-                                                ':status' => 'publish'
-                                            ]);
-                                            while ($rows_cat = $stmt_uplo->fetch(PDO::FETCH_ASSOC)) {
-                                                $id = $rows_cat['cat_id'];
-                                                $cat_name = $rows_cat['cat_name'];
-                                            ?>
-                                                <option value="<?php echo $id; ?>"><?php echo  $cat_name; ?></option>
-                                            <?php } ?>
-                                        </select>
-                                        <span class="lnr lnr-chevron-down"></span>
+                                <!-- row first Two Column -->
+                                <div class="row">
+                                    <div class="form-group col-lg-6 col-md-12 co-sm-12 col-xs-12">
+                                        <label for="product_name">Product Name
+                                            <span>(Max 100 characters)</span>
+                                        </label>
+                                        <input type="text" name="frm[name]" required autofocus id="product_name" class="text_field" placeholder="Enter your product...">
+                                    </div>
+                                    <div class="form-group col-lg-6 col-md-12 co-sm-12 col-xs-12">
+                                        <label for="category">Select Category</label>
+                                        <div class="select-wrap select-wrap2">
+                                            <select name="frm[category]" required id="category" class="text_field">
+                                                <?php
+                                                $conn = config();
+                                                $cat_sql = "SELECT * FROM category WHERE status = :status";
+                                                $stmt_uplo = $conn->prepare($cat_sql);
+                                                $stmt_uplo->execute([
+                                                    ':status' => 'publish'
+                                                ]);
+                                                while ($rows_cat = $stmt_uplo->fetch(PDO::FETCH_ASSOC)) {
+                                                    $id = $rows_cat['cat_id'];
+                                                    $cat_name = $rows_cat['cat_name'];
+                                                ?>
+                                                    <option value="<?php echo $id; ?>"><?php echo  $cat_name; ?></option>
+                                                <?php } ?>
+                                            </select>
+                                            <span class="lnr lnr-chevron-down"></span>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="product_name">Product Name
-                                        <span>(Max 100 characters)</span>
-                                    </label>
-                                    <input type="text" name="frm[name]" required id="product_name" class="text_field" placeholder="Enter your product name here...">
+                                <div class="row">
+                                    <div class="form-group col-lg-6 col-md-12 co-sm-12 col-xs-12">
+                                        <label for="product_name">Product Details
+                                            <span>(Max 500 characters)</span>
+                                        </label>
+                                        <input type="text" name="frm[detail]" required id="product_name" class="text_field" placeholder="Enter your product name here...">
+                                    </div>
+                                    <div class="form-group col-lg-6 col-md-12 co-sm-12 col-xs-12">
+                                        <label for="product_name">Expire Date
+                                            <span>(Max 500 characters)</span>
+                                        </label>
+                                        <input type="date" name="frm[expireDate]" required id="product_name" class="text_field" placeholder="Enter your product name here...">
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="product_name">Product Details
-                                        <span>(Max 500 characters)</span>
-                                    </label>
-                                    <input type="text" name="frm[detail]" required id="product_name" class="text_field" placeholder="Enter your product name here...">
-                                </div>
-                                <div class="form-group">
-                                    <label for="product_name">Expire Date
-                                        <span>(Max 500 characters)</span>
-                                    </label>
-                                    <input type="date" name="frm[expireDate]" required id="product_name" class="text_field" placeholder="Enter your product name here...">
-                                </div>
-
                                 <div class="form-group">
                                     <div class="upload_wrapper">
                                         <p>Upload Image
@@ -146,7 +149,7 @@
 
                                         <div class="custom_upload">
                                             <label for="thumbnail">
-                                                <input type="file" required name="image" id="thumbnail" class="files">
+                                                <input type="file" required accept="image/*" name="image" id="thumbnail" class="files">
                                                 <span class="btn  btn--sm">Choose Image</span>
                                             </label>
                                         </div>
@@ -165,17 +168,23 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="tags">Item Tags
-                                        <span>(Max 10 tags)</span>
-                                    </label>
-                                    <textarea name="frm[tag]" name="tags" id="tags" class="text_field" placeholder="Enter your item tags here..."></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="rlicense">Regular License</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon">$</span>
-                                        <input required type="text" name="frm[price]" id="rlicense" class="text_field" placeholder="00.00">
+                                <div class="row">
+                                    <div class="form-group col-lg-6 col-md-12 co-sm-12 col-xs-12">
+                                        <label for="tags">Item Tags
+                                            <span>(Max 10 tags)</span>
+                                        </label>
+                                        <textarea name="frm[tag]" name="tags" id="tags" class="text_field" placeholder="Enter your item tags here..."></textarea>
+                                    </div>
+                                    <div class="form-group col-lg-6 col-md-12 co-sm-12 col-xs-12">
+                                        <label for="rlicense">Amount</label>
+                                        <div class="input-group">
+                                            <input type="text" required name="frm[amount]" id="rlicense" class="text_field" placeholder="0 OR cc OR kg">
+                                        </div>
+                                        <label for="rlicense">Regular License</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">$</span>
+                                            <input required type="text" name="frm[price]" id="rlicense" class="text_field" placeholder="00.00">
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- <div class="form-group no-margin">

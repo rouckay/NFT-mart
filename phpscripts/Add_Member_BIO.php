@@ -14,6 +14,7 @@ $stmt->execute([
     ':detail' => $bio,
     ':user_id' => $mem_id
 ]);
-echo "<div class='alert alert-success'>'Your Bio Is added To Your Profile '</div>";
-header('refresh:2;url=author.php');
+echo "<div class='alert alert-success'>Your bio is Successfully Added</div>";
+echo "{$bio}";
+// header('refresh:2;url=author.php');
 ?>

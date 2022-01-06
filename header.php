@@ -113,6 +113,9 @@
                                         <a href="auction.php">Auction</a>
                                     </li>
                                     <li>
+                                        <a href="support.php">Support</a>
+                                    </li>
+                                    <li>
                                         <a href="contact.php">contact</a>
                                     </li>
                                 </ul>

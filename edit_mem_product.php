@@ -1,6 +1,7 @@
 <?php $curr_page = basename(__FILE__);  ?>
 <?php require_once "header.php"; ?>
 <?php check_mem(); ?>
+<?php session_cookie($mem_id, $user); ?>
 <!--================================
         START BREADCRUMB AREA
     =================================-->
@@ -17,7 +18,7 @@
                             <a href="dashboard.php">Dashboard</a>
                         </li>
                         <li class="active">
-                            <a href="<?php echo $curr_page; ?>">Edit Item</a>
+                            Edit Item</a>
                         </li>
                     </ul>
                 </div>
@@ -56,7 +57,7 @@
     <!-- start page edit pro Main Files -->
     <?php if (isset($_POST['btn_edit_pro'])) {
         $conn = config();
-        echo $pro_id = $_POST['pro_id'];
+        $pro_id = $_POST['pro_id'];
         $pro_query = "SELECT * FROM mem_products WHERE mem_pro_id = :pro_id";
         $stmt_pro = $conn->prepare($pro_query);
         $stmt_pro->execute([
@@ -73,6 +74,8 @@
         $by = $rows_mem_pro['author'];
         $views = $rows_mem_pro['pro_views'];
         $price = $rows_mem_pro['price'];
+    } else {
+        header('location:dashboard-manage-item.php');
     }
     ?>
     <!-- END page edit pro Main Files -->
@@ -92,9 +95,10 @@
             <!-- END Messaging -->
             <!-- Item Upload Start -->
             <?php if (isset($_POST['btn_edit_pro'])) {
-                $item_data = $_POST['frm'];
-                $image = $_FILES['image']['name'];
-                uploader_mem_pro($item_data, $image);
+                $item_data = $_POST['frm'] ?? '0';
+                updateMemPro($item_data);
+                // uploader_mem_pro($item_data, $image);
+                // $image_update = $_FILES['image']['name'];
             }  ?>
             <div class="row">
                 <div class="col-md-12">
@@ -111,7 +115,7 @@
             <!-- end /.row -->
             <div class="row">
                 <div class="col-lg-8 col-md-7">
-                    <form action="dashboard-upload.php" method="POST" enctype="multipart/form-data">
+                    <form action="edit_mem_product.php" method="POST" enctype="multipart/form-data">
                         <div class="upload_modules">
                             <div class="modules__title">
                                 <h3>Item Name & Description</h3>
@@ -134,28 +138,24 @@
                                                 $id = $rows_cat['cat_id'];
                                                 $cat_name = $rows_cat['cat_name'];
                                             ?>
-                                            <option value="<?php echo $id; ?>"><?php echo  $cat_name; ?></option>
+                                                <option value="<?php echo $id; ?>" <?php echo $category == $id ? 'selected' : ''; ?>><?php echo  $cat_name; ?></option>
                                             <?php } ?>
                                         </select>
                                         <span class="lnr lnr-chevron-down"></span>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label for="product_name">Product Name
                                         <span>(Max 100 characters)</span>
                                     </label>
-                                    <input type="text" name="frm[name]" required id="product_name" class="text_field"
-                                        placeholder="Enter your product name here...">
+                                    <input type="text" name="frm[name]" required id="product_name" class="text_field" value="<?php echo $name; ?>" placeholder="Enter your product name here...">
                                 </div>
                                 <div class="form-group">
                                     <label for="product_name">Product Details
                                         <span>(Max 500 characters)</span>
                                     </label>
-                                    <input type="text" name="frm[detail]" required id="product_name" class="text_field"
-                                        placeholder="Enter your product name here...">
+                                    <input type="text" name="frm[detail]" value="<?php echo $detail; ?>" required id="product_name" class="text_field" placeholder="Enter your product Detail here...">
                                 </div>
-
                                 <!-- <div class="form-group no-margin">
                                     <p class="label">Product Description</p>
                                     <div id="trumbowyg-demo"></div>
@@ -180,7 +180,7 @@
 
                                         <div class="custom_upload">
                                             <label for="thumbnail">
-                                                <input type="file" required name="image" id="thumbnail" class="files">
+                                                <input type="file" required name="frm[image]" value="<?php echo $image ?>" id="thumbnail" class="files">
                                                 <span class="btn btn--round btn--sm">Choose File</span>
                                             </label>
                                         </div>
@@ -189,12 +189,11 @@
                                         <div class="progress_wrapper">
                                             <div class="labels clearfix">
                                                 <p>Thumbnail.jpg</p>
-                                                <span data-width="89">89%</span>
+                                                <span data-width="89">0%</span>
                                             </div>
                                             <div class="progress">
-                                                <div class="progress-bar" role="progressbar" aria-valuenow="70"
-                                                    aria-valuemin="0" aria-valuemax="100" style="width: 89%;">
-                                                    <span class="sr-only">70% Complete</span>
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                                    <span class="sr-only">0% Complete</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -245,51 +244,12 @@
                                     <!-- end /.col-md-6 -->
                                 </div>
                                 <!-- end /.row -->
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <!-- <div class="form-group radio-group">
-                                            <p class="label">High Resolution</p>
-                                            <div class="custom-radio">
-                                                <input disabled type="radio" id="yes" class="" name="high_res">
-                                                <label for="yes">
-                                                    <span class="circle"></span>Yes</label>
-                                            </div>
-
-                                            <div class="custom-radio">
-                                                <input disabled type="radio" id="no" class="" name="high_res">
-                                                <label for="no">
-                                                    <span class="circle"></span>no</label>
-                                            </div>
-                                        </div> -->
-                                    </div>
-                                    <!-- end /.col-md-6 -->
-
-                                    <div class="col-md-6">
-                                        <!-- <div class="form-group radio-group">
-                                            <p class="label">Retina Ready</p>
-                                            <div class="custom-radio">
-                                                <input disabled type="radio" id="ryes" class="" name="retina">
-                                                <label for="ryes">
-                                                    <span class="circle"></span>Yes</label>
-                                            </div>
-
-                                            <div class="custom-radio">
-                                                <input disabled type="radio" id="rno" class="" name="retina">
-                                                <label for="rno">
-                                                    <span class="circle"></span>no</label>
-                                            </div>
-                                        </div> -->
-                                    </div>
-                                    <!-- end /.col-md-6 -->
-                                </div>
-                                <!-- end /.row -->
 
                                 <div class="form-group">
                                     <label for="tags">Item Tags
                                         <span>(Max 10 tags)</span>
                                     </label>
-                                    <textarea name="frm[tag]" name="tags" id="tags" class="text_field"
-                                        placeholder="Enter your item tags here..."></textarea>
+                                    <input type="text" name="frm[tag]" value="<?php echo $tag; ?>" id="tags" class="text_field" placeholder="Enter your item tags here...">
                                 </div>
                             </div>
                             <!-- end /.upload_modules -->
@@ -309,8 +269,7 @@
                                             <label for="rlicense">Regular License</label>
                                             <div class="input-group">
                                                 <span class="input-group-addon">$</span>
-                                                <input required type="text" name="frm[price]" id="rlicense"
-                                                    class="text_field" placeholder="00.00">
+                                                <input required type="text" name="frm[price]" id="rlicense" value="<?php echo $price; ?>" class="text_field" placeholder="00.00">
                                             </div>
                                         </div>
                                     </div>

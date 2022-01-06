@@ -304,6 +304,7 @@ $at = $row_user['created_at'];
                                 <h3 class="alert alert-danger">You Don't Have Bio Yet</h3>
                                 <br>
                                 <div class="message-form">
+                                    <div id="response"></div>
                                     <form method="POST" id="bio_form">
                                         <div class="form-group">
                                             <input type="text" name="bio" class="text_field" id="bio" placeholder="Your Bio...">
@@ -314,14 +315,15 @@ $at = $row_user['created_at'];
                                             <button type="submit" id="save_bio" class="btn btn--md btn--round">Save You
                                                 Bio</button>
                                         </div>
-                                        <div id="response"></div>
                                     </form>
                                     <?php //} 
                                     ?>
 
                                 </div>
                             <?php } elseif ($rows_in_db == '1') { ?>
-                                <div class="text text-primary"><?php echo $user_bio_detail_from_db;  ?></div>
+                                <?php echo $user_bio_detail_from_db;  ?>
+                                <div class="text text-primary" id="response">
+                                </div>
                                 <input type="hidden" id="mem_idUpBio" value="<?php echo $mem_id; ?>">
                                 <button id="createBio" class='btn btn-info btn-sm'>Edit Bio</button>
                                 <div id="responseUpdateBio"></div>
@@ -338,7 +340,9 @@ $at = $row_user['created_at'];
                 <div class="product-title-area">
                     <div class="product__title">
                     </div>
+                    <!-- Medicine List -->
                     <?php require_once('phpscripts/medician_list.php');  ?>
+                    <!-- END Medicine List -->
                 </div>
 
                 <div class="row">
@@ -370,7 +374,7 @@ $at = $row_user['created_at'];
                         $author = $rows_auth_pro['author'];
                     ?>
                         <!-- start .col-md-4 -->
-                        <div class="col-lg-6 col-md-6">
+                        <div class="col-lg-4 col-md-6">
                             <!-- start .single-product -->
                             <div class="product product--card">
                                 <!-- Product Template image size 361 X 230 -->
@@ -400,7 +404,6 @@ $at = $row_user['created_at'];
                                                 $author_name = $rows_ava['mem_user_name'];
                                                 $author_image = $rows_ava['mem_image'];
                                             ?>
-                                                <img class="auth-img" src="admin/img/member_avatars/<?php echo $author_name; ?>/<?php echo $author_image; ?>" alt="author image">
                                                 <p>
                                                     <a href="#"><?php echo $author; ?></a>
                                                 </p>
@@ -425,7 +428,7 @@ $at = $row_user['created_at'];
                                         </li>
                                     </ul>
 
-                                    <p><?php echo $detail; ?>.</p>
+                                    <p><?php echo substr($detail, 0, 20); ?>.</p>
                                 </div>
                                 <!-- end /.product-desc -->
 
@@ -453,13 +456,13 @@ $at = $row_user['created_at'];
                                             </li>
                                         </ul>
                                     </div>
-
+                                    <!-- 
                                     <div class="sell">
                                         <p>
                                             <span class="lnr lnr-cart"></span>
                                             <span>50</span>
                                         </p>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <!-- end /.product-purchase -->
                             </div>

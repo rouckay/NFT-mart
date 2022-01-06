@@ -231,52 +231,6 @@ if (isset($_POST['btn_s']) || isset($_POST['main_menu_search'])) {
                                     </div>
                                 </div>
                             </div>
-                            <div class="wrapper">
-                                <div class="card-rotate-bg"></div>
-
-                                <div class="card">
-
-                                    <div class="card-head">
-                                        <img style="height: 200px;" src="admin/img/member_product/<?php // echo $name 
-                                                                                                    ?>/<?php // echo $image 
-                                                                                                    ?>" alt="" class="product-img">
-                                        <button class="bid-btn">GO Detail Page</button>
-                                    </div>
-                                    <div class="card-body">
-
-                                        <div class="wrapper-flex mb">
-
-                                            <div class="bid-info">
-                                                <div class="img-box">
-                                                    <img src="admin/img/member_product/<?php  //echo $name 
-                                                                                        ?>/<?php echo $image ?>" alt="" class="product-img">
-                                                    <img src="admin/img/member_product/<?php  //echo $name 
-                                                                                        ?>/<?php echo $image ?>" alt="" class="product-img">
-                                                    <img src="admin/img/member_product/<?php  //echo $name 
-                                                                                        ?>/<?php echo $image ?>" alt="" class="product-img">
-                                                </div>
-                                                <a href="#">10+ Place Bid.</a>
-                                            </div>
-                                            <button class="share-btn">
-                                                <ion-icon name="ellipsis-horizontal"></ion-icon>
-                                            </button>
-                                        </div>
-                                        <h4 class="product-name">Hi</h4>
-                                        <a href="#"><?php // echo $name 
-                                                    ?></a>
-                                        </h4>
-                                        <a href="#" class="latest-bid"><?php // echo substr($detail, 0, 10) 
-                                                                        ?></a>
-                                        <div class="wrapper-flex">
-                                            <div class="last-bid"><?php // echo $price 
-                                                                    ?></div>
-                                            <div class="react">
-                                                <ion-icon name="heart-outline"></ion-icon> <span>322</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                     <?php }
                     } else {
                         header('location:index.php');

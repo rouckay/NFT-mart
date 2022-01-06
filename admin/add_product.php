@@ -13,8 +13,7 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">ADD New Product</h1>
     <p class="mb-4">Here are Some Skins.
-        For more information about DataTables, please visit the <a target="_blank"
-            href="https://datatables.net">official DataTables documentation</a>.</p>
+        For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
@@ -96,8 +95,7 @@
                         <!-- NEw -->
                         <label for="category">Select Category</label>
                         <div class="form-group">
-                            <select name="category" id="category" class="form-select form-select-lg mb-3"
-                                aria-label=".form-select-lg example">
+                            <select name="category" id="category" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
                                 <?php $conn = config();
                                 $cat_pro_sql = "SELECT * FROM category WHERE status = :status ";
                                 $cat_stmt = $conn->prepare($cat_pro_sql);
@@ -108,7 +106,7 @@
                                     $cat_id = $cat_rows['cat_id'];
                                     $cat_name = $cat_rows['cat_name'];
                                 ?>
-                                <option value="<?php echo $cat_id; ?>"><?php echo $cat_name; ?></option>
+                                    <option value="<?php echo $cat_id; ?>"><?php echo $cat_name; ?></option>
                                 <?php } ?>
                             </select>
                         </div>

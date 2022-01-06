@@ -181,31 +181,34 @@ foreach ($buyer_info  as $buyer_data) {
                                 <tbody>
                                     <?php
                                     $Retrive_with = fetch_Withdrawal($mem_id);
-                                    foreach ($Retrive_with as $withdrawal_data) {
-                                        $product_id =  $withdrawal_data['with_pro_id'];
-                                        $product_withdrawal_date = $withdrawal_data['with_date'];
-                                        $who_want_to_by = $withdrawal_data['with_buyer_id'];
-                                        $with_auth = $withdrawal_data['with_pro_author'];
-                                        $amount = $withdrawal_data['amount'];
-                                        $status = $withdrawal_data['status'];
-                                        $productRetrive = showProductsById($product_id);
-                                        foreach ($productRetrive as $pro_data) {
-                                            $pro_name =  $pro_data['mem_pro_name'];
-                                            $image =  $pro_data['mem_pro_image'];
-                                            $price =  $pro_data['price'];
+                                    if ($Retrive_with == '') {
+                                    } else {
+                                        foreach ($Retrive_with as $withdrawal_data) {
+                                            $product_id =  $withdrawal_data['with_pro_id'];
+                                            $product_withdrawal_date = $withdrawal_data['with_date'];
+                                            $who_want_to_by = $withdrawal_data['with_buyer_id'];
+                                            $with_auth = $withdrawal_data['with_pro_author'];
+                                            $amount = $withdrawal_data['amount'];
+                                            $status = $withdrawal_data['status'];
+                                            $productRetrive = showProductsById($product_id);
+                                            foreach ($productRetrive as $pro_data) {
+                                                $pro_name =  $pro_data['mem_pro_name'];
+                                                $image =  $pro_data['mem_pro_image'];
+                                                $price =  $pro_data['price'];
 
                                     ?>
-                                            <tr>
-                                                <td><?php echo $pro_name; ?></td>
-                                                <td><img height="80px" width="80px" src="admin/img/member_product/<?php echo $pro_name; ?>/<?php echo $image; ?>"></td>
-                                                <td class="bold"><?php echo $amount; ?></td>
-                                                <td class="bold">$<?php echo $price; ?></td>
-                                                <td class="bold"><?php echo $with_auth; ?></td>
-                                                <td class="<?php echo $status == 'approved' ? 'paid' : 'pending'; ?>">
-                                                    <span><?php echo $status == 'approved' ? 'Paid' : 'Pending'; ?></span>
-                                                </td>
-                                            </tr>
+                                                <tr>
+                                                    <td><?php echo $pro_name; ?></td>
+                                                    <td><img height="80px" width="80px" src="admin/img/member_product/<?php echo $pro_name; ?>/<?php echo $image; ?>"></td>
+                                                    <td class="bold"><?php echo $amount; ?></td>
+                                                    <td class="bold">$<?php echo $price; ?></td>
+                                                    <td class="bold"><?php echo $with_auth; ?></td>
+                                                    <td class="<?php echo $status == 'approved' ? 'paid' : 'pending'; ?>">
+                                                        <span><?php echo $status == 'approved' ? 'Paid' : 'Pending'; ?></span>
+                                                    </td>
+                                                </tr>
                                     <?php }
+                                        }
                                     } ?>
                                 </tbody>
                             </table>
@@ -213,7 +216,7 @@ foreach ($buyer_info  as $buyer_data) {
                     </div>
                 </div>
             </div>
-            <div class="row bg-success">
+            <div class="row">
                 <div class="col-md-12 ">
                     <div class="withdraw_module withdraw_history">
                         <div class="withdraw_table_header" id="productConfirmPlace">
@@ -238,42 +241,47 @@ foreach ($buyer_info  as $buyer_data) {
                                 <tbody id="table">
                                     <?php
                                     $ownerFunc =  showProductForOwnerwithdrawal($user);
-                                    foreach ($ownerFunc as $ownerPro_info) {
-                                        $with_id = $ownerPro_info['with_id'];
-                                        $product_id = $ownerPro_info['with_pro_id'];
-                                        $mem_id = $ownerPro_info['with_buyer_id'];
-                                        $amount_or_products = $ownerPro_info['amount'];
-                                        $buyer_info = fetch_mem_info_by_id($mem_id);
-                                        foreach ($buyer_info as $buyer_name_fetch) {
-                                            $buyer_name = $buyer_name_fetch['mem_name'];
-                                            $buyer_id = $buyer_name_fetch['mem_id'];
-                                            $productRetrive = showProductsById($product_id);
-                                            foreach ($productRetrive as $pro_data) {
-                                                $pro_name =  $pro_data['mem_pro_name'];
-                                                $image =  $pro_data['mem_pro_image'];
-                                                $price =  $pro_data['price']; ?>
-                                                <tr>
-                                                    <div id="response_with"></div>
-                                                    <div id="response_deliv"></div>
-                                                    <td><?php echo $pro_name; ?></td>
-                                                    <td><img height="80px" width="80px" src="admin/img/member_product/<?php echo $pro_name; ?>/<?php echo $image; ?>"></td>
-                                                    <td class="bold">$<?php echo $price; ?></td>
-                                                    <td class="bold"><?php echo $amount_or_products; ?></td>
-                                                    <td class="bold"><span class="btn btn--icon btn-md btn--round btn-success"><span class="lnr lnr-user"></span><?php echo $buyer_name; ?></span> </td>
-                                                    <td>
-                                                        <input type="hidden" id="with_id" value="<?php echo $with_id; ?>">
-                                                        <button class="btn btn-sm btn-danger" id="btn_deny">Deny</button>
-                                                        <input type="hidden" id="with_pro_id" value="<?php echo $product_id; ?>">
-                                                        <input type="hidden" id="buyer_id" value="<?php echo $buyer_id; ?>">
-                                                        <input type="hidden" id="buyer_name" value="<?php echo $member_name; ?>">
-                                                    </td>
-                                                    <td>
-                                                        <button class="btn btn-sm btn-success" type="submit" name="approvedBtn" id="btn_approve">Approve</button>
-                                                    </td>
-                                                </tr>
-                                                <?php // echo  "<div class='bg-danger' >$thereIsNoProducts</div>" 
-                                                ?>
+                                    if ($ownerFunc == null) {
+                                        echo "<div class='bg-warning text-center'>There No Products for Confirmation</div>";
+                                    } else {
+                                        foreach ($ownerFunc as $ownerPro_info) {
+                                            $with_id = $ownerPro_info['with_id'];
+                                            $product_id = $ownerPro_info['with_pro_id'];
+                                            $mem_id = $ownerPro_info['with_buyer_id'];
+                                            $amount_or_products = $ownerPro_info['amount'];
+                                            $buyer_info = fetch_mem_info_by_id($mem_id);
+                                            foreach ($buyer_info as $buyer_name_fetch) {
+                                                $buyer_name = $buyer_name_fetch['mem_name'];
+                                                $buyer_id = $buyer_name_fetch['mem_id'];
+                                                $productRetrive = showProductsById($product_id);
+                                                foreach ($productRetrive as $pro_data) {
+                                                    $pro_name =  $pro_data['mem_pro_name'];
+                                                    $image =  $pro_data['mem_pro_image'];
+                                                    $price =  $pro_data['price']; ?>
+                                                    <tr>
+                                                        <div id="response_with"></div>
+                                                        <div id="response_deliv"></div>
+                                                        <td><?php echo $pro_name; ?></td>
+                                                        <td><img height="80px" width="80px" src="admin/img/member_product/<?php echo $pro_name; ?>/<?php echo $image; ?>"></td>
+                                                        <td class="bold">$<?php echo $price; ?></td>
+                                                        <td class="bold"><?php echo $amount_or_products; ?></td>
+                                                        <td class="bold"><span class="btn btn--icon btn-md btn--round btn-success"><span class="lnr lnr-user"></span><?php echo $buyer_name; ?></span> </td>
+                                                        <td>
+                                                            <input type="hidden" id="with_id" value="<?php echo $with_id; ?>">
+                                                            <button class="btn btn-sm btn-danger" id="btn_deny">Deny</button>
+                                                            <input type="hidden" id="with_pro_id" value="<?php echo $product_id; ?>">
+                                                            <input type="hidden" id="buyer_id" value="<?php echo $buyer_id; ?>">
+                                                            <input type="hidden" id="buyer_name" value="<?php echo $member_name; ?>">
+                                                            <input type="hidden" id="amount" value="<?php echo $amount_or_products; ?>">
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-success" type="submit" name="approvedBtn" id="btn_approve">Approve</button>
+                                                        </td>
+                                                    </tr>
+                                                    <?php // echo  "<div class='bg-danger' >$thereIsNoProducts</div>" 
+                                                    ?>
                                     <?php }
+                                            }
                                         }
                                     } ?>
                                 </tbody>
@@ -302,7 +310,8 @@ foreach ($buyer_info  as $buyer_data) {
                 data: {
                     with_pro_id: with_pro_id,
                     buyer_id: buyer_id,
-                    buyer_name: buyer_name
+                    buyer_name: buyer_name,
+                    amount: amount
                 },
                 success: function(response) {
                     $('#response_with').html(response);

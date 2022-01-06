@@ -60,12 +60,12 @@
                         <div class="login--form">
                             <div class="form-group">
                                 <label for="user_name">Username</label>
-                                <input id="user_name" name="frm[user_name]" type="text" class="text_field" placeholder="Enter your username...">
+                                <input id="user_name" autofocus name="frm[user_name]" type="text" class="text_field" placeholder="Enter your username...">
                             </div>
 
                             <div class="form-group">
                                 <label for="pass">Password</label>
-                                <input id="pass" type="password" name="frm[password]" class="text_field" placeholder="Enter your password...">
+                                <input id="pass" type="password" name="frm[password]" class="text_field" placeholder="&#128273; Enter your password...">
                             </div>
 
                             <div class="form-group">

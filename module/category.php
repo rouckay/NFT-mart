@@ -13,8 +13,7 @@ while ($rows = $stmt->fetch(PDO::FETCH_ASSOC)) {
 ?>
     <li>
         <a href="category_products.php?cat_id=<?php echo $id;  ?>">
-            <span class="lnr lnr-chevron-right"></span><?php echo $name; ?>
-
+            <?php echo $name; ?>
         </a>
     </li>
 <?php } ?>

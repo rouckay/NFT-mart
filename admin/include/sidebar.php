@@ -3,11 +3,12 @@
 
      <!-- Sidebar - Brand -->
      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
-         <div class="sidebar-brand-icon rotate-n-15">
-             <i class="fas fa-book">
-             </i>
+         <!-- rotate-n-15 For Rotate SomeThing -->
+         <div class="sidebar-brand-icon">
+             <i class="">
+                 <img src="../img/justLogo.png"> </i>
          </div>
-         <div class="sidebar-brand-text mx-3">PUBG Dokon</div>
+         <div class="sidebar-brand-text mx-3">Dr.Nijat</div>
      </a>
 
      <!-- Divider -->
@@ -41,8 +42,7 @@
      </li>
      <!-- Nav Item - Pages Collapse Menu -->
      <li class="nav-item">
-         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
-             aria-controls="collapseOne">
+         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
              <i class="fas fa-fw fa-users"></i>
              <span>Members</span>
          </a>
@@ -52,14 +52,14 @@
                  <a class="collapse-item" href="all_members.php">Member List</a>
                  <a class="collapse-item" href="../signup.php">Add Member</a>
                  <a class="collapse-item" href="mem_pro_list.php">List Member Products</a>
+                 <a class="collapse-item" href="add_new_arrived.php">New Arrivel Products</a>
                  <a class="collapse-item" href="member_list.php">List Of Members</a>
              </div>
          </div>
      </li>
      <!-- Nav Item - Pages Collapse Menu -->
      <li class="nav-item">
-         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-             aria-controls="collapseTwo">
+         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
              <i class="fas fa-fw fa-cog"></i>
              <span>Components</span>
          </a>
@@ -75,13 +75,11 @@
 
      <!-- Nav Item - Utilities Collapse Menu -->
      <li class="nav-item">
-         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-             aria-expanded="true" aria-controls="collapseUtilities">
+         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
              <i class="fas fa-fw fa-wrench"></i>
              <span>Utilities</span>
          </a>
-         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-             data-parent="#accordionSidebar">
+         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
              <div class="bg-white py-2 collapse-inner rounded">
                  <h6 class="collapse-header">Custom Utilities:</h6>
                  <a class="collapse-item" href="utilities-color.php">Colors</a>
@@ -102,8 +100,7 @@
 
      <!-- Nav Item - Pages Collapse Menu -->
      <li class="nav-item">
-         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
-             aria-controls="collapsePages">
+         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
              <i class="fas fa-fw fa-folder"></i>
              <span>Pages</span>
          </a>

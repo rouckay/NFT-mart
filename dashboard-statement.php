@@ -166,46 +166,13 @@ $buyer_id = $mem_id;
                                 <!-- purchased -->
                                 <?php
                                 $purchased =  fetchParchased($buyer_id);
-                                foreach ($purchased as $purchasedInfo) {
-                                    $product_id = $purchasedInfo['pro_id'];
-                                    $purchased_pro_author = $purchasedInfo['pro_author'];
-                                    $purchased_pro_Date = $purchasedInfo['date'];
-                                    $fromProTble = showProductsById($product_id);
-                                    foreach ($fromProTble as $proTbleInfo) {
-                                        $proName = $proTbleInfo['mem_pro_name'];
-                                        $proPrice = $proTbleInfo['price'];
-                                ?>
-                                        <tr>
-                                            <td><?php echo $purchased_pro_Date; ?></td>
-                                            <td>MP810094</td>
-                                            <td class="author"><?php echo $purchased_pro_author ?></td>
-                                            <td class="detail">
-                                                <a href="single-product.html"><?php echo $proName; ?></a>
-                                            </td>
-                                            <td class="type">
-                                                <span class="purchase">Purchased</span>
-                                            </td>
-                                            <td>$<?php echo $proPrice; ?></td>
-                                            <td class="earning">-$29</td>
-                                            <td class="action">
-                                                <a href="invoice.html">view</a>
-                                            </td>
-                                        </tr>
-                                <?php }
-                                } ?>
-                                <!-- END purchased -->
-                                <!-- Selled -->
-                                <?php
-                                $selled =  fetchParchasedwithSeller($user);
-                                foreach ($selled as $selledInfo) {
-                                    $product_id = $selledInfo['pro_id'];
-                                    $purchased_pro_author = $selledInfo['pro_author'];
-                                    $purchased_pro_Date = $selledInfo['date'];
-                                    // Mem Name ID
-                                    $author = $user;
-                                    $mem_info = mem_pro_author($author);
-                                    foreach ($mem_info as $MemData) {
-                                        $mem_name = $MemData['mem_name'];
+                                if ($purchased == null) {
+                                    echo "<div class='text-center text-white bg-primary'>There Is No purchased Porducts Look Like Your New Here.</div>";
+                                } else {
+                                    foreach ($purchased as $purchasedInfo) {
+                                        $product_id = $purchasedInfo['pro_id'];
+                                        $purchased_pro_author = $purchasedInfo['pro_author'];
+                                        $purchased_pro_Date = $purchasedInfo['date'];
                                         $fromProTble = showProductsById($product_id);
                                         foreach ($fromProTble as $proTbleInfo) {
                                             $proName = $proTbleInfo['mem_pro_name'];
@@ -214,12 +181,12 @@ $buyer_id = $mem_id;
                                             <tr>
                                                 <td><?php echo $purchased_pro_Date; ?></td>
                                                 <td>MP810094</td>
-                                                <td class="author"><?php echo $mem_name; ?></td>
+                                                <td class="author"><?php echo $purchased_pro_author ?></td>
                                                 <td class="detail">
                                                     <a href="single-product.html"><?php echo $proName; ?></a>
                                                 </td>
                                                 <td class="type">
-                                                    <span class="sale">Sale</span>
+                                                    <span class="purchase">Purchased</span>
                                                 </td>
                                                 <td>$<?php echo $proPrice; ?></td>
                                                 <td class="earning">-$29</td>
@@ -230,36 +197,80 @@ $buyer_id = $mem_id;
                                 <?php }
                                     }
                                 } ?>
+                                <!-- END purchased -->
+                                <!-- Selled -->
+                                <?php
+                                $selled = fetchParchasedwithSeller($user);
+                                if ($selled == null) {
+                                    echo "<div class='bg-info text-center text-white'>There No Selled Product</div>";
+                                } else {
+                                    foreach ($selled as $selledInfo) {
+                                        $product_id = $selledInfo['pro_id'];
+                                        $purchased_pro_author = $selledInfo['pro_author'];
+                                        $purchased_pro_Date = $selledInfo['date'];
+                                        // Mem Name ID
+                                        $author = $user;
+                                        $mem_info = mem_pro_author($author);
+                                        foreach ($mem_info as $MemData) {
+                                            $mem_name = $MemData['mem_name'];
+                                            $fromProTble = showProductsById($product_id);
+                                            foreach ($fromProTble as $proTbleInfo) {
+                                                $proName = $proTbleInfo['mem_pro_name'];
+                                                $proPrice = $proTbleInfo['price']; ?>
+                                                <tr>
+                                                    <td><?php echo $purchased_pro_Date; ?></td>
+                                                    <td>MP810094</td>
+                                                    <td class="author"><?php echo $mem_name; ?></td>
+                                                    <td class="detail">
+                                                        <a href="single-product.html"><?php echo $proName; ?></a>
+                                                    </td>
+                                                    <td class="type">
+                                                        <span class="sale">Sale</span>
+                                                    </td>
+                                                    <td>$<?php echo $proPrice; ?></td>
+                                                    <td class="earning">-$29</td>
+                                                    <td class="action">
+                                                        <a href="invoice.html">view</a>
+                                                    </td>
+                                                </tr>
+                                <?php }
+                                        }
+                                    }
+                                } ?>
                                 <!-- END Selled -->
                                 <!-- withdrawal -->
                                 <?php
                                 $withdrawal =  proNotif($user);
-                                foreach ($withdrawal as $withdrawalInfo) {
-                                    $product_id = $withdrawalInfo['with_pro_id'];
-                                    $purchased_pro_author = $withdrawalInfo['with_pro_author'];
-                                    $purchased_pro_Date = $withdrawalInfo['with_date'];
-                                    $fromProTble = showProductsById($product_id);
-                                    foreach ($fromProTble as $proTbleInfo) {
-                                        $proName = $proTbleInfo['mem_pro_name'];
-                                        $proPrice = $proTbleInfo['price'];
+                                if ($withdrawal == null) {
+                                    echo "<div class='text-center bg-warning'>Sorry There Is not withdrawal</div>";
+                                } else {
+                                    foreach ($withdrawal as $withdrawalInfo) {
+                                        $product_id = $withdrawalInfo['with_pro_id'];
+                                        $purchased_pro_author = $withdrawalInfo['with_pro_author'];
+                                        $purchased_pro_Date = $withdrawalInfo['with_date'];
+                                        $fromProTble = showProductsById($product_id);
+                                        foreach ($fromProTble as $proTbleInfo) {
+                                            $proName = $proTbleInfo['mem_pro_name'];
+                                            $proPrice = $proTbleInfo['price'];
                                 ?>
-                                        <tr>
-                                            <td><?php echo $purchased_pro_Date; ?></td>
-                                            <td>MP810094</td>
-                                            <td class="author"><?php echo $purchased_pro_author ?></td>
-                                            <td class="detail">
-                                                <a href="single-product.html"><?php echo $proName; ?></a>
-                                            </td>
-                                            <td class="type">
-                                                <span class="withdrawal">withdrawal</span>
-                                            </td>
-                                            <td>$<?php echo $proPrice; ?></td>
-                                            <td class="earning">-$29</td>
-                                            <td class="action">
-                                                <a href="invoice.html">view</a>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td><?php echo $purchased_pro_Date; ?></td>
+                                                <td>MP810094</td>
+                                                <td class="author"><?php echo $purchased_pro_author ?></td>
+                                                <td class="detail">
+                                                    <a href="single-product.html"><?php echo $proName; ?></a>
+                                                </td>
+                                                <td class="type">
+                                                    <span class="withdrawal">withdrawal</span>
+                                                </td>
+                                                <td>$<?php echo $proPrice; ?></td>
+                                                <td class="earning">-$29</td>
+                                                <td class="action">
+                                                    <a href="invoice.html">view</a>
+                                                </td>
+                                            </tr>
                                 <?php }
+                                    }
                                 } ?>
                                 <!-- END Withdawal -->
                             </tbody>

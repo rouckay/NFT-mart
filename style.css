@@ -18731,3 +18731,11 @@ span.counter {
 }
 
 /*# sourceMappingURL=src/map/style.css.map */
+/* MyPanels */
+.myPanel{
+  padding: 10px;
+  background-color: #0057ff;
+  /* border-radius: 10px; */
+  color: white;
+}
+/* END MyPanels */

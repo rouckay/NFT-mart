@@ -1,6 +1,7 @@
 <?php $curr_page = basename(__FILE__); ?>
 <?php require_once "header.php"; ?>
 <?php check_mem(); ?>
+<?php session_cookie($mem_id, $user); ?>
 <!--================================
         START BREADCRUMB AREA
     =================================-->
@@ -73,19 +74,10 @@
                                 <p>
                                     <?php
                                     $conn = config();
-                                    if (isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
-                                        $user_id = base64_decode($_COOKIE['mem_user_id']);
-                                        $mem_user_name = base64_decode($_COOKIE['mem_user_name']);
-                                    } elseif (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
-                                        $user_id = $_SESSION['member_id'];
-                                        $mem_user_name = $_SESSION['member_user'];
-                                    } else {
-                                        $user_id = -1;
-                                    }
                                     $mem_pro_sql = "SELECT * FROM mem_products WHERE author = :author AND status =:status  ORDER BY mem_pro_id DESC";
                                     $stmt_mem = $conn->prepare($mem_pro_sql);
                                     $stmt_mem->execute([
-                                        ':author' => $mem_user_name,
+                                        ':author' => $user,
                                         ':status' => "publish"
                                     ]);
                                     $rows = $stmt_mem->rowCount();
@@ -120,20 +112,10 @@
             <div class="row">
                 <!-- start .col-md-4 -->
                 <?php
-                $conn = config();
-                if (isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
-                    $user_id = base64_decode($_COOKIE['mem_user_id']);
-                    $mem_user_name = base64_decode($_COOKIE['mem_user_name']);
-                } elseif (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
-                    $user_id = $_SESSION['member_id'];
-                    $mem_user_name = $_SESSION['member_user'];
-                } else {
-                    $user_id = -1;
-                }
-                $mem_pro_sql = "SELECT * FROM mem_products WHERE author = :author AND status = :status LIMIT 0,6";
+                $mem_pro_sql = "SELECT * FROM mem_products WHERE author = :author AND status = :status LIMIT 0,8";
                 $stmt_mem = $conn->prepare($mem_pro_sql);
                 $stmt_mem->execute([
-                    ':author' => $mem_user_name,
+                    ':author' => $user,
                     ':status' => 'publish'
                 ]);
                 while ($rows_mem_pro = $stmt_mem->fetch(PDO::FETCH_ASSOC)) {
@@ -153,7 +135,7 @@
                         require_once "module/hidden_mem_products.php";
                     } else {
                     ?>
-                        <div class="col-lg-4 col-md-6">
+                        <div class="col-lg-3 col-md-6">
                             <!-- start .single-product -->
                             <div class="product product--card">
 
@@ -175,15 +157,15 @@
                                             <ul>
                                                 <?php
                                                 if (isset($_POST['btn_edit_pro'])) {
-                                                    header('location:edit_mem_product.php');
+                                                    $pro_id = $_POST['pro_id'];
                                                 }
 
                                                 ?>
                                                 <li>
                                                     <form action="edit_mem_product.php" method="POST">
                                                         <input type="hidden" name="pro_id" value="<?php echo $id; ?>">
-                                                        <a href="edit_mem_product.php" type="submit" name="btn_edit_pro" class="fa fa-edit">
-                                                            Edit </a>
+                                                        <button style="border:none;color:blue;" type="submit" name="btn_edit_pro" class="fa fa-edit">
+                                                            Edit </button>
                                                     </form>
                                                 </li>
                                                 <li>

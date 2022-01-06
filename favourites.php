@@ -227,7 +227,7 @@
                                     </li>
                                 </ul>
 
-                                <p><?php echo substr($detail, 0, 75); ?>.</p>
+                                <p><?php echo substr($detail, 0, 40); ?>.</p>
                             </div>
                             <!-- end /.product-desc -->
 

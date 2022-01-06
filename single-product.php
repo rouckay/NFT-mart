@@ -50,6 +50,7 @@ $name = $rows['mem_pro_name'];
 $detail = $rows['mem_pro_detail'];
 $image = $rows['mem_pro_image'];
 $price = $rows['price'];
+$views = $rows['pro_views'];
 $author = $rows['author'];
 $category = $rows['category_id'];
 $tag = $rows['tag'];
@@ -89,7 +90,15 @@ foreach ($product_author_info as $author_val) {
 <!--================================
         END BREADCRUMB AREA
     =================================-->
-
+<!-- Products Views  -->
+<?php
+$GetViewSql = "UPDATE mem_products SET pro_views =pro_views +1 WHERE mem_pro_id = :pro_id";
+$stmt_view = $conn->prepare($GetViewSql);
+$stmt_view->execute([
+    ':pro_id' => $id
+]);
+?>
+<!-- END Products Views  -->
 <!--============================================
         START SINGLE PRODUCT DESCRIPTION AREA
     ==============================================-->

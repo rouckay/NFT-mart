@@ -65,6 +65,7 @@
                             <div class="product-desc">
                                 <a href="single-product.php?id=<?php echo $id ?>" class="product_title">
                                     <h4><?php echo $name; ?></h4>
+                                    <p><?php echo substr($detail, 0, 40) . "..."; ?></p>
                                 </a>
                                 <ul class="titlebtm">
                                     <!-- Author Image and Info -->
@@ -107,40 +108,44 @@
                             ?>
                             <div class="product-purchase">
                                 <div class="price_love">
-                                    <form action="admin/include/user_functions.php" method="POST">
+                                    <form action="index.php" method="POST">
                                         <input type="hidden" name="pro_id" value="<?php echo $id; ?>">
                                         <input type="hidden" name="pro_author" value="<?php echo $author; ?>">
-                                        <span>$<?php echo $price; ?></span>
                                         <p>
-                                            <button type="submit" name="btn_add_fav" class="btn btn--round btn--bordered btn-sm btn-danger"><span class="lnr lnr-heart"></span>
+                                            <button type="submit" name="btn_add_fav" class="btn btn--round btn-sm btn-light"><span class="lnr lnr-heart"></span>
                                             </button>
                                     </form>
                                     </p>
                                 </div>
                                 <div class="sell">
                                     <p>
+
                                         <?php
+
                                         if (isset($_POST['btn_add_to_cart'])) {
                                             $pro_id = $_POST['cart_pro_id'];
                                             $pro_author = $_POST['cart_pro_author'];
                                             $who = $_POST['who_adding_to_cart'];
-                                            // add_to_cart_func($pro_id,$pro_author,$who);
                                         }
                                         ?>
-                                    <form action="index.php" method="POST">
-                                        <input type="hidden" name="cart_pro_id" value="<?php echo $id; ?>">
-                                        <input type="hidden" name="cart_pro_author" value="<?php echo $author; ?>">
-                                        <input type="hidden" name="who_adding_to_cart" value="<?php echo $user_id; ?>">
+                                    <form method="POST">
+                                        <input type="hidden" id="cart_pro_id" name="cart_pro_id" value="<?php echo $id; ?>">
+                                        <input type="hidden" id="cart_pro_author" name="cart_pro_author" value="<?php echo $author; ?>">
+                                        <input type="hidden" id="who_adding_to_cart" name="who_adding_to_cart" value="<?php echo $user_id; ?>">
                                         <!-- Count Total Added To Cart -->
                                         <?php
-                                        $count_total_added = total_added_to_cart_count($id); ?>
-                                        <button type="submit" class="btn btn--round btn-sm" name="btn_add_to_cart"><span class="lnr lnr-cart"></span>
-                                            <?php echo $count_total_added >= 1 ? "$count_total_added" : ""; ?> </button>
+                                        if ($user == $author) { ?>
+                                            <div class="btn btn--round btn--bordered btn-sm btn-success"><span>&#10004;</span></div>
+                                        <?php } else { ?>
+                                            <button id="btn_add_to_cart" name="btn_add_to_cart" class="btn btn--round btn--bordered btn-sm btn-success"><span class="lnr lnr-cart">$<?php echo $price; ?></span> </button>
+                                        <?php }
+                                        ?>
                                         <!-- Count Total Added To Cart -->
                                         </p>
+                                    </form>
                                 </div>
+                                <div id="response"></div>
                             </div>
-                            </form>
                             <!-- end /.product-purchase -->
                         </div>
                         <!-- end /.single-product -->
