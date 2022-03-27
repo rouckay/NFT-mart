@@ -47,7 +47,9 @@
 <!--================================
         END SEARCH AREA
     =================================-->
-
+<?php if (isset($_GET['SelectCate'])) {
+    echo '<script>alert("Please Select Category")</script>';
+}; ?>
 <!--================================
         START FILTER AREA
     =================================-->
@@ -157,7 +159,7 @@
                                 <div class="product__thumbnail">
                                     <img width="361px" height="230px" src="admin/img/cat_image/<?php echo $name;  ?>/<?php echo $image; ?>" alt="Product Image">
                                     <div class="prod_btn">
-                                        <a href="category_products.php?cat_id = <?php echo $id ?>" class="transparent btn--sm btn--round">More Info</a>
+                                        <a href="category_products.php?cat_id=<?php echo $id ?>" class="transparent btn--sm btn--round">More Info</a>
                                     </div>
                                     <!-- end /.prod_btn -->
                                 </div>

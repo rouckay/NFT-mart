@@ -115,12 +115,7 @@ $stmt_view->execute([
                             $exp = explode(".", $image);
                             $ext = end($exp);
                             if ($ext == "jpg" or $ext == "png" or $ext == "jpeg") { ?>
-                                <img width="750px" height="430px" src="admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>" alt="Keep calm this isn't the end of the world, the preview is just missing.">
-
-                            <?php } else { ?>
-                                <video width="750px" height="430px" poster="placeholder.png" controls autoplay muted loop>
-                                    <source src="./admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>">
-                                </video>
+                                <img style="position:absolute; left: 30%; right:50%" src="admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>" alt="Keep calm this isn't the end of the world, the preview is just missing.">
                             <?php } ?>
                             <!-- END Image & video Show -->
                         </div>
@@ -148,42 +143,36 @@ $stmt_view->execute([
                         <div class="prev-thumb">
                             <div class="thumb-slider">
                                 <div class="item-thumb">
-                                    <img src="images/thumb1.jpg" alt="This is the thumbnail of the item">
+                                    <img width="80px" height="80px" src="admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>" alt="This is the thumbnail of the item">
+                                </div>
+                                <!-- <div class="item-thumb">
+                                    <img width="80px" height="80px" src="admin/img/member_product/<?php //echo $name; 
+                                                                                                    ?>/<?php //echo $image; 
+                                                                                                        ?>" alt="This is the thumbnail of the item">
                                 </div>
                                 <div class="item-thumb">
+                                    <img width="80px" height="80px" src="admin/img/member_product/<?php //echo $name; 
+                                                                                                    ?>/<?php // echo $image; 
+                                                                                                        ?>" alt="This is the thumbnail of the item">
+                                </div>
+                                <div class="item-thumb">
+                                    <img width="80px" height="80px" src="admin/img/member_product/<?php //echo $name; 
+                                                                                                    ?>/<?php //echo $image; 
+                                                                                                        ?>" alt="This is the thumbnail of the item">
+                                </div> -->
+                                <!-- <div class="item-thumb">
                                     <img src="images/thumb2.jpg" alt="This is the thumbnail of the item">
                                 </div>
                                 <div class="item-thumb">
                                     <img src="images/thumb3.jpg" alt="This is the thumbnail of the item">
-                                </div>
-                                <div class="item-thumb">
-                                    <img src="images/thumb4.jpg" alt="This is the thumbnail of the item">
-                                </div>
-                                <div class="item-thumb">
-                                    <img src="images/thumb5.jpg" alt="This is the thumbnail of the item">
-                                </div>
-                                <div class="item-thumb">
-                                    <img src="images/thumb1.jpg" alt="This is the thumbnail of the item">
-                                </div>
-                                <div class="item-thumb">
-                                    <img src="images/thumb2.jpg" alt="This is the thumbnail of the item">
-                                </div>
-                                <div class="item-thumb">
-                                    <img src="images/thumb3.jpg" alt="This is the thumbnail of the item">
-                                </div>
-                                <div class="item-thumb">
-                                    <img src="images/thumb4.jpg" alt="This is the thumbnail of the item">
-                                </div>
-                                <div class="item-thumb">
-                                    <img src="images/thumb5.jpg" alt="This is the thumbnail of the item">
-                                </div>
+                                </div> -->
                             </div>
                             <!-- end /.thumb-slider -->
 
-                            <div class="prev-nav thumb-nav">
+                            <!-- <div class="prev-nav thumb-nav">
                                 <span class="lnr nav-left lnr-arrow-left"></span>
                                 <span class="lnr nav-right lnr-arrow-right"></span>
-                            </div>
+                            </div> -->
                             <!-- end /.prev-nav -->
                         </div>
 
@@ -246,12 +235,8 @@ $stmt_view->execute([
                                 $exp = explode(".", $image);
                                 $ext = end($exp);
                                 if ($ext == "jpg" or $ext == "png" or $ext == "jpeg") { ?>
-                                    <img width="640px" height="400px" src="admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>" alt="This author">
+                                    <img src="admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>" alt="This author">
 
-                                <?php } else { ?>
-                                    <video poster="placeholder.png" controls autoplay muted loop>
-                                        <source src="./admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>">
-                                    </video>
                                 <?php } ?>
                                 <!-- END Image & video Show -->
 
@@ -265,6 +250,7 @@ $stmt_view->execute([
                                 <?php
                                 require_once('phpscripts/comment.php');
                                 ?>
+                                <div id=resp></div>
                                 <!-- end /.media-list -->
 
                                 <div class="pagination-area pagination-area2">
@@ -304,7 +290,6 @@ $stmt_view->execute([
                                                     <button id="btn_add_comment" name="btn_add_comment" class="btn btn--sm btn--round">Post
                                                         Comment</button>
                                                     <!-- </form> -->
-                                                    <div id=resp>I will Give you Response</div>
                                             </div>
                                         </div>
                                         <!-- comment reply -->
@@ -374,7 +359,7 @@ $stmt_view->execute([
                                             <div class="media-body">
                                                 <form action="#" class="comment-reply-form">
                                                     <textarea class="bla" name="reply-comment" placeholder="Write your comment..."></textarea>
-                                                    <button class="btn btn--md btn--round">Post Comment</button>
+                                                    <button class="btn btn--md btn--round">Post Reply</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -435,136 +420,6 @@ $stmt_view->execute([
                                         </div>
 
                                         <div id="collapse1" class="panel-collapse collapse" aria-labelledby="panel-one" data-parent="#accordion">
-                                            <div class="panel-body">
-                                                <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut
-                                                    sceleris que the mattis, leo quam aliquet congue placerat mi id nisi
-                                                    interdum mollis. Aliquip placeat salvia cillum iphone. Seitan
-                                                    aliquip
-                                                    quis cardigan american apparel, butcher. Nunc placerat mi id nisi
-                                                    interdum mollis. Praesent pharetra, justo ut sceleris que the
-                                                    mattis,
-                                                    leo quam aliquet congue placerat mi id nisi interdum mollis. Aliquip
-                                                    placeat salvia cillum iphone. Seitan aliquip quis cardigan american
-                                                    apparel, butcher .</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- end /.accordion__single -->
-                                    <div class="panel accordion__single" id="panel-two">
-                                        <div class="single_acco_title">
-                                            <h4>
-                                                <a data-toggle="collapse" href="#collapse2" class="collapsed" aria-expanded="false" data-target="#collapse2" aria-controls="collapse2">
-                                                    <span>Why do I need to login to purchase an item on DigiPro?</span>
-                                                    <i class="lnr lnr-chevron-down indicator"></i>
-                                                </a>
-                                            </h4>
-                                        </div>
-
-                                        <div id="collapse2" class="panel-collapse collapse" aria-labelledby="panel-two" data-parent="#accordion">
-                                            <div class="panel-body">
-                                                <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut
-                                                    sceleris que the mattis, leo quam aliquet congue placerat mi id nisi
-                                                    interdum mollis. Aliquip placeat salvia cillum iphone. Seitan
-                                                    aliquip
-                                                    quis cardigan american apparel, butcher. Nunc placerat mi id nisi
-                                                    interdum mollis. Praesent pharetra, justo ut sceleris que the
-                                                    mattis,
-                                                    leo quam aliquet congue placerat mi id nisi interdum mollis. Aliquip
-                                                    placeat salvia cillum iphone. Seitan aliquip quis cardigan american
-                                                    apparel, butcher .</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- end /.accordion__single -->
-                                    <div class="panel accordion__single" id="panel-three">
-                                        <div class="single_acco_title">
-                                            <h4>
-                                                <a data-toggle="collapse" href="#collapse3" class="collapsed" aria-expanded="false" data-target="#collapse3" aria-controls="collapse3">
-                                                    <span>How to create an account on DigiPro?</span>
-                                                    <i class="lnr lnr-chevron-down indicator"></i>
-                                                </a>
-                                            </h4>
-                                        </div>
-
-                                        <div id="collapse3" class="panel-collapse collapse" aria-labelledby="panel-three" data-parent="#accordion">
-                                            <div class="panel-body">
-                                                <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut
-                                                    sceleris que the mattis, leo quam aliquet congue placerat mi id nisi
-                                                    interdum mollis. Aliquip placeat salvia cillum iphone. Seitan
-                                                    aliquip
-                                                    quis cardigan american apparel, butcher. Nunc placerat mi id nisi
-                                                    interdum mollis. Praesent pharetra, justo ut sceleris que the
-                                                    mattis,
-                                                    leo quam aliquet congue placerat mi id nisi interdum mollis. Aliquip
-                                                    placeat salvia cillum iphone. Seitan aliquip quis cardigan american
-                                                    apparel, butcher .</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- end /.accordion__single -->
-                                    <div class="panel accordion__single" id="panel-four">
-                                        <div class="single_acco_title">
-                                            <h4>
-                                                <a data-toggle="collapse" href="#collapse4" class="collapsed" aria-expanded="false" data-target="#collapse4" aria-controls="collapse4">
-                                                    <span>How to write the changelog for theme updates?</span>
-                                                    <i class="lnr lnr-chevron-down indicator"></i>
-                                                </a>
-                                            </h4>
-                                        </div>
-
-                                        <div id="collapse4" class="panel-collapse collapse" aria-labelledby="panel-four" data-parent="#accordion">
-                                            <div class="panel-body">
-                                                <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut
-                                                    sceleris que the mattis, leo quam aliquet congue placerat mi id nisi
-                                                    interdum mollis. Aliquip placeat salvia cillum iphone. Seitan
-                                                    aliquip
-                                                    quis cardigan american apparel, butcher. Nunc placerat mi id nisi
-                                                    interdum mollis. Praesent pharetra, justo ut sceleris que the
-                                                    mattis,
-                                                    leo quam aliquet congue placerat mi id nisi interdum mollis. Aliquip
-                                                    placeat salvia cillum iphone. Seitan aliquip quis cardigan american
-                                                    apparel, butcher .</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- end /.accordion__single -->
-                                    <div class="panel accordion__single" id="panel-five">
-                                        <div class="single_acco_title">
-                                            <h4>
-                                                <a data-toggle="collapse" href="#collapse5" class="collapsed" aria-expanded="false" data-target="#collapse5" aria-controls="collapse5">
-                                                    <span>Do you recommend using a download manager software?</span>
-                                                    <i class="lnr lnr-chevron-down indicator"></i>
-                                                </a>
-                                            </h4>
-                                        </div>
-
-                                        <div id="collapse5" class="panel-collapse collapse" aria-labelledby="panel-five" data-parent="#accordion">
-                                            <div class="panel-body">
-                                                <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut
-                                                    sceleris que the mattis, leo quam aliquet congue placerat mi id nisi
-                                                    interdum mollis. Aliquip placeat salvia cillum iphone. Seitan
-                                                    aliquip
-                                                    quis cardigan american apparel, butcher. Nunc placerat mi id nisi
-                                                    interdum mollis. Praesent pharetra, justo ut sceleris que the
-                                                    mattis,
-                                                    leo quam aliquet congue placerat mi id nisi interdum mollis. Aliquip
-                                                    placeat salvia cillum iphone. Seitan aliquip quis cardigan american
-                                                    apparel, butcher .</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- end /.accordion__single -->
-                                    <div class="panel accordion__single" id="panel-six">
-                                        <div class="single_acco_title">
-                                            <h4>
-                                                <a data-toggle="collapse" href="#collapse6" class="collapsed" aria-expanded="false" data-target="#collapse6" aria-controls="collapse6">
-                                                    <span>How to purchase an item on DigiPro?</span>
-                                                    <i class="lnr lnr-chevron-down indicator"></i>
-                                                </a>
-                                            </h4>
-                                        </div>
-
-                                        <div id="collapse6" class="panel-collapse collapse" aria-labelledby="panel-six" data-parent="#accordion">
                                             <div class="panel-body">
                                                 <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut
                                                     sceleris que the mattis, leo quam aliquet congue placerat mi id nisi
@@ -759,108 +614,11 @@ $stmt_view->execute([
                 </div>
             </div>
             <!-- end /.col-md-12 -->
-            <?php
-            $author_pros = mem_pro_for_single_pro($author);
-            foreach ($author_pros as $auth_pro) {
-            ?>
-                <!-- start .col-md-4 -->
-                <div class="col-lg-4 col-md-6">
-                    <!-- start .single-product -->
-                    <div class="product product--card">
+            <!-- ---------------------------- fetch Author Products -->
+            <?php authorProducts(6, $user); ?>
+            <!-- ---------------------------- END fetch Author Products -->
 
-                        <div class="product__thumbnail">
-                            <!-- Image & video Show -->
-                            <?php
-                            $exp = explode(".", $auth_pro['mem_pro_image']);
-                            $ext = end($exp);
-                            if ($ext == "jpg" or $ext == "png" or $ext == "jpeg" or $ext == 'gif') { ?>
-                                <img width="361px" height="240px" src="./admin/img/member_product/<?php echo $auth_pro['mem_pro_name']; ?>/<?php echo $auth_pro['mem_pro_image']; ?>" alt="<?php echo $auth_pro['mem_pro_name']; ?>">
-
-                            <?php } else { ?>
-                                <div class="card">
-                                    <video width="361px" height="240px" autoplay muted loop poster="placeholder.png" controls style="background-size:contain">
-                                        <source src="./admin/img/member_product/<?php echo $auth_pro['mem_pro_name']; ?>/<?php echo $auth_pro['mem_pro_image']; ?>">
-                                    </video>
-                                </div>
-                            <?php } ?>
-                            <!-- END Image & video Show -->
-                            <div class="prod_btn">
-                                <a href="single-product.php?id=<?php echo $auth_pro['mem_pro_id']; ?>" class="transparent btn--sm btn--round">More Info</a>
-                                <a href="single-product.php?id=<?php echo $auth_pro['mem_pro_id']; ?>" class="transparent btn--sm btn--round">Live Demo</a>
-                            </div>
-                            <!-- end /.prod_btn -->
-                        </div>
-                        <!-- end /.product__thumbnail -->
-
-                        <div class="product-desc">
-                            <a href="#" class="product_title">
-                                <h4><?php echo $auth_pro['mem_pro_name']; ?></h4>
-                            </a>
-                            <ul class="titlebtm">
-                                <li>
-                                    <img class="auth-img" src="admin/img/member_avatars/<?php echo $author ?>/<?php echo $author_image; ?>" alt="author image">
-                                    <p>
-                                        <a href=""><?php echo $author ?></a>
-                                    </p>
-                                </li>
-                                <li class="product_cat">
-                                    <a href="#">
-                                        <?php
-                                        $pro_category = fetch_categories($category);
-                                        foreach ($pro_category as $cat_info) {
-                                        ?>
-                                            <img src="admin/img/cat_image/<?php echo $cat_info['cat_name']; ?>/<?php echo $cat_info['cat_image']; ?>" alt="<?php echo $cat_info['cat_name']; ?>"><?php echo $cat_info['cat_name']; ?></a>
-                                <?php } ?>
-                                </li>
-                            </ul>
-
-                            <p><?php echo $auth_pro['mem_pro_detail']; ?>.</p>
-                        </div>
-                        <!-- end /.product-desc -->
-
-                        <div class="product-purchase">
-                            <div class="price_love">
-                                <span>$10</span>
-                                <p>
-                                    <span class="lnr lnr-heart"></span> 48
-                                </p>
-                            </div>
-
-                            <div class="rating product--rating">
-                                <ul>
-                                    <li>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                    <li>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                    <li>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                    <li>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                    <li>
-                                        <span class="fa fa-star-half-o"></span>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div class="sell">
-                                <p>
-                                    <span class="lnr lnr-cart"></span>
-                                    <span>50</span>
-                                </p>
-                            </div>
-                        </div>
-                        <!-- end /.product-purchase -->
-                    </div>
-                    <!-- end /.single-product -->
-                </div>
-            <?php } ?>
-            <!-- end /.col-md-4 -->
-
-            <p id="resp">I will Give you Response</p>
+            <!-- <p id="resp">I will Give you Response</p> -->
         </div>
         <!-- end /.container -->
     </div>

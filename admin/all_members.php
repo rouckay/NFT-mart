@@ -10,14 +10,14 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Tables</h1>
     <?php if (isset($_GET['deleted'])) { ?>
-    <div class="alert alert-success" role="alert">
-        <span class="alert_icon lnr lnr-success"></span>
-        <span class='alert_icon lnr lnr-checkmark-circle'></span>
-        <strong>Oh No!</strong> Member Successfully Deleted.
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span class="lnr lnr-cross" aria-hidden="true"></span>
-        </button>
-    </div>
+        <div class="alert alert-success" role="alert">
+            <span class="alert_icon lnr lnr-success"></span>
+            <span class='alert_icon lnr lnr-checkmark-circle'></span>
+            <strong>Oh No!</strong> Member Successfully Deleted.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span class="lnr lnr-cross" aria-hidden="true"></span>
+            </button>
+        </div>
     <?php } ?>
 
     <!-- DataTales Example -->
@@ -35,6 +35,7 @@
                             <th>Email</th>
                             <th>User_name</th>
                             <th>Image</th>
+                            <th>Status</th>
                             <th>Date</th>
                             <th>Delete</th>
                             <th>Edit</th>
@@ -47,6 +48,7 @@
                             <th>Email</th>
                             <th>User_name</th>
                             <th>Image</th>
+                            <th>Status</th>
                             <th>Date</th>
                             <th>Delete</th>
                             <th>Edit</th>
@@ -62,34 +64,51 @@
                             $id = $fetch_mem_rows['mem_id'];
                             $name = $fetch_mem_rows['mem_name'];
                             $image = $fetch_mem_rows['mem_image'];
+                            $acc_status = $fetch_mem_rows['acc_status'];
                             $user_name = $fetch_mem_rows['mem_user_name'];
                             $email = $fetch_mem_rows['mem_email'];
                             $at = $fetch_mem_rows['created_at'];
                         ?>
-                        <tr>
-                            <th><?php echo $id; ?></th>
-                            <th><?php echo $name; ?></th>
-                            <th><?php echo $email; ?></th>
-                            <th><?php echo $user_name; ?></th>
-                            <th><img class="rounded-circle" width="50px" height="50px"
-                                    src="img/member_avatars/<?php echo $user_name; ?>/<?php echo $image; ?>">
-                            </th>
-                            <th><?php echo $at;
+                            <tr>
+                                <th><?php echo $id; ?></th>
+                                <th><?php echo $name; ?></th>
+                                <th><?php echo $email; ?></th>
+                                <th><?php echo $user_name; ?></th>
+                                <th><img class="rounded-circle" width="50px" height="50px" src="img/member_avatars/<?php echo $user_name; ?>/<?php echo $image; ?>">
+                                </th>
+                                <th>
+                                    <!-- ------------------------------ Member Account Status -->
+                                    <?php if (isset($_POST['pending'])) {
+                                        $mem_status_id = $_POST['mem_id'];
+                                        $status = 'publish';
+                                        changeMemStatus($status, $mem_status_id);
+                                    } else if (isset($_POST['publish'])) {
+                                        $mem_status_id = $_POST['mem_id'];
+                                        $status = 'pending';
+                                        changeMemStatus($status, $mem_status_id);
+                                    }
+                                    ?>
+                                    <form method="POST" action="all_members.php">
+                                        <input type="hidden" name="mem_id" value="<?php echo $id; ?>">
+                                        <?php echo $acc_status == 'pending' ? "<button name='pending' class='btn btn-sm btn-warning'>Pending</button>" : "<button name='publish' class='btn btn-sm btn-success'>Publish</button>" ?>
+                                    </form>
+                                    <!-- ------------------------------ END Member Account Status -->
+                                </th>
+                                <th><?php echo $at;
                                     ?></th>
-                            <!-- Delete Button -->
-                            <th>
-                                <form action="include/user_functions.php" method="POST">
-                                    <input type="hidden" name="id" value="<?php echo $id; ?>">
-                                    <button type="submit" name="btn_del_mem" class="btn btn-danger btn-circle"><i
-                                            class="fa fa-trash"></i>
-                                    </button>
-                                </form>
-                            </th>
-                            <!-- END Delete Button -->
-                            <!-- Edit Button -->
-                            <th><a href="" class="btn btn-info btn-circle"><i class="fa fa-edit"></i> </a></th>
-                            <!-- END Edit Button -->
-                        </tr>
+                                <!-- Delete Button -->
+                                <th>
+                                    <form action="include/user_functions.php" method="POST">
+                                        <input type="hidden" name="id" value="<?php echo $id; ?>">
+                                        <button type="submit" name="btn_del_mem" class="btn btn-danger btn-circle"><i class="fa fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </th>
+                                <!-- END Delete Button -->
+                                <!-- Edit Button -->
+                                <th><a href="" class="btn btn-info btn-circle"><i class="fa fa-edit"></i> </a></th>
+                                <!-- END Edit Button -->
+                            </tr>
                         <?php } ?>
                     </tbody>
                 </table>

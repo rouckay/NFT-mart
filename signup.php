@@ -66,7 +66,7 @@
 
                             <div class="form-group">
                                 <label for="urname">Your Name</label>
-                                <input id="urname" type="text" required name="frm[name]" class="text_field" placeholder="Enter your Name">
+                                <input id="urname" type="text" autocomplete="on" required name="frm[name]" class="text_field" placeholder="Enter your Name">
                             </div>
 
                             <div class="form-group">
@@ -98,7 +98,7 @@
 
                                         <div class="custom_upload">
                                             <label for="thumbnail">
-                                                <input type="file" required name="avatar" id="thumbnail" class="files">
+                                                <input type="file" required name="avatar" accept=".jpeg,.png,.jpg" id="thumbnail" class="files">
                                                 <span class="btn btn--round btn--sm">Choose File</span>
                                             </label>
                                         </div>

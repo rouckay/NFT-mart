@@ -1,4 +1,5 @@
 <?php
+$paramsId =  $_GET['auth'];
 if (isset($_SESSION['member_id']) || isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
     if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
         $user_id = $_SESSION['member_id'];
@@ -42,13 +43,13 @@ if (isset($_SESSION['member_id']) || isset($_SESSION['member_user']) || isset($_
                     <textarea name="message" class="text_field" id="author-message" placeholder="Your message..."></textarea>
                 </div>
 
-                <div class="msg_submit">
-                    <button type="submit" name="send_msg" class="btn btn--md btn--round">send
+
+                <?php
+                echo $user_id == $paramsId ? '<div class="bg-warning btn-md">You Can not Send To Your Self!</div>' : "<div class='msg_submit'>
+                    <button type='submit' name='send_msg' class='btn btn--md btn--round'>send
                         message</button>
-                </div>
+                </div>" ?>
             </form>
-            <?php //} 
-            ?>
 
         </div>
         <!-- end /.message-form -->

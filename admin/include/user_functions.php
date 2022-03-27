@@ -3,10 +3,21 @@ date_default_timezone_set("asia/kabul");
 ob_start();
 include_once('functions.php');
 session_start();
-// Chech The User For Login
-// error_reporting(0);
-// if (isset($_COOKIE['mem_user_id']) & isset($_COOKIE['mem_user_name']) & $_SESSION['member_user']) {
+// class ProClass
+// {
+//     public $conn;
+//     function showDb($conn)
+//     {
+//         $this->conn = $conn;
+//     }
+//     function showerDB()
+//     {
+//         return $this->conn;
+//     }
 // }
+// $showDB = new ProClass();
+// $showDB->showDb('hello');
+// echo $showDB->showerDB();
 
 $conn = config();
 
@@ -43,10 +54,11 @@ function mem_sign($mem_sign)
 {
     $conn = config();
     $mem_sign = $_POST['frm'];
-    $mem_sign_sql = "SELECT * FROM members WHERE mem_user_name = :mem_user";
+    $mem_sign_sql = "SELECT * FROM members WHERE mem_user_name = :mem_user AND acc_status = :status";
     $stmt_m_s = $conn->prepare($mem_sign_sql);
     $stmt_m_s->execute([
-        ':mem_user' => $mem_sign['user_name']
+        ':mem_user' => $mem_sign['user_name'],
+        ':status' => 'publish'
     ]);
     $mem_info = $stmt_m_s->fetch(PDO::FETCH_ASSOC);
     $mem_password_hash = $mem_info['mem_pass'];
@@ -78,11 +90,12 @@ function mem_sign($mem_sign)
         <div class="alert alert-danger" role="alert">
             <span class="alert_icon lnr lnr-warning"></span>
             <strong>Oh No!</strong> User Not Found!
+            <strong>But If you Think It's Correct!</strong> Your Account is Not Activated Please Contact Support To Activate Your Account!
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span class="lnr lnr-cross" aria-hidden="true"></span>
             </button>
         </div>
-<?php    }
+    <?php    }
 }
 //Check if the member is Signed in or if it's not back to index
 function check_mem()
@@ -351,14 +364,30 @@ function uploader_mem_pro($item_data, $image)
 }
 // END Upload Member Product
 // Update Member Products
-function updateMemPro($item_data)
+function updateMemPro($item_data, $image, $oldPic)
 {
     $conn = config();
     $item_data = $_POST['frm'];
-    $sqlUpdate = "UPDATE mem_products SET  WHERE mem_pro_id = :pro_id";
+    if ($_FILES['image']['name'] != '') {
+        $image = $_FILES['image']['name'];
+        $from = $_FILES['image']['tmp_name'];
+        $dir = mkdir("admin/img/member_product/" . $item_data['name']);
+        $to = "admin/img/member_product/" . $item_data['name'] . "/" . $image;
+        move_uploaded_file($from, $to);
+    } else {
+        $image = $oldPic;
+    }
+    $sqlUpdate = "UPDATE mem_products SET mem_pro_name=:mem_pro_name, mem_pro_detail = :mem_pro_detail, mem_pro_image=:mem_pro_image, category_id = :category_id,tag=:tag, price=:price,pro_amount = :pro_amount  WHERE mem_pro_id = :pro_id";
     $stmt_up_pro = $conn->prepare($sqlUpdate);
     $stmt_up_pro->execute([
-        ':pro_id'
+        ':pro_id' => $item_data['mem_pro_id'],
+        ':mem_pro_name' => $item_data['name'],
+        ':mem_pro_detail' => $item_data['detail'],
+        ':mem_pro_image' => $image,
+        ':category_id' => $item_data['category'],
+        ':tag' => $item_data['tag'],
+        ':price' => $item_data['price'],
+        ':pro_amount' => $item_data['amount'],
     ]);
 }
 // END Update Member Products
@@ -488,16 +517,18 @@ function add_to_favourite($fav_pro_id, $fav_pro_author, $mem_id)
     $fav_pro_id = $_POST['pro_id'];
     $fav_pro_author = $_POST['pro_author'];
 
-    $sql_check_dublicate = "SELECT * FROM favourite WHERE pro_id = :pro_id";
+    $sql_check_dublicate = "SELECT * FROM favourite WHERE pro_id = :pro_id AND pro_author = :author AND mem_id = :mem_id";
     $stmt_dublicate = $conn->prepare($sql_check_dublicate);
     $stmt_dublicate->execute([
-        ':pro_id' => $fav_pro_id
+        ':pro_id' => $fav_pro_id,
+        ':author' => $fav_pro_author,
+        ':mem_id' => $mem_id
     ]);
     $rows_dublicate = $stmt_dublicate->rowCount();
 
     if ($rows_dublicate >= 1) {
-        echo '<script>alert("This Product is Already In Your Favourite List")</script>';
         // header("location:favourites.php?AlreadyExist");
+
     } elseif ($mem_id == -1) {
         header('location:login.php?login_to_add_to_fav');
     } else {
@@ -510,6 +541,18 @@ function add_to_favourite($fav_pro_id, $fav_pro_author, $mem_id)
         ]);
         $success = 'added';
         header("location:favourites.php?success_msg");
+        $authidFetch = mem_pro_author($fav_pro_author);
+        foreach ($authidFetch as $authData) {
+            $authid = $authData['mem_id'];
+            $sqlNotif = "INSERT INTO notification (notificationFor,notificationFrom, pro_id,type) VALUES (:notifFor,:notifFrom,:pro_id,:type)";
+            $stmtNotif = $conn->prepare($sqlNotif);
+            $stmtNotif->execute([
+                ':notifFor' => $authid,
+                ':notifFrom' => $mem_id,
+                ':pro_id' => $fav_pro_id,
+                ':type' => "Favourite"
+            ]);
+        }
     }
     // header('location=./favourites.php.php?Added_successfully');
 }
@@ -580,7 +623,7 @@ function message_to_mem($msg_user_name, $msg_email, $message, $reciever)
 {
     $conn = config();
     $reciever = $_POST['reciever'];
-    $msg_user_name = $_POST['user_name'];
+    $sender = $_POST['user_name'];
     $msg_email = $_POST['mem_email'];
     $message = $_POST['message'];
     $send_msg_sql = "INSERT INTO messages (msg_user_name, msg_user_email,msg_detail,msg_date,reciever) VALUES (:user,:email,:detail,:date,:to)";
@@ -592,22 +635,16 @@ function message_to_mem($msg_user_name, $msg_email, $message, $reciever)
         ':date' => date('M n, Y') . "at" . date('h: i A'),
         ':to' => $reciever
     ]);
+    // ---------------------------------------------------- Notifications
+    allNotifications($reciever, $sender, "Message");
+    // allNotifications('55', '44', "Fucked Message");
+    // ----------------------------------------------------END Notifications
 }
 // END Message System 
 // Delete Member Product From Member Dashboard
 function delet_mem_pro_from_dash($pro_id, $author)
 {
     $conn = config();
-    if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
-        $user_id = $_SESSION['member_id'];
-        $user_name = $_SESSION['member_user'];
-    } elseif (isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
-        $user_id = $_COOKIE['mem_user_id'];
-        $user_name = $_COOKIE['mem_user_user'];
-    } else {
-        $user_id = -1;
-        $user_name = -1;
-    }
     $author = $_POST['author'];
     $pro_id = $_POST['pro_id'];
     $mem_info_for_del = "SELECT * FROM mem_products WHERE mem_pro_id=:pro_id AND author = :pro_author";
@@ -627,8 +664,10 @@ function delet_mem_pro_from_dash($pro_id, $author)
     $stmt->execute([
         ':id' => $pro_id,
         ':author' => $author
-
     ]);
+    if (isset($dele_query)) {
+        header('location:dashboard-manage-item.php');
+    }
 }
 // END Delete Member Product From Member Dashboard
 // Hide Member Products
@@ -698,6 +737,7 @@ function add_mem_bio($bio, $user_id)
 // END Add BIO Using AJAX
 // Add To Cart 
 if (isset($_POST['btn_add_to_cart'])) {
+
     $conn = config();
     $pro_id = $_POST['cart_pro_id'];
     $pro_author = $_POST['cart_pro_author'];
@@ -713,6 +753,18 @@ if (isset($_POST['btn_add_to_cart'])) {
             ':owner' => $who
         ]);
         header('location:cart.php');
+        $authidFetch = mem_pro_author($pro_author);
+        foreach ($authidFetch as $authData) {
+            $authid = $authData['mem_id'];
+            $sqlNotif = "INSERT INTO notification (notificationFor,notificationFrom, pro_id,type) VALUES (:notifFor,:notifFrom,:pro_id,:type)";
+            $stmtNotif = $conn->prepare($sqlNotif);
+            $stmtNotif->execute([
+                ':notifFor' => $authid,
+                ':notifFrom' => $who,
+                ':pro_id' => 0,
+                ':type' => "Add To Cart"
+            ]);
+        }
     }
 }
 // END Add To Cart 
@@ -818,7 +870,7 @@ function total_added_to_cart_count($pro_id)
 function mem_pro_author($author)
 {
     $conn = config();
-    $sql_pro_author = "SELECT * FROM members WHERE mem_user_name=:auth_name";
+    $sql_pro_author = "SELECT * FROM members WHERE mem_user_name=:auth_name ";
     $stmt = $conn->prepare($sql_pro_author);
     $stmt->execute([
         ':auth_name' => $author
@@ -932,8 +984,20 @@ function insert_replay($com_id, $author, $mem_id, $replay)
         ':com_sender_id' => $mem_id,
         ':com_replay' => $replay
     ]);
-    if ($inserting) {
-        header("refresh:1url:single-product.php");
+
+    header("refresh:1url:single-product.php");
+    $memInfo = mem_pro_author($author);
+    foreach ($memInfo as $memData) {
+        $senderInfo = $memData['mem_id'];
+
+        $sqlNotif = "INSERT INTO notification (notificationFor,notificationFrom, pro_id,type) VALUES (:notifFor,:notifFrom,:pro_id,:type)";
+        $stmtNotif = $conn->prepare($sqlNotif);
+        $stmtNotif->execute([
+            ':notifFor' => $senderInfo,
+            ':notifFrom' => $mem_id,
+            ':pro_id' => 0,
+            ':type' => "Reply"
+        ]);
     }
 }
 // END insert Replay First
@@ -1059,7 +1123,7 @@ function showProductsById($product_id)
     while ($row_products = $stmt_pro->fetch(PDO::FETCH_ASSOC)) {
         $resultPro[] = $row_products;
     }
-    return $resultPro;
+    return $resultPro ?? 0;
 }
 // END Show Member Product By Id 
 // Show Member Product with Author and Id 
@@ -1143,4 +1207,632 @@ function delet_arr($pro_id)
         ':pro_id' => $pro_id
     ]);
 }
+// Following Fetch
+function fetchFollowing($mem_id)
+{
+    $conn = config();
+    $fetchFollowing = "SELECT * from folllow WHERE sender = :sender";
+    $stmt = $conn->prepare($fetchFollowing);
+    $stmt->execute([
+        ':sender' => $mem_id
+    ]);
+    while ($rows = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $result[] = $rows;
+    }
+    return $result;
+}
+// END Following Fetch
+// Followers Fetch
+function fetchFollowers($mem_id)
+{
+    $conn = config();
+    $fetchFollowers = "SELECT * from folllow WHERE reciever = :reciever";
+    $stmt = $conn->prepare($fetchFollowers);
+    $stmt->execute([
+        ':reciever' => $mem_id
+    ]);
+    while ($rows = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $result[] = $rows;
+    }
+    return $result;
+}
+// END Followers Fetch
+// Started Change Member Status
+function changeMemStatus($status, $mem_status_id)
+{
+    $conn = config();
+    echo $status;
+    echo $mem_status_id;
+    $sql = "UPDATE members SET acc_status=:status WHERE mem_id = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([
+        ':status' => $status,
+        ':id' => $mem_status_id
+    ]);
+}
+//END  Started Change Member Status
+// Add Blog Post
+function addBlogPost($title, $detail, $image, $user_id)
+{
+    $conn = config();
+    // $image = $_FILES['image']['name'];
+    $from = $_FILES['image']['tmp_name'];
+    $dir = mkdir("admin/img/blog/" . $title);
+    $to = "admin/img/blog/" . $title
+        . '/' . $image;
+    move_uploaded_file($from, $to);
+    $sql = "INSERT INTO blog (blg_title,blg_detail,user_id,blg_img) VALUES (:title,:detail,:user,:img)";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([
+        ':title' => $title,
+        ':detail' => $detail,
+        ':user' => $user_id,
+        ':img' => $image
+    ]);
+}
+// END Add Blog Post
+function showAllBlogPost($limit)
+{
+    $conn = config();
+    $sql = "SELECT * FROM blog ORDER BY blg_id DESC limit 0,$limit";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    while ($data = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $returnData[] = $data;
+    }
+    return $returnData;
+}
+// Listing Products
+// Select Specific Post By Id
+function showPostById($post_id)
+{
+    $conn = config();
+    $sql = "SELECT * FROM blog WHERE blg_id = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([
+        ':id' => $post_id
+    ]);
+    $rowData = $stmt->fetch(PDO::FETCH_ASSOC);
+    $result[] = $rowData;
+    return $result;
+}
+//END Select Specific Post By Id
+// Member Cover Photo
+function  memCoverPhoto($user)
+{
+    $conn = config();
+    $sql = "SELECT * FROM member_cover_photo WHERE mem_user_name = :user";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([
+        ':user' => $user
+    ]);
+    while ($rowData = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $result[] = $rowData;
+    }
+    return $result;
+}
+// END Member Cover Photo
+// --------------------------------------show Post By Author
+function showPostByAuthor($author)
+{
+    $conn = config();
+    $sql = "SELECT * FROM blog WHERE user_id = :id";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([
+        ':id' => $author
+    ]);
+    while ($rowData = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $result[] = $rowData;
+    }
+    return $result;
+}
+// --------------------------------------END show Post By Author
+// ---------------------------------------- Product List WITH LIMIT
+function productsGrade($limit)
+{
+    if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
+        $mem_id = $_SESSION['member_id'];
+        $user = $_SESSION['member_user'];
+    } elseif (isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
+        $mem_id = base64_decode($_COOKIE['mem_user_id']);
+        $user = base64_decode($_COOKIE['mem_user_name']);
+    } else {
+        $mem_id = -1;
+        $user = -1;
+    }
+
+    $conn = config();
+    $home_pro_sql = "SELECT * FROM mem_products WHERE pro_amount>=1 ORDER BY mem_pro_id ASC LIMIT 0,$limit";
+    $stmt_pro = $conn->prepare($home_pro_sql);
+    $stmt_pro->execute();
+    while ($row_home_pro = $stmt_pro->fetch(PDO::FETCH_ASSOC)) {
+        $id = $row_home_pro['mem_pro_id'];
+        $image = $row_home_pro['mem_pro_image'];
+        $name = $row_home_pro['mem_pro_name'];
+        $detail = $row_home_pro['mem_pro_detail'];
+        $price = $row_home_pro['price'];
+        $category = $row_home_pro['category_id'];
+        $tags = $row_home_pro['tag'];
+        $author = $row_home_pro['author'];
+        $views = $row_home_pro['pro_views'];
+        $amount = $row_home_pro['pro_amount'];
+    ?>
+        <div class="col-lg-4 col-md-6">
+            <!-- start .single-product -->
+            <div class="product product--card " style="border-radius:15px 15px 15px 15px;">
+                <div style="border-radius: 40px;" class="product__thumbnail">
+                    <!-- Image & video Show -->
+                    <?php
+                    $exp = explode(".", $image);
+                    $ext = end($exp);
+                    if ($ext == "jpg" or $ext == "png" or $ext == "jpeg" or $ext == 'gif') { ?>
+                        <img style="height: 
+                                        150px;object-fit:contain;border-radius: 15px;" src="./admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>" alt="Product Image">
+
+                    <?php } ?>
+                    <!-- END Image & video Show -->
+                    <div class="prod_btn">
+                        <a href="single-product.php?id=<?php echo $id; ?>" class="transparent btn--sm btn--round">More Info</a>
+                    </div>
+                    <!-- end /.prod_btn -->
+                </div>
+                <!-- end /.product__thumbnail -->
+
+                <div style="margin-bottom: -75px;" class="product-desc">
+                    <a href="single-product.php?id=<?php echo $id ?>" class="product_title">
+                        <h4><?php echo $name; ?></h4>
+                    </a>
+                    <ul class="titlebtm">
+                        <!-- Author Image and Info -->
+                        <?php
+                        $conn = config();
+                        $auth_sql = "SELECT * FROM members WHERE mem_user_name = :auth";
+                        $stmt_auth = $conn->prepare($auth_sql);
+                        $stmt_auth->execute([
+                            ':auth' => $author
+                        ]);
+                        while ($rows_auth = $stmt_auth->fetch(PDO::FETCH_ASSOC)) {
+                            $auth_id = $rows_auth['mem_id'];
+                            $auth_img = $rows_auth['mem_image'];
+                            $auth_user_name = $rows_auth['mem_user_name'];
+                        ?>
+                            <li>
+                                <img class="auth-img" src="admin/img/member_avatars/<?php echo $auth_user_name; ?>/<?php echo $auth_img; ?>" alt="<?php echo $auth_user_name; ?>">
+                                <p>
+                                    <a href="public_auth.php?auth=<?php echo $auth_id;  ?>"><?php echo $auth_user_name; ?></a>
+                                </p>
+                            </li>
+                        <?php } ?>
+                        <!-- ---------------------------Total Product Amount -->
+                        <li class="product_cat" style=" float:right;">
+                            <span>&#128230; <?php echo "<span style='padding: 2px;'>$amount</span>"; ?></span><span style="font-size: 20px;">&#128065;<span style="font-size: 15px;"><?php echo $views; ?></span> </span>
+
+                        </li>
+                        <!-- ---------------------------END Total Product Amount -->
+                    </ul>
+
+                    <p><?php echo substr($detail, 0, 40) . "..."; ?>.</p>
+                </div>
+                <div class="product-purchase">
+
+                    <!-- ----------------------Add To Favourite ----------------- -->
+                    <?php
+                    if ($author == $user) { ?>
+                        <div class='fa fa-heart text-danger'> It's Your</div>
+                        <!-- <button type="submit" name="btn_add_fav" class="btn btn--round btn-sm btn-light"><span class="lnr lnr-user text-danger"></span> -->
+                        </button>
+                    <?php } else {
+                        require('module/add_to_favourite.php');
+                    }
+                    ?>
+                    <!-- ----------------------END Add To Favourite -------------------->
+                    <!--  ------------------------Add To Cart ---------------------------->
+                    <?php // require('module/add_to_cart.php') 
+                    ?>
+                    <div class="sell">
+                        <p>
+                            <?php
+                            if (isset($_POST['btn_add_to_cart'])) {
+                                $pro_id = $_POST['cart_pro_id'];
+                                $pro_author = $_POST['cart_pro_author'];
+                                $who = $_POST['who_adding_to_cart'];
+                            }
+                            ?>
+                        <form method="POST">
+                            <input type="hidden" name="cart_pro_id" value="<?php echo $id; ?>">
+                            <input type="hidden" name="cart_pro_author" value="<?php echo $author; ?>">
+                            <input type="hidden" name="who_adding_to_cart" value="<?php echo $mem_id; ?>">
+                            <!-- Count Total Added To Cart -->
+                            <?php
+                            if ($user == $author) { ?>
+                                <div class="btn btn--round btn--bordered btn-sm btn-success"><span>&#10004;</span></div>
+                            <?php } else { ?>
+                                <button id="btn_add_to_cart" name="btn_add_to_cart" class="btn btn--round btn--bordered btn-sm btn-success"><span class="lnr lnr-cart">$<?php echo $price; ?></span> </button>
+                            <?php }
+                            ?>
+                            <!-- Count Total Added To Cart -->
+                            </p>
+                        </form>
+                    </div>
+                    <!--  ------------------------END Add Cart---------------------------->
+                    <div id="response"></div>
+                </div>
+                <!-- end /.product-purchase -->
+            </div>
+            <!-- end /.single-product -->
+            <!-- New Style Started -->
+            <!-- ENDED Style Started -->
+        </div>
+    <?php }
+}
+// END Listing Products
+// author Products
+function authorProducts($limit, $user)
+{
+
+    $conn = config();
+    if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
+        $mem_id = $_SESSION['member_id'];
+        $user = $_SESSION['member_user'];
+    } elseif (isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
+        $mem_id = base64_decode($_COOKIE['mem_user_id']);
+        $user = base64_decode($_COOKIE['mem_user_name']);
+    } else {
+        $mem_id = -1;
+        $user = -1;
+    }
+
+    $home_pro_sql = "SELECT * FROM mem_products WHERE pro_amount>=1 AND author = :author ORDER BY mem_pro_id ASC LIMIT 0,$limit";
+    $stmt_pro = $conn->prepare($home_pro_sql);
+    $stmt_pro->execute([
+        ':author' => $user
+    ]);
+    while ($row_home_pro = $stmt_pro->fetch(PDO::FETCH_ASSOC)) {
+        $id = $row_home_pro['mem_pro_id'];
+        $image = $row_home_pro['mem_pro_image'];
+        $name = $row_home_pro['mem_pro_name'];
+        $detail = $row_home_pro['mem_pro_detail'];
+        $price = $row_home_pro['price'];
+        $category = $row_home_pro['category_id'];
+        $tags = $row_home_pro['tag'];
+        $author = $row_home_pro['author'];
+        $views = $row_home_pro['pro_views'];
+        $amount = $row_home_pro['pro_amount'];
+
+    ?>
+        <div class="col-lg-4 col-md-6">
+            <!-- start .single-product -->
+            <div class="product product--card " style="border-radius:15px 15px 15px 15px;">
+                <div style="border-radius: 40px;" class="product__thumbnail">
+                    <!-- Image & video Show -->
+                    <?php
+                    $exp = explode(".", $image);
+                    $ext = end($exp);
+                    if ($ext == "jpg" or $ext == "png" or $ext == "jpeg" or $ext == 'gif') { ?>
+                        <img style="height: 
+                                        240px;object-fit: cover;border-radius: 15px 15px 15px 15px;" src="./admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>" alt="Product Image">
+
+                    <?php } ?>
+                    <!-- END Image & video Show -->
+                    <div class="prod_btn">
+                        <a href="single-product.php?id=<?php echo $id; ?>" class="transparent btn--sm btn--round">More Info</a>
+                    </div>
+                    <!-- end /.prod_btn -->
+                </div>
+                <!-- end /.product__thumbnail -->
+
+                <div style="margin-bottom: -75px;" class="product-desc">
+                    <a href="single-product.php?id=<?php echo $id ?>" class="product_title">
+                        <h4><?php echo $name; ?></h4>
+                    </a>
+                    <ul class="titlebtm">
+                        <!-- Author Image and Info -->
+                        <?php
+                        $conn = config();
+                        $auth_sql = "SELECT * FROM members WHERE mem_user_name = :auth";
+                        $stmt_auth = $conn->prepare($auth_sql);
+                        $stmt_auth->execute([
+                            ':auth' => $author
+                        ]);
+                        while ($rows_auth = $stmt_auth->fetch(PDO::FETCH_ASSOC)) {
+                            $auth_id = $rows_auth['mem_id'];
+                            $auth_img = $rows_auth['mem_image'];
+                            $auth_user_name = $rows_auth['mem_user_name'];
+                        ?>
+                            <li>
+                                <img class="auth-img" src="admin/img/member_avatars/<?php echo $auth_user_name; ?>/<?php echo $auth_img; ?>" alt="<?php echo $auth_user_name; ?>">
+                                <p>
+                                    <a href="public_auth.php?auth=<?php echo $auth_id;  ?>"><?php echo $auth_user_name; ?></a>
+                                </p>
+                            </li>
+                        <?php } ?>
+                        <!-- ---------------------------Total Product Amount -->
+                        <li class="product_cat" style=" float:right;">
+                            <span>&#128230; <?php echo "<span style='padding: 2px;'>$amount</span>"; ?></span><span style="font-size: 20px;">&#128065;<span style="font-size: 15px;"><?php echo $views; ?></span> </span>
+
+                        </li>
+                        <!-- ---------------------------END Total Product Amount -->
+                    </ul>
+
+                    <p><?php echo substr($detail, 0, 40) . "..."; ?>.</p>
+                </div>
+                <div class="product-purchase">
+
+                    <!-- ----------------------Add To Favourite ----------------- -->
+                    <?php
+                    if ($author == $user) { ?>
+                        <div class='fa fa-heart text-danger'> It's Your</div>
+                        <!-- <button type="submit" name="btn_add_fav" class="btn btn--round btn-sm btn-light"><span class="lnr lnr-user text-danger"></span> -->
+                        </button>
+                    <?php } else {
+                        require('module/add_to_favourite.php');
+                    }
+                    ?>
+                    <!-- ----------------------END Add To Favourite -------------------->
+                    <!--  ------------------------Add To Cart ---------------------------->
+                    <div class="sell">
+                        <p>
+                            <?php
+                            if (isset($_POST['btn_add_to_cart'])) {
+                                $pro_id = $_POST['cart_pro_id'];
+                                $pro_author = $_POST['cart_pro_author'];
+                                $who = $_POST['who_adding_to_cart'];
+                            }
+                            ?>
+                        <form method="POST">
+                            <input type="hidden" id="cart_pro_id" name="cart_pro_id" value="<?php echo $id; ?>">
+                            <input type="hidden" id="cart_pro_author" name="cart_pro_author" value="<?php echo $author; ?>">
+                            <input type="hidden" id="who_adding_to_cart" name="who_adding_to_cart" value="<?php echo $mem_id; ?>">
+                            <!-- Count Total Added To Cart -->
+                            <?php
+                            if ($user == $author) { ?>
+                                <div class="btn btn--round btn--bordered btn-sm btn-success"><span>&#10004;</span></div>
+                            <?php } else { ?>
+                                <button id="btn_add_to_cart" name="btn_add_to_cart" class="btn btn--round btn--bordered btn-sm btn-success"><span class="lnr lnr-cart">$<?php echo $price; ?></span> </button>
+                            <?php }
+                            ?>
+                            <!-- Count Total Added To Cart -->
+                            </p>
+                        </form>
+                    </div>
+                    <!--  ------------------------END Add Cart---------------------------->
+                    <div id="response"></div>
+                </div>
+                <!-- end /.product-purchase -->
+            </div>
+            <!-- end /.single-product -->
+            <!-- New Style Started -->
+            <!-- ENDED Style Started -->
+        </div>
+    <?php    }
+}
+// END author Products
+// Latest Products
+function latestProducts($limit)
+{
+    $conn = config();
+    if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
+        $mem_id = $_SESSION['member_id'];
+        $user = $_SESSION['member_user'];
+    } elseif (isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
+        $mem_id = base64_decode($_COOKIE['mem_user_id']);
+        $user = base64_decode($_COOKIE['mem_user_name']);
+    } else {
+        $mem_id = -1;
+        $user = -1;
+    }
+
+    $home_pro_sql = "SELECT * FROM mem_products WHERE pro_amount >=1 ORDER BY mem_pro_id DESC LIMIT 0,$limit";
+    $stmt_pro = $conn->prepare($home_pro_sql);
+    $stmt_pro->execute();
+    while ($row_home_pro = $stmt_pro->fetch(PDO::FETCH_ASSOC)) {
+        $id = $row_home_pro['mem_pro_id'];
+        $image = $row_home_pro['mem_pro_image'];
+        $name = $row_home_pro['mem_pro_name'];
+        $detail = $row_home_pro['mem_pro_detail'];
+        $price = $row_home_pro['price'];
+        $category = $row_home_pro['category_id'];
+        $tags = $row_home_pro['tag'];
+        $views = $row_home_pro['pro_views'];
+        $author = $row_home_pro['author'];
+        $amount = $row_home_pro['pro_amount'];
+    ?>
+        <!-- start .col-md-4 -->
+        <div class="col-lg-3 col-md-6">
+            <!-- start .single-product -->
+            <div class="product product--card product--card-small">
+
+                <div class="product__thumbnail">
+                    <!-- Image Size 240px -->
+                    <?php
+                    $exp = explode(".", $image);
+                    $ext = end($exp);
+                    if ($ext == "jpg" or $ext == "png" or $ext == "jpeg" or $ext == 'gif') { ?>
+                        <img style="height: 150px;object-fit:contain;border-radius:15px;" src="./admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>" alt="Product Image">
+
+                    <?php } else { ?>
+                        <div class="card text-center ">
+                            Please Upload valid Photo
+                        </div>
+                    <?php } ?>
+                    <!-- END Image & video Show -->
+                    <div class="prod_btn">
+                        <a href="single-product.php?id=<?php echo $id; ?>" class="transparent btn--sm btn--round">More Info</a>
+                    </div>
+                    <!-- end /.prod_btn -->
+                </div>
+                <!-- end /.product__thumbnail -->
+
+                <div class="product-desc">
+                    <a href="single-product.php?id=<?php echo $id ?>" class="product_title">
+                        <h4><?php echo $name; ?></h4>
+                    </a>
+                    <ul class="titlebtm">
+                        <!-- Author Image and Info -->
+                        <?php
+                        $conn = config();
+                        $auth_sql = "SELECT * FROM members WHERE mem_user_name = :auth";
+                        $stmt_auth = $conn->prepare($auth_sql);
+                        $stmt_auth->execute([
+                            ':auth' => $author
+                        ]);
+                        while ($rows_auth = $stmt_auth->fetch(PDO::FETCH_ASSOC)) {
+                            $auth_id = $rows_auth['mem_id'];
+                            $auth_img = $rows_auth['mem_image'];
+                            $auth_user_name = $rows_auth['mem_user_name'];
+                        ?>
+                            <li>
+                                <img class="auth-img" src="admin/img/member_avatars/<?php echo $auth_user_name; ?>/<?php echo $auth_img; ?>" alt="<?php echo $auth_user_name; ?>">
+                                <p>
+                                    <a href="public_auth.php?auth=<?php echo $auth_id;  ?>"><?php echo $auth_user_name; ?></a>
+                                </p> <span style="float: intial;">&#128230; <?php echo "<span style='padding: 2px;'>$amount</span>"; ?></span><span style="font-size: 20px; float:right;">&#128065;<span style="font-size: 15px; padding:3px;"><?php echo $views; ?></span> </span>
+                            </li>
+                        <?php } ?>
+                        <!-- <li class="product_cat">
+                                <a href="#">
+                                    <span class="lnr lnr-book"></span><?php // echo  $tags; 
+                                                                        ?></a>
+                                            </li> -->
+                    </ul>
+                    <p><?php echo substr($detail, 0, 20) ?></p>
+
+                </div>
+                <!-- end /.product-desc -->
+                <div class="product-purchase">
+                    <!-- ----------------------Add To Favourite ----------------- -->
+                    <?php
+                    if ($author == $user) { ?>
+                        <div class='fa fa-heart text-danger'> It's Your</div>
+                        <!-- <button type="submit" name="btn_add_fav" class="btn btn--round btn-sm btn-light"><span class="lnr lnr-user text-danger"></span> -->
+                        </button>
+                    <?php } else {
+                        require('module/add_to_favourite.php');
+                    }
+                    ?>
+                    <!-- ----------------------END Add To Favourite -------------------->
+                    <!--  ------------------------Add To Cart ---------------------------->
+                    <div class="sell">
+                        <p>
+                            <?php
+                            if (isset($_POST['btn_add_to_cart'])) {
+                                $pro_id = $_POST['cart_pro_id'];
+                                $pro_author = $_POST['cart_pro_author'];
+                                $who = $_POST['who_adding_to_cart'];
+                            }
+                            ?>
+                        <form method="POST">
+                            <input type="hidden" id="cart_pro_id" name="cart_pro_id" value="<?php echo $id; ?>">
+                            <input type="hidden" id="cart_pro_author" name="cart_pro_author" value="<?php echo $author; ?>">
+                            <input type="hidden" id="who_adding_to_cart" name="who_adding_to_cart" value="<?php echo $mem_id; ?>">
+                            <!-- Count Total Added To Cart -->
+                            <?php
+                            if ($user == $author) { ?>
+                                <div class="btn btn--round btn--bordered btn-sm btn-success"><span>&#10004;</span></div>
+                            <?php } else { ?>
+                                <button id="btn_add_to_cart" name="btn_add_to_cart" class="btn btn--round btn--bordered btn-sm btn-success"><span class="lnr lnr-cart">$<?php echo $price; ?></span> </button>
+                            <?php }
+                            ?>
+                            <!-- Count Total Added To Cart -->
+                            </p>
+                        </form>
+                    </div>
+                    <!--  ------------------------END Add Cart---------------------------->
+                    <div id="response"></div>
+                </div>
+                <!-- end /.product-purchase -->
+            </div>
+            <!-- end /.single-product -->
+        </div>
+    <?php } ?>
+<?php }
+// END Latest Products
+// Delete From Favourite
+function deleteFromFavourite($fav_pro_id, $fav_pro_author)
+{
+    $conn = config();
+    $sql = "DELETE FROM favourite WHERE pro_id = :id AND pro_author = :author";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([
+        ':id' => $fav_pro_id,
+        ':author' => $fav_pro_author
+    ]);
+
+    header('Refresh:1;favourites.php?removedFavourite');
+}
+// END Delete From Favourite
+// User Notifications Page
+function allNotifications($reciever, $sender, $type)
+{
+    $conn = config();
+    $memInfo = mem_pro_author($sender);
+    foreach ($memInfo as $memData) {
+        $senderInfo = $memData['mem_id'];
+
+        $sqlNotif = "INSERT INTO notification (notificationFor,notificationFrom, pro_id,type) VALUES (:notifFor,:notifFrom,:pro_id,:type)";
+        $stmtNotif = $conn->prepare($sqlNotif);
+        $stmtNotif->execute([
+            ':notifFor' => $reciever,
+            ':notifFrom' => $senderInfo,
+            ':pro_id' => 0,
+            ':type' => $type
+        ]);
+    }
+}
+// END User Notifications Page
+// Update Amouunt Of Products
+function updateProductAmount($id, $upAuthor, $amount)
+{
+    $conn = config();
+    $sql = "UPDATE mem_products SET pro_amount = :amount WHERE mem_pro_id =:pro_id AND author = :auth";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([
+        ':pro_id' => $id,
+        ':auth' => $upAuthor,
+        ':amount' => $amount
+    ]);
+    // $web = 1;
+    // $mem_info = mem_pro_author($upAuthor);
+    // foreach ($mem_info as $data) {
+    //     $mem_id = $data['mem_id'];
+    //     allNotifications(44, $web, "hELLO ");
+    // }
+}
+
+// END Update Amouunt Of Products
+// Member Freelancering 
+function freelancerControl($freelid, $status)
+{
+    $conn = config();
+    $seeFirst = freelancerStatus($freelid);
+    foreach ($seeFirst as $freelanser) {
+        $checkId = $freelanser['freel_mem_id'];
+        if ($checkId) {
+            echo 'exist';
+        } else {
+            echo 'need To Insert';
+        }
+    }
+    $sql = "INSERT INTO freelancering (freel_mem_id, status) VALUES (:memid,:controls)";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([
+        ':memid' => $freelid,
+        ':controls' => $status
+    ]);
+}
+function freelancerStatus($mem_id)
+{
+    $conn = config();
+    $sql = "SELECT * FROM freelancering WHERE freel_mem_id = :memid
+    ";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([
+        ':memid' => $mem_id,
+    ]);
+    $rowCounts = $stmt->rowCount();
+    while ($rows = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $results[] = $rows;
+    }
+    return $results;
+}
+// END Member Freelancering 
 ?>

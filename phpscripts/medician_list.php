@@ -14,7 +14,7 @@
                     <!-- <div class="withdraw_table_header">
                     </div> -->
                     <div class="table-responsive">
-                        <table class="table table-striped table-responsive withdraw__table">
+                        <table class="table withdraw__table">
                             <thead>
                                 <tr>
                                     <th>Name</th>

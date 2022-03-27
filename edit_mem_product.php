@@ -1,4 +1,9 @@
-<?php $curr_page = basename(__FILE__);  ?>
+<?php $page = basename(__FILE__);
+$ready = explode('.', $page);
+if ($ready[0] == 'edit_mem_product') {
+    $curr_page = "Edit Member Product";
+}
+?>
 <?php require_once "header.php"; ?>
 <?php check_mem(); ?>
 <?php session_cookie($mem_id, $user); ?>
@@ -71,9 +76,10 @@
         $category = $rows_mem_pro['category_id'];
         $tag = $rows_mem_pro['tag'];
         $at = $rows_mem_pro['at'];
+        $price = $rows_mem_pro['price'];
+        $amount = $rows_mem_pro['pro_amount'];
         $by = $rows_mem_pro['author'];
         $views = $rows_mem_pro['pro_views'];
-        $price = $rows_mem_pro['price'];
     } else {
         header('location:dashboard-manage-item.php');
     }
@@ -96,7 +102,9 @@
             <!-- Item Upload Start -->
             <?php if (isset($_POST['btn_edit_pro'])) {
                 $item_data = $_POST['frm'] ?? '0';
-                updateMemPro($item_data);
+                $image = $_FILES['image']['name'];
+                $oldPic = $image;
+                updateMemPro($item_data, $image, $oldPic);
                 // uploader_mem_pro($item_data, $image);
                 // $image_update = $_FILES['image']['name'];
             }  ?>
@@ -135,10 +143,10 @@
                                                 ':status' => 'publish'
                                             ]);
                                             while ($rows_cat = $stmt_uplo->fetch(PDO::FETCH_ASSOC)) {
-                                                $id = $rows_cat['cat_id'];
+                                                $cat_id = $rows_cat['cat_id'];
                                                 $cat_name = $rows_cat['cat_name'];
                                             ?>
-                                                <option value="<?php echo $id; ?>" <?php echo $category == $id ? 'selected' : ''; ?>><?php echo  $cat_name; ?></option>
+                                                <option value="<?php echo $cat_id; ?>" <?php echo $category == $cat_id ? 'selected' : ''; ?>><?php echo  $cat_name; ?></option>
                                             <?php } ?>
                                         </select>
                                         <span class="lnr lnr-chevron-down"></span>
@@ -148,6 +156,7 @@
                                     <label for="product_name">Product Name
                                         <span>(Max 100 characters)</span>
                                     </label>
+                                    <input type="text" name="frm[mem_pro_id]" required class="text_field" value="<?php echo $id; ?>" placeholder="Enter your product name here...">
                                     <input type="text" name="frm[name]" required id="product_name" class="text_field" value="<?php echo $name; ?>" placeholder="Enter your product name here...">
                                 </div>
                                 <div class="form-group">
@@ -180,7 +189,7 @@
 
                                         <div class="custom_upload">
                                             <label for="thumbnail">
-                                                <input type="file" required name="frm[image]" value="<?php echo $image ?>" id="thumbnail" class="files">
+                                                <input type="file" name="image" value="<?php echo $image ?>" id="thumbnail" class="files">
                                                 <span class="btn btn--round btn--sm">Choose File</span>
                                             </label>
                                         </div>
@@ -268,8 +277,17 @@
                                         <div class="form-group">
                                             <label for="rlicense">Regular License</label>
                                             <div class="input-group">
-                                                <span class="input-group-addon">$</span>
+                                                <span class="input-group-addon">AF</span>
                                                 <input required type="text" name="frm[price]" id="rlicense" value="<?php echo $price; ?>" class="text_field" placeholder="00.00">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="rlicense">Amount Of Products</label>
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Amount</span>
+                                                <input required type="numer" name="frm[amount]" id="rlicense" value="<?php echo $amount; ?>" class="text_field" placeholder="00.00">
                                             </div>
                                         </div>
                                     </div>
@@ -281,8 +299,7 @@
                         </div>
                         <!-- end /.upload_modules -->
                         <!-- submit button -->
-                        <button type="submit" name="btn_edit_pro" class="btn btn--round btn--fullwidth btn--lg">Submit
-                            Your Item for
+                        <button type="submit" name="btn_edit_pro" class="btn btn--round btn--fullwidth btn--lg">Submit Your Item for
                             Review</button>
                     </form>
                 </div>

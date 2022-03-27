@@ -2,9 +2,17 @@
 <?php require_once "header.php"; ?>
 <!-- Check Member If that is sign In Or Not -->
 <?php check_mem(); ?>
-<!--================================
-        START BREADCRUMB AREA
-    =================================-->
+<?php session_cookie($mem_id,$user) ?>
+<!-- Fetch Data For follow to Follower Data -->
+<?php 
+        // $conn = config();
+        // $followersSQL = "SELECT * FROM folllow WHERE reciever = :reciever ";
+        // $stmt = $conn->prepare($followersSQL);
+        // $stmt->execute([
+        //     ':reciever'=> $
+        // ]);
+?>
+<!-- END Fetch Data For follow to Follower Data -->
 <section class="breadcrumb-area">
     <div class="container">
         <div class="row">
@@ -292,15 +300,27 @@ $at = $row_user['created_at'];
 
                         <div class="user_area">
                             <ul>
+                                    <?php $following = fetchFollowers($mem_id);
+                                foreach ($following as $eachFollowing) {
+                                    $sql_member = "SELECT * FROM members WHERE mem_id = :mem_id";
+                                    $stmt = $conn->prepare($sql_member);
+                                    $stmt->execute([
+                                        ':mem_id' => $eachFollowing['sender']
+                                    ]);
+                                    while ($rowMem = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                        $mem_name = $rowMem['mem_user_name'];
+                                        $mem_image = $rowMem['mem_image'];
+                                    }
+                                ?>
                                 <li>
                                     <div class="user_single">
                                         <div class="user__short_desc">
                                             <div class="user_avatar">
-                                                <img src="images/m1.png" alt="">
+                                                <img width='70px' height='70px' src="admin/img/member_avatars/<?php echo $mem_name; ?>/<?php echo $mem_image; ?>" alt="">
                                             </div>
                                             <div class="user_info">
-                                                <a href="#">CizThemes</a>
-                                                <p>Member Since: February 2019 Bangladesh</p>
+                                                <a href="#"><?php echo $mem_name; ?></a>
+                                                <p>Member Since: <?php echo $eachFollowing['followOn']; ?></p>
                                             </div>
                                         </div>
                                         <div class="user__meta">
@@ -333,384 +353,7 @@ $at = $row_user['created_at'];
                                     </div>
                                     <!-- end /.user_single -->
                                 </li>
-
-                                <li>
-                                    <div class="user_single">
-                                        <div class="user__short_desc">
-                                            <div class="user_avatar">
-                                                <img src="images/m2.png" alt="">
-                                            </div>
-                                            <div class="user_info">
-                                                <a href="#">CizThemes</a>
-                                                <p>Member Since: February 2019 Bangladesh</p>
-                                            </div>
-                                        </div>
-                                        <div class="user__meta">
-                                            <p>268 Items</p>
-                                            <p>970 Sales</p>
-                                            <div class="rating product--rating">
-                                                <ul>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star-half-o"></span>
-                                                    </li>
-                                                </ul>
-                                                <span class="rating__count">(34)</span>
-                                            </div>
-                                        </div>
-                                        <div class="user__status user--follow">
-                                            <a href="#" class="btn btn--round btn--md">Follow</a>
-                                        </div>
-                                    </div>
-                                    <!-- end /.user_single -->
-                                </li>
-
-                                <li>
-                                    <div class="user_single">
-                                        <div class="user__short_desc">
-                                            <div class="user_avatar">
-                                                <img src="images/m4.png" alt="">
-                                            </div>
-                                            <div class="user_info">
-                                                <a href="#">CizThemes</a>
-                                                <p>Member Since: February 2019 Bangladesh</p>
-                                            </div>
-                                        </div>
-                                        <div class="user__meta">
-                                            <p>268 Items</p>
-                                            <p>970 Sales</p>
-                                            <div class="rating product--rating">
-                                                <ul>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star-half-o"></span>
-                                                    </li>
-                                                </ul>
-                                                <span class="rating__count">(34)</span>
-                                            </div>
-                                        </div>
-                                        <div class="user__status user--following">
-                                            <a href="#" class="btn btn--round btn--md">Following</a>
-                                        </div>
-                                    </div>
-                                    <!-- end /.user_single -->
-                                </li>
-
-                                <li>
-                                    <div class="user_single">
-                                        <div class="user__short_desc">
-                                            <div class="user_avatar">
-                                                <img src="images/m5.png" alt="">
-                                            </div>
-                                            <div class="user_info">
-                                                <a href="#">CizThemes</a>
-                                                <p>Member Since: February 2019 Bangladesh</p>
-                                            </div>
-                                        </div>
-                                        <div class="user__meta">
-                                            <p>268 Items</p>
-                                            <p>970 Sales</p>
-                                            <div class="rating product--rating">
-                                                <ul>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star-half-o"></span>
-                                                    </li>
-                                                </ul>
-                                                <span class="rating__count">(34)</span>
-                                            </div>
-                                        </div>
-                                        <div class="user__status user--follow">
-                                            <a href="#" class="btn btn--round btn--md">Follow</a>
-                                        </div>
-                                    </div>
-                                    <!-- end /.user_single -->
-                                </li>
-
-                                <li>
-                                    <div class="user_single">
-                                        <div class="user__short_desc">
-                                            <div class="user_avatar">
-                                                <img src="images/m6.png" alt="">
-                                            </div>
-                                            <div class="user_info">
-                                                <a href="#">CizThemes</a>
-                                                <p>Member Since: February 2019 Bangladesh</p>
-                                            </div>
-                                        </div>
-                                        <div class="user__meta">
-                                            <p>268 Items</p>
-                                            <p>970 Sales</p>
-                                            <div class="rating product--rating">
-                                                <ul>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star-half-o"></span>
-                                                    </li>
-                                                </ul>
-                                                <span class="rating__count">(34)</span>
-                                            </div>
-                                        </div>
-                                        <div class="user__status user--follow">
-                                            <a href="#" class="btn btn--round btn--md">Follow</a>
-                                        </div>
-                                    </div>
-                                    <!-- end /.user_single -->
-                                </li>
-
-                                <li>
-                                    <div class="user_single">
-                                        <div class="user__short_desc">
-                                            <div class="user_avatar">
-                                                <img src="images/m7.png" alt="">
-                                            </div>
-                                            <div class="user_info">
-                                                <a href="#">CizThemes</a>
-                                                <p>Member Since: February 2019 Bangladesh</p>
-                                            </div>
-                                        </div>
-                                        <div class="user__meta">
-                                            <p>268 Items</p>
-                                            <p>970 Sales</p>
-                                            <div class="rating product--rating">
-                                                <ul>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star-half-o"></span>
-                                                    </li>
-                                                </ul>
-                                                <span class="rating__count">(34)</span>
-                                            </div>
-                                        </div>
-                                        <div class="user__status user--following">
-                                            <a href="#" class="btn btn--round btn--md">Following</a>
-                                        </div>
-                                    </div>
-                                    <!-- end /.user_single -->
-                                </li>
-
-                                <li>
-                                    <div class="user_single">
-                                        <div class="user__short_desc">
-                                            <div class="user_avatar">
-                                                <img src="images/m8.png" alt="">
-                                            </div>
-                                            <div class="user_info">
-                                                <a href="#">CizThemes</a>
-                                                <p>Member Since: February 2019 Bangladesh</p>
-                                            </div>
-                                        </div>
-                                        <div class="user__meta">
-                                            <p>268 Items</p>
-                                            <p>970 Sales</p>
-                                            <div class="rating product--rating">
-                                                <ul>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star-half-o"></span>
-                                                    </li>
-                                                </ul>
-                                                <span class="rating__count">(34)</span>
-                                            </div>
-                                        </div>
-                                        <div class="user__status user--following">
-                                            <a href="#" class="btn btn--round btn--md">Following</a>
-                                        </div>
-                                    </div>
-                                    <!-- end /.user_single -->
-                                </li>
-
-                                <li>
-                                    <div class="user_single">
-                                        <div class="user__short_desc">
-                                            <div class="user_avatar">
-                                                <img src="images/m9.png" alt="">
-                                            </div>
-                                            <div class="user_info">
-                                                <a href="#">CizThemes</a>
-                                                <p>Member Since: February 2019 Bangladesh</p>
-                                            </div>
-                                        </div>
-                                        <div class="user__meta">
-                                            <p>268 Items</p>
-                                            <p>970 Sales</p>
-                                            <div class="rating product--rating">
-                                                <ul>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star-half-o"></span>
-                                                    </li>
-                                                </ul>
-                                                <span class="rating__count">(34)</span>
-                                            </div>
-                                        </div>
-                                        <div class="user__status user--follow">
-                                            <a href="#" class="btn btn--round btn--md">Follow</a>
-                                        </div>
-                                    </div>
-                                    <!-- end /.user_single -->
-                                </li>
-
-                                <li>
-                                    <div class="user_single">
-                                        <div class="user__short_desc">
-                                            <div class="user_avatar">
-                                                <img src="images/m10.png" alt="">
-                                            </div>
-                                            <div class="user_info">
-                                                <a href="#">CizThemes</a>
-                                                <p>Member Since: February 2019 Bangladesh</p>
-                                            </div>
-                                        </div>
-                                        <div class="user__meta">
-                                            <p>268 Items</p>
-                                            <p>970 Sales</p>
-                                            <div class="rating product--rating">
-                                                <ul>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star-half-o"></span>
-                                                    </li>
-                                                </ul>
-                                                <span class="rating__count">(34)</span>
-                                            </div>
-                                        </div>
-                                        <div class="user__status user--following">
-                                            <a href="#" class="btn btn--round btn--md">Following</a>
-                                        </div>
-                                    </div>
-                                    <!-- end /.user_single -->
-                                </li>
-
-                                <li>
-                                    <div class="user_single">
-                                        <div class="user__short_desc">
-                                            <div class="user_avatar">
-                                                <img src="images/m3.png" alt="">
-                                            </div>
-                                            <div class="user_info">
-                                                <a href="#">CizThemes</a>
-                                                <p>Member Since: February 2019 Bangladesh</p>
-                                            </div>
-                                        </div>
-                                        <div class="user__meta">
-                                            <p>268 Items</p>
-                                            <p>970 Sales</p>
-                                            <div class="rating product--rating">
-                                                <ul>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star"></span>
-                                                    </li>
-                                                    <li>
-                                                        <span class="fa fa-star-half-o"></span>
-                                                    </li>
-                                                </ul>
-                                                <span class="rating__count">(34)</span>
-                                            </div>
-                                        </div>
-                                        <div class="user__status user--following">
-                                            <a href="#" class="btn btn--round btn--md">Following</a>
-                                        </div>
-                                    </div>
-                                    <!-- end /.user_single -->
-                                </li>
+                                <?php } ?>
                             </ul>
 
                             <div class="pagination-area pagination-area2">

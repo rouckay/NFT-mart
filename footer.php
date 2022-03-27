@@ -261,7 +261,7 @@
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA0C5etf1GVmL_ldVAichWwFFVcDfa1y_c"></script>
 <!-- inject:js -->
-<script src="js/frontscript.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="js/vendor/jquery/jquery-1.12.3.js"></script>
 <script src="js/vendor/jquery/popper.min.js"></script>
 <script src="js/vendor/jquery/uikit.min.js"></script>
@@ -280,10 +280,16 @@
 <script src="js/vendor/waypoints.min.js"></script>
 <script src="js/dashboard.js"></script>
 <script src="js/main.js"></script>
-<script src="js/jquery.js"></script>
+<!-- <script src="js/jquery.js"></script> -->
 <script src="js/map.js"></script>
+<script src="js/frontscript.js"></script>
 <script src="js/myFrontEndScript.js"></script>
 <script src="js/myJquery.js"></script>
+
+
+
+
+
 <!-- endinject -->
 </body>
 

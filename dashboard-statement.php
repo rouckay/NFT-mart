@@ -174,27 +174,33 @@ $buyer_id = $mem_id;
                                         $purchased_pro_author = $purchasedInfo['pro_author'];
                                         $purchased_pro_Date = $purchasedInfo['date'];
                                         $fromProTble = showProductsById($product_id);
-                                        foreach ($fromProTble as $proTbleInfo) {
-                                            $proName = $proTbleInfo['mem_pro_name'];
-                                            $proPrice = $proTbleInfo['price'];
+                                        if ($fromProTble == null) {
+                                            // Some Message here if you face Some Probleme
+                                        } else {
+                                            foreach ($fromProTble as $proTbleInfo) {
+                                                $proName = $proTbleInfo['mem_pro_name'];
+                                                $proPrice = $proTbleInfo['price'];
                                 ?>
-                                            <tr>
-                                                <td><?php echo $purchased_pro_Date; ?></td>
-                                                <td>MP810094</td>
-                                                <td class="author"><?php echo $purchased_pro_author ?></td>
-                                                <td class="detail">
-                                                    <a href="single-product.html"><?php echo $proName; ?></a>
-                                                </td>
-                                                <td class="type">
-                                                    <span class="purchase">Purchased</span>
-                                                </td>
-                                                <td>$<?php echo $proPrice; ?></td>
-                                                <td class="earning">-$29</td>
-                                                <td class="action">
-                                                    <a href="invoice.html">view</a>
-                                                </td>
-                                            </tr>
+                                                <tr>
+                                                    <td><?php echo $purchased_pro_Date; ?></td>
+                                                    <td>MP810094</td>
+                                                    <td class="author"><?php echo $purchased_pro_author ?></td>
+                                                    <td class="detail">
+                                                        <a href="single-product.html"><?php echo $proName; ?></a>
+                                                    </td>
+                                                    <td class="type">
+                                                        <span class="purchase">Purchased</span>
+                                                    </td>
+                                                    <td>$<?php echo $proPrice; ?></td>
+                                                    <td class="earning">-$29</td>
+                                                    <td class="action">
+                                                        <form action="invoice.phpid=122" method="GET">
+                                                            <button type="submit" class='btn btn-sm rounded btn-info'>view</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
                                 <?php }
+                                        }
                                     }
                                 } ?>
                                 <!-- END purchased -->
@@ -214,26 +220,29 @@ $buyer_id = $mem_id;
                                         foreach ($mem_info as $MemData) {
                                             $mem_name = $MemData['mem_name'];
                                             $fromProTble = showProductsById($product_id);
-                                            foreach ($fromProTble as $proTbleInfo) {
-                                                $proName = $proTbleInfo['mem_pro_name'];
-                                                $proPrice = $proTbleInfo['price']; ?>
-                                                <tr>
-                                                    <td><?php echo $purchased_pro_Date; ?></td>
-                                                    <td>MP810094</td>
-                                                    <td class="author"><?php echo $mem_name; ?></td>
-                                                    <td class="detail">
-                                                        <a href="single-product.html"><?php echo $proName; ?></a>
-                                                    </td>
-                                                    <td class="type">
-                                                        <span class="sale">Sale</span>
-                                                    </td>
-                                                    <td>$<?php echo $proPrice; ?></td>
-                                                    <td class="earning">-$29</td>
-                                                    <td class="action">
-                                                        <a href="invoice.html">view</a>
-                                                    </td>
-                                                </tr>
+                                            if ($fromProTble == null) {
+                                            } else {
+                                                foreach ($fromProTble as $proTbleInfo) {
+                                                    $proName = $proTbleInfo['mem_pro_name'];
+                                                    $proPrice = $proTbleInfo['price']; ?>
+                                                    <tr>
+                                                        <td><?php echo $purchased_pro_Date; ?></td>
+                                                        <td>MP810094</td>
+                                                        <td class="author"><?php echo $mem_name; ?></td>
+                                                        <td class="detail">
+                                                            <a href="single-product.html"><?php echo $proName; ?></a>
+                                                        </td>
+                                                        <td class="type">
+                                                            <span class="sale">Sale</span>
+                                                        </td>
+                                                        <td>$<?php echo $proPrice; ?></td>
+                                                        <td class="earning">-$29</td>
+                                                        <td class="action">
+                                                            <a href="invoice.php">view</a>
+                                                        </td>
+                                                    </tr>
                                 <?php }
+                                            }
                                         }
                                     }
                                 } ?>
@@ -266,7 +275,7 @@ $buyer_id = $mem_id;
                                                 <td>$<?php echo $proPrice; ?></td>
                                                 <td class="earning">-$29</td>
                                                 <td class="action">
-                                                    <a href="invoice.html">view</a>
+                                                    <a href="invoice.php">view</a>
                                                 </td>
                                             </tr>
                                 <?php }

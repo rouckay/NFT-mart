@@ -25,13 +25,6 @@
     </div>
     <!-- end /.container -->
 </section>
-<!--================================
-        END BREADCRUMB AREA
-    =================================-->
-
-<!--================================
-        START FILTER AREA
-    =================================-->
 <?php
 // if (isset($_GET['already_exist'])) {
 //     echo $dublicate_product_err_msg = "<div class='alert alert-danger'>This Item Is Already Exist! </div>";
@@ -134,19 +127,24 @@
     </div>
 </div>
 <!--================================
-        END FILTER AREA
-    =================================-->
+END FILTER AREA
+=================================-->
 
 
 <!--================================
-        START PRODUCTS AREA
-    =================================-->
+START PRODUCTS AREA
+=================================-->
 <section class="products">
     <!-- start container -->
     <div class="container">
-
+        <?php
+        if (isset($_GET['removedFavourite'])) { ?>
+            <div class="alert alert-success text-center">Successfully Removed From Favourite</div>
+        <?php }
+        ?>
         <!-- start .row -->
         <div class="row">
+            <div id="resp"></div>
             <!-- start .col-md-4 -->
             <!-- start .single-product -->
             <?php
@@ -202,7 +200,7 @@
 
                             <div class="product__thumbnail">
                                 <!-- product Image size in this page = 361px X 230px -->
-                                <img width="361px" height="230px" style="background-position: center;background-size:cover;" src="admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>" alt="<?php echo $name; ?>">
+                                <img height="150px" style="object-fit:contain; background-position: center;background-size:cover;" src="admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>" alt="<?php echo $name; ?>">
                                 <div class="prod_btn">
                                     <a href="single-product.php?id=<?php echo $id; ?>" class="transparent btn--sm btn--round">More Info</a>
                                 </div>
@@ -216,31 +214,65 @@
                                 </a>
                                 <ul class="titlebtm">
                                     <li>
-                                        <img class="auth-img" src="admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>" alt="author image">
+                                        <?php
+                                        $fetchAuthImage = mem_pro_author($author);
+                                        foreach ($fetchAuthImage as $img) {
+                                            $authImage = $img['mem_image'];
+                                        ?>
+
+                                            <img class="auth-img" src="admin/img/member_avatars/<?php echo $author; ?>/<?php echo $authImage; ?>" alt="author image">
+                                        <?php }
+                                        ?>
                                         <p>
                                             <a href="#"><?php echo $author; ?></a>
                                         </p>
-                                    </li>
-                                    <li class="product_cat">
-                                        <a href="#">
-                                            <span class="lnr lnr-book"></span><?php echo $category; ?></a>
                                     </li>
                                 </ul>
 
                                 <p><?php echo substr($detail, 0, 40); ?>.</p>
                             </div>
                             <!-- end /.product-desc -->
-
+                            <!-- Add To Favourite -->
                             <div class="product-purchase">
                                 <div class="price_love">
-                                    <span>$<?php echo $price; ?></span>
+                                    <?php if (isset($_POST['btn_remove_fav'])) {
+                                        $fav_pro_id = $_POST['fav_pro_id'];
+                                        $fav_pro_author = $_POST['fav_pro_author'];
+                                        deleteFromFavourite($fav_pro_id, $fav_pro_author);
+                                    } ?>
+                                    <form method="POST">
+                                        <input type="hidden" name="fav_pro_id" value="<?php echo $id; ?>">
+                                        <input type="hidden" name="fav_pro_author" value="<?php echo $author; ?>">
+                                        <button name="btn_remove_fav" id="removeFavBtn" class="btn btn--round btn-sm btn-light">&#10060;</button>
+                                    </form>
                                 </div>
+                                <!-- END Add To Favourite -->
                                 <div class="sell">
                                     <p>
-                                        <span class="lnr lnr-cart"></span>
-                                        <span>16</span>
-                                    </p>
+                                        <?php
+                                        if (isset($_POST['btn_add_to_cart'])) {
+                                            $pro_id = $_POST['cart_pro_id'];
+                                            $pro_author = $_POST['cart_pro_author'];
+                                            $who = $_POST['who_adding_to_cart'];
+                                        }
+                                        ?>
+                                    <form method="POST">
+                                        <input type="hidden" id="cart_pro_id" name="cart_pro_id" value="<?php echo $id; ?>">
+                                        <input type="hidden" id="cart_pro_author" name="cart_pro_author" value="<?php echo $author; ?>">
+                                        <input type="hidden" id="who_adding_to_cart" name="who_adding_to_cart" value="<?php echo $user_id; ?>">
+                                        <!-- Count Total Added To Cart -->
+                                        <?php
+                                        if ($user == $author) { ?>
+                                            <div class="btn btn--round btn--bordered btn-sm btn-success"><span>&#10004;</span></div>
+                                        <?php } else { ?>
+                                            <button id="btn_add_to_cart" name="btn_add_to_cart" class="btn btn--round btn--bordered btn-sm btn-success"><span class="lnr lnr-cart">$<?php echo $price; ?></span> </button>
+                                        <?php }
+                                        ?>
+                                        <!-- Count Total Added To Cart -->
+                                        </p>
+                                    </form>
                                 </div>
+                                <div id="response"></div>
                             </div>
                             <!-- end /.product-purchase -->
                         </div>
@@ -257,13 +289,13 @@
                 <div class="pagination-area">
                     <nav class="navigation pagination" role="navigation">
                         <div class="nav-links">
-                            <a class="prev page-numbers" href="http://localhost/wordpress1/page/3/">
+                            <a class="prev page-numbers" href="#">
                                 <span class="lnr lnr-arrow-left"></span>
                             </a>
-                            <a class="page-numbers current" href="http://localhost/wordpress1/">1</a>
-                            <a class="page-numbers" href="http://localhost/wordpress1/page/2/">2</a>
-                            <a class="page-numbers" href="http://localhost/wordpress1/page/3/">3</a>
-                            <a class="next page-numbers" href="http://localhost/wordpress1/page/3/">
+                            <a class="page-numbers current" href="#">1</a>
+                            <a class="page-numbers" id="num" href="#/">2</a>
+                            <a class="page-numbers" href="#">3</a>
+                            <a class="next page-numbers" href="#">
                                 <span class="lnr lnr-arrow-right"></span>
                             </a>
                         </div>
@@ -275,31 +307,24 @@
     </div>
     <!-- end /.container -->
 </section>
-<!--================================
-        END PRODUCTS AREA
-    =================================-->
-
-
-<!--================================
-        START CALL TO ACTION AREA
-    =================================-->
-<section class="call-to-action bgimage">
-    <div class="bg_image_holder">
-        <img src="images/calltobg.jpg" alt="">
-    </div>
-    <div class="container content_above">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="call-to-wrap">
-                    <h1 class="text--white">Ready to Join Our Marketplace!</h1>
-                    <h4 class="text--white">Over 25,000 designers and developers trust the MartPlace.</h4>
-                    <a href="#" class="btn btn--lg btn--round btn--white callto-action-btn">Join Us Today</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!--================================
-        END CALL TO ACTION AREA
-    =================================-->
+<script>
+    // $(document).ready(function() {
+    // $('#removeFavBtn').click(function(e) {
+    // e.preventDefault();
+    // e.target.parentElement.parentElement.parentElement.parentElement.remove();
+    // var id = $('#fav_pro_id').val();
+    // var author = $('#fav_pro_author').val();
+    // $.ajax({
+    //     method: "POST",
+    //     url: 'AJAX/removeFavoirite.php',
+    //     data: {
+    //         id: id,
+    //         author: author
+    //     }
+    // }).done(function(resp) {
+    //     $('#response').html(resp)
+    // });
+    //     })
+    // })
+</script>
 <?php require_once "footer.php"; ?>

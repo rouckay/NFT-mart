@@ -3,6 +3,7 @@
 <!--================================
         START SEARCH AREA
     =================================-->
+<?php $cat_id = $_GET['cat_id']; ?>
 <section class="search-wrapper">
     <div class="search-area2 bgimage">
         <div class="bg_image_holder">
@@ -14,8 +15,8 @@
                     <div class="search">
                         <div class="search__title">
                             <?php
-                            if (isset($_GET['cat_id'])) {
-                                $cat_id = $_GET['cat_id'];
+                            if ($cat_id) {
+
                                 $conn = config();
                                 $category_pro_sql = "SELECT * FROM mem_products WHERE status = :status AND category_id = :id";
                                 $stmt_cat_title = $conn->prepare($category_pro_sql);
@@ -46,7 +47,7 @@
                             </form>
                         </div>
                     <?php } else {
-                                header('location:category.php');
+                                header('location:category.php?SelectCate');
                             } ?>
                     <div class="breadcrumb">
                         <ul>
@@ -146,8 +147,6 @@
 
 
                     <?php
-
-                    $cat_id = $_GET['cat_id'];
                     $conn = config();
                     $category_pro_sql = "SELECT * FROM mem_products WHERE category_id = :id";
                     $stmt = $conn->prepare($category_pro_sql);

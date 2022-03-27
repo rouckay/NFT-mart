@@ -11,17 +11,7 @@
 require_once "module/cookie_session.php";
 
 ?>
-<?php
 
-
-if (isset($_SESSION['member_id'])) {
-    $mem_id = $_SESSION['member_id'];
-} elseif (isset($_COOKIE['mem_user_id'])) {
-    $mem_id = base64_decode($_COOKIE['mem_user_id']);
-} else {
-    $mem_id = -1;
-}
-?>
 <?php
 $conn = config();
 if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
@@ -138,16 +128,10 @@ END HERO AREA
                     <p>This Is the Most Popular Featured Product In Market Today, So Any Seller Product can be Most Popular Featured Product by selling Most Of that Products In This Market.</p>
                 </div>
             </div>
-            <!-- end /.col-md-12 -->
         </div>
-        <!-- end /.featured__preview-img -->
     </div>
-    <!-- end /.featured-product-slider -->
 </section>
 
-<!--================================
-    START PRODUCTS AREA
-=================================-->
 <div class="container">
     <div class="row">
         <!-- start col-md-12 -->
@@ -186,140 +170,7 @@ END HERO AREA
             </div>
             <div class="shortcode_wrapper">
                 <div class="row">
-                    <?php $home_pro_sql = "SELECT * FROM mem_products WHERE pro_amount >=1 ORDER BY mem_pro_id DESC LIMIT 0,4";
-                    $stmt_pro = $conn->prepare($home_pro_sql);
-                    $stmt_pro->execute();
-                    while ($row_home_pro = $stmt_pro->fetch(PDO::FETCH_ASSOC)) {
-                        $id = $row_home_pro['mem_pro_id'];
-                        $image = $row_home_pro['mem_pro_image'];
-                        $name = $row_home_pro['mem_pro_name'];
-                        $detail = $row_home_pro['mem_pro_detail'];
-                        $price = $row_home_pro['price'];
-                        $category = $row_home_pro['category_id'];
-                        $tags = $row_home_pro['tag'];
-                        $views = $row_home_pro['pro_views'];
-                        $author = $row_home_pro['author'];
-                        $amount = $row_home_pro['pro_amount'];
-
-                    ?>
-
-                        <!-- start .col-md-4 -->
-                        <div class="col-lg-3 col-md-6">
-                            <!-- start .single-product -->
-                            <div class="product product--card product--card-small">
-
-                                <div class="product__thumbnail">
-                                    <!-- Image & video Show -->
-                                    <?php
-                                    $exp = explode(".", $image);
-                                    $ext = end($exp);
-                                    if ($ext == "jpg" or $ext == "png" or $ext == "jpeg" or $ext == 'gif') { ?>
-                                        <img width="361px" height="230px" src="./admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>" alt="Product Image">
-
-                                    <?php } else { ?>
-                                        <div class="card text-center ">
-                                            Please Upload valid Photo
-                                        </div>
-                                    <?php } ?>
-                                    <!-- END Image & video Show -->
-                                    <div class="prod_btn">
-                                        <a href="single-product.php?id=<?php echo $id; ?>" class="transparent btn--sm btn--round">More Info</a>
-                                    </div>
-                                    <!-- end /.prod_btn -->
-                                </div>
-                                <!-- end /.product__thumbnail -->
-
-                                <div class="product-desc">
-                                    <a href="single-product.php?id=<?php echo $id ?>" class="product_title">
-                                        <h4><?php echo $name; ?></h4>
-                                    </a>
-                                    <p><?php echo substr($detail, 0, 20) ?></p>
-                                    <ul class="titlebtm">
-                                        <!-- Author Image and Info -->
-                                        <?php
-                                        $conn = config();
-                                        $auth_sql = "SELECT * FROM members WHERE mem_user_name = :auth";
-                                        $stmt_auth = $conn->prepare($auth_sql);
-                                        $stmt_auth->execute([
-                                            ':auth' => $author
-                                        ]);
-                                        while ($rows_auth = $stmt_auth->fetch(PDO::FETCH_ASSOC)) {
-                                            $auth_id = $rows_auth['mem_id'];
-                                            $auth_img = $rows_auth['mem_image'];
-                                            $auth_user_name = $rows_auth['mem_user_name'];
-                                        ?>
-                                            <li>
-                                                <img class="auth-img" src="admin/img/member_avatars/<?php echo $auth_user_name; ?>/<?php echo $auth_img; ?>" alt="<?php echo $auth_user_name; ?>">
-                                                <p>
-                                                    <a href="public_auth.php?auth=<?php echo $auth_id;  ?>"><?php echo $auth_user_name; ?></a>
-                                                </p> <span>&#128230; <?php echo "<span style='padding: 2px;' class='rounded bg-primary text-white'>$amount</span>"; ?></span><span style="font-size: 20px;">&#128065;<span style="font-size: 15px;"><?php echo $views; ?></span> </span>
-                                            </li>
-                                        <?php } ?>
-                                        <!-- <li class="product_cat">
-                                            <a href="#">
-                                                <span class="lnr lnr-book"></span><?php // echo  $tags; 
-                                                                                    ?></a>
-                                        </li> -->
-                                    </ul>
-
-                                </div>
-                                <!-- end /.product-desc -->
-                                <?php
-                                // if (isset($_SESSION['member_id']) || isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_user'])) {
-                                // check_mem();
-                                if (isset($_POST['btn_add_fav'])) {
-                                    $fav_data = $_POST['pro_id_fav'];
-                                }
-                                // } else {
-                                //     header('location:login.php');
-                                // }
-                                ?>
-                                <div class="product-purchase">
-                                    <div class="price_love">
-                                        <form action="index.php" method="POST">
-                                            <input type="hidden" name="pro_id" value="<?php echo $id; ?>">
-                                            <input type="hidden" name="pro_author" value="<?php echo $author; ?>">
-                                            <p>
-                                                <button type="submit" name="btn_add_fav" class="btn btn--round btn-sm btn-light"><span class="lnr lnr-heart"></span>
-                                                </button>
-                                        </form>
-                                        </p>
-                                    </div>
-                                    <div class="sell">
-                                        <p>
-
-                                            <?php
-
-                                            if (isset($_POST['btn_add_to_cart'])) {
-                                                $pro_id = $_POST['cart_pro_id'];
-                                                $pro_author = $_POST['cart_pro_author'];
-                                                $who = $_POST['who_adding_to_cart'];
-                                            }
-                                            ?>
-                                        <form method="POST">
-                                            <input type="hidden" id="cart_pro_id" name="cart_pro_id" value="<?php echo $id; ?>">
-                                            <input type="hidden" id="cart_pro_author" name="cart_pro_author" value="<?php echo $author; ?>">
-                                            <input type="hidden" id="who_adding_to_cart" name="who_adding_to_cart" value="<?php echo $user_id; ?>">
-                                            <!-- Count Total Added To Cart -->
-                                            <?php
-                                            if ($user == $author) { ?>
-                                                <div class="btn btn--round btn--bordered btn-sm btn-success"><span>&#10004;</span></div>
-                                            <?php } else { ?>
-                                                <button id="btn_add_to_cart" name="btn_add_to_cart" class="btn btn--round btn--bordered btn-sm btn-success"><span class="lnr lnr-cart">$<?php echo $price; ?></span> </button>
-                                            <?php }
-                                            ?>
-                                            <!-- Count Total Added To Cart -->
-                                            </p>
-                                        </form>
-                                    </div>
-                                    <div id="response"></div>
-                                </div>
-                                <!-- end /.product-purchase -->
-                            </div>
-                            <!-- end /.single-product -->
-                        </div>
-                    <?php } ?>
-                    <!-- end /.col-md-4 -->
+                    <?php latestProducts(4); ?>
                 </div>
             </div>
             <!-- end /.container -->
@@ -350,135 +201,9 @@ END HERO AREA
             </div>
             <div class="col-lg-9">
                 <div class="row">
-                    <?php $home_pro_sql = "SELECT * FROM mem_products WHERE pro_amount>=1 ORDER BY mem_pro_id ASC LIMIT 0,6";
-                    $stmt_pro = $conn->prepare($home_pro_sql);
-                    $stmt_pro->execute();
-                    while ($row_home_pro = $stmt_pro->fetch(PDO::FETCH_ASSOC)) {
-                        $id = $row_home_pro['mem_pro_id'];
-                        $image = $row_home_pro['mem_pro_image'];
-                        $name = $row_home_pro['mem_pro_name'];
-                        $detail = $row_home_pro['mem_pro_detail'];
-                        $price = $row_home_pro['price'];
-                        $category = $row_home_pro['category_id'];
-                        $tags = $row_home_pro['tag'];
-                        $author = $row_home_pro['author'];
-
-                    ?>
-                        <div class="col-lg-4 col-md-6">
-                            <!-- start .single-product -->
-                            <div class="product product--card " style="border-radius:15px 15px 15px 15px;">
-                                <div style="border-radius: 40px;" class="product__thumbnail">
-                                    <!-- Image & video Show -->
-                                    <?php
-                                    $exp = explode(".", $image);
-                                    $ext = end($exp);
-                                    if ($ext == "jpg" or $ext == "png" or $ext == "jpeg" or $ext == 'gif') { ?>
-                                        <img width="361px" height="240px" style="border-radius:15px 15px 15px 15px;" src="./admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>" alt="Product Image">
-
-                                    <?php } else { ?>
-                                        <div class="card">
-                                            <video width="361px" height="240px" autoplay muted loop poster="placeholder.png" controls style="background-size:contain">
-                                                <source src="./admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>">
-                                            </video>
-                                        </div>
-                                    <?php } ?>
-                                    <!-- END Image & video Show -->
-                                    <div class="prod_btn">
-                                        <a href="single-product.php?id=<?php echo $id; ?>" class="transparent btn--sm btn--round">More Info</a>
-                                    </div>
-                                    <!-- end /.prod_btn -->
-                                </div>
-                                <!-- end /.product__thumbnail -->
-
-                                <div style="margin-bottom: -75px;" class="product-desc">
-                                    <a href="single-product.php?id=<?php echo $id ?>" class="product_title">
-                                        <h4><?php echo $name; ?></h4>
-                                    </a>
-                                    <ul class="titlebtm">
-                                        <!-- Author Image and Info -->
-                                        <?php
-                                        $conn = config();
-                                        $auth_sql = "SELECT * FROM members WHERE mem_user_name = :auth";
-                                        $stmt_auth = $conn->prepare($auth_sql);
-                                        $stmt_auth->execute([
-                                            ':auth' => $author
-                                        ]);
-                                        while ($rows_auth = $stmt_auth->fetch(PDO::FETCH_ASSOC)) {
-                                            $auth_id = $rows_auth['mem_id'];
-                                            $auth_img = $rows_auth['mem_image'];
-                                            $auth_user_name = $rows_auth['mem_user_name'];
-                                        ?>
-                                            <li>
-                                                <img class="auth-img" src="admin/img/member_avatars/<?php echo $auth_user_name; ?>/<?php echo $auth_img; ?>" alt="<?php echo $auth_user_name; ?>">
-                                                <p>
-                                                    <a href="public_auth.php?auth=<?php echo $auth_id;  ?>"><?php echo $auth_user_name; ?></a>
-                                                </p>
-                                            </li>
-                                        <?php } ?>
-                                        <li class="product_cat">
-                                            <span>&#128230; <?php echo "<span style='padding: 2px;' class='rounded bg-primary text-white'>$amount</span>"; ?></span><span style="font-size: 20px;">&#128065;<span style="font-size: 15px;"><?php echo $views; ?></span> </span>
-                                        </li>
-                                    </ul>
-
-                                    <p><?php echo substr($detail, 0, 40) . "..."; ?>.</p>
-                                </div>
-                                <?php
-                                if (isset($_POST['btn_add_fav'])) {
-                                    $fav_pro_id = $_POST['pro_id'];
-                                    $fav_pro_author = $_POST['pro_author'];
-                                    add_to_favourite($fav_pro_id, $fav_pro_author, $mem_id);
-                                }
-                                // } else {
-                                //     header('location:login.php');
-                                // }
-                                ?>
-                                <div class="product-purchase">
-                                    <div class="price_love">
-                                        <form action="index.php" method="POST">
-                                            <input type="hidden" name="pro_id" value="<?php echo $id; ?>">
-                                            <input type="hidden" name="pro_author" value="<?php echo $author; ?>">
-                                            <p>
-                                                <button type="submit" name="btn_add_fav" class="btn btn--round btn-sm btn-light"><span class="lnr lnr-heart"></span>
-                                                </button>
-                                        </form>
-                                        </p>
-                                    </div>
-                                    <div class="sell">
-                                        <p>
-
-                                            <?php
-
-                                            if (isset($_POST['btn_add_to_cart'])) {
-                                                $pro_id = $_POST['cart_pro_id'];
-                                                $pro_author = $_POST['cart_pro_author'];
-                                                $who = $_POST['who_adding_to_cart'];
-                                            }
-                                            ?>
-                                        <form method="POST">
-                                            <input type="hidden" id="cart_pro_id" name="cart_pro_id" value="<?php echo $id; ?>">
-                                            <input type="hidden" id="cart_pro_author" name="cart_pro_author" value="<?php echo $author; ?>">
-                                            <input type="hidden" id="who_adding_to_cart" name="who_adding_to_cart" value="<?php echo $user_id; ?>">
-                                            <!-- Count Total Added To Cart -->
-                                            <?php
-                                            if ($user == $author) { ?>
-                                                <div class="btn btn--round btn--bordered btn-sm btn-success"><span>&#10004;</span></div>
-                                            <?php } else { ?>
-                                                <button id="btn_add_to_cart" name="btn_add_to_cart" class="btn btn--round btn--bordered btn-sm btn-success"><span class="lnr lnr-cart">$<?php echo $price; ?></span> </button>
-                                            <?php }
-                                            ?>
-                                            <!-- Count Total Added To Cart -->
-                                            </p>
-                                        </form>
-                                    </div>
-                                    <div id="response"></div>
-                                </div>
-                                <!-- end /.product-purchase -->
-                            </div>
-                            <!-- end /.single-product -->
-                            <!-- New Style Started -->
-                            <!-- ENDED Style Started -->
-                        </div>
-                    <?php } ?>
+                    <!-- ---------------------------Products Grade -->
+                    <?php productsGrade(6); ?>
+                    <!-- ---------------------------END Products Grade -->
                 </div>
             </div>
         </div>
@@ -486,29 +211,6 @@ END HERO AREA
     </div>
     <!-- end /.container -->
 
-</section>
-
-<section class="promotion-area">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 v_middle">
-                <div class="promotion-img">
-                    <img width="555px" height="420px" src="admin/img/member_product/<?php echo $name; ?>/<?php echo $image; ?>" alt="Promotion image">
-                </div>
-            </div>
-
-            <div class="col-lg-5 offset-lg-1 col-md-6 v_middle">
-                <div class="promotion-content">
-                    <h3 class="promotion__subtitle"><?php echo  $name; ?></h3>
-                    <h1 class="promotion__title">Get Them All For Only $<?php echo $price; ?>!
-                        <span>Save 35%</span>
-                    </h1>
-                    <p><?php echo $detail; ?>!</p>
-                    <a href="single-product.php?id=<?php echo $id; ?>" class="btn btn--lg btn--round">View Details</a>
-                </div>
-            </div>
-        </div>
-    </div>
 </section>
 <section class="why_choose section--padding">
     <div class="container">
@@ -559,6 +261,7 @@ END HERO AREA
         </div>
     </div>
 </section>
+
 <script>
     // $(document).ready(function() {
     //     $('#btn_add_to_cart').click(function(e) {
@@ -578,6 +281,12 @@ END HERO AREA
     //             .done(function(resp) {
     //                 $('#response').html(resp);
     //             })
+    //     });
+    // });
+    // $(document).ready(function() {
+    //     $('#btn_add_fav').submit(function(e){
+    //         e.preventDefault();
+    //         console.log(e.target.parentElement);
     //     });
     // });
 </script>

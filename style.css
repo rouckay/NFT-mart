@@ -95,6 +95,11 @@ NB: this file contains the list of components/scss partial along with the style.
 /*****************************
 	-- RESET
 *****************************/
+.fit_image{
+  height:"240px";
+  object-fit: cover;
+  border-radius:15px 15px 15px 15px;
+}
 body {
   font-family: "Quicksand", sans-serif;
   position: relative;
@@ -18553,6 +18558,7 @@ span.counter {
   .country_statistics .dashboard__title .select-wrap {
     float: none;
   }
+  
   .country_statistics .dashboard__title .select-wrap select {
     width: 100%;
   }

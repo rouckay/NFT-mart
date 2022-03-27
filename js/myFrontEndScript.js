@@ -11,9 +11,15 @@ $(document).ready(function () {
             author: author,
             comment: comment
         }, function (data) {
-            $('#resp').text(data)
+            $('#resp').html(data)
+            $('#product-comment').load(location.href + " #product-comment");
         });
         $('#comment')[0].reset();
     })
+    // --------------------button Add To Favourite -----------------
+    $('#btn_add_fav').click((e) => {
+        e.preventDefault();
+        console.log(e.target.parentElement)
+    })
+    // --------------------END button Add To Favourite -----------------
 });
-

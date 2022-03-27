@@ -1,6 +1,6 @@
 (function () {
   "use strict";
-
+  // Here We Adding Our Own Latitude And Logitude
   var myCenter = new google.maps.LatLng(54.085533, -0.194593);
   function initialize() {
     var mapProp = {

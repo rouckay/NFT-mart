@@ -1,5 +1,9 @@
 <?php $curr_page = basename(__FILE__); ?>
 <?php require_once "header.php"; ?>
+<!-- If your Is Loged In Then Redirect to Home page -->
+
+
+<!-- END If your Is Loged In Then Redirect to Home page -->
 <!--================================
         START BREADCRUMB AREA
     =================================-->
@@ -36,25 +40,21 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-6 offset-lg-3">
-                <?php if (isset($_GET['login_first'])) { ?>
-                    <div class='alert alert-warning' role='alert'>
-                        <span class='alert_icon lnr lnr-warning'></span>
-                        <strong>Dear User!</strong> For That You Have To Login First!
-                        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                            <span class='lnr lnr-cross' aria-hidden='true'></span>
-                        </button>
-                    </div>
-                <?php } ?>
-                <?php if (isset($_POST['btn_mem_sign'])) {
-                    $mem_sign = $_POST['frm'];
-                    mem_sign($mem_sign);
-                } ?>
-                <form action="login.php" method="POST">
+
+                <form action="login.php" id="form" method="POST">
+                    <?php if (isset($_POST['btn_mem_sign'])) {
+                        $mem_sign = $_POST['frm'];
+                        mem_sign($mem_sign);
+                    ?>
+                        <!-- <div class='alert alert-warning' role='alert'>
+                            <span class='alert_icon lnr lnr-warning'></span>
+                            <strong>Dear User!</strong> For That You Have To Login First!
+                            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                                <span class='lnr lnr-cross' aria-hidden='true'></span>
+                            </button>
+                        </div> -->
+                    <?php } ?>
                     <div class="cardify login">
-                        <div class="login--header">
-                            <h3>Welcome Back</h3>
-                            <p>You can sign in with your username</p>
-                        </div>
                         <!-- end .login_header -->
 
                         <div class="login--form">
@@ -75,9 +75,7 @@
                                         <span class="circle"></span>Remember Me For 24 Hourse</label>
                                 </div>
                             </div>
-
-                            <button class="btn btn--md btn--round" name="btn_mem_sign" type="submit">Login Now</button>
-
+                            <button class="btn btn--md btn--round" id="logBtn" name="btn_mem_sign" type="submit">Login Now</button>
                             <div class="login_assist">
                                 <p class="recover">Lost your
                                     <a href="recover-pass.php">username</a> or
@@ -86,6 +84,10 @@
                                 <p class="signup">Don't have an
                                     <a href="signup.php">account</a>?
                                 </p>
+                                <p class="signup" style="float:left">Register Company
+                                    <a href="signup.php">account</a>?
+                                </p>
+                                <p>To Activate your Account Click <a href="support.php" class='text-white btn btn-sm btn-primary' style="float: right;">Support</a></p>
                             </div>
                         </div>
                         <!-- end .login--form -->
@@ -99,6 +101,50 @@
     </div>
     <!-- end .container -->
 </section>
+<script>
+    var form = document.querySelector('#form');
+    var logBtn = document.querySelector('#logBtn');
+    var userE = document.querySelector('#user_name');
+    var passForm = document.querySelector('#pass');
+    // Form submit EventListener
+    events();
+
+    function events() {
+        // OnLoad Event
+        document.addEventListener('DOMContentLoaded', loadOnLoad);
+        userE.addEventListener('blur', validateFields);
+        passForm.addEventListener('keyup', validateFields)
+        // form.addEventListener('submit', formSubmit);
+
+    }
+    // END Form submit EventListener
+    // Functions
+    // Load ON load fun
+    function loadOnLoad() {
+        logBtn.disabled = true;
+    }
+    // Validate UserName
+    var errors = document.querySelectorAll('.error');
+
+    function validateFields() {
+        validateLength(this)
+        if (userE.value !== '' && passForm.value !== '') {
+            if (errors.length === 0) {
+                logBtn.disabled = false;
+            }
+        }
+    }
+
+    function validateLength(fields) {
+        if (fields.value.length > 0) {
+            fields.style.border = '1px solid green';
+            fields.classList.remove('error');
+        } else {
+            fields.style.borderBottom = '2px solid red';
+            fields.classList.add('error');
+        }
+    }
+</script>
 <!--================================
             END LOGIN AREA
     =================================-->

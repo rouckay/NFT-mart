@@ -14,6 +14,13 @@
 // if ($rows_mem_exist != "1") {
 //     header('location:index.php?no_member_availabe');
 // } elseif ($rows_mem_exist == '1') {
+if (isset($_COOKIE['mem_user_id']) || isset($_SESSION['member_id'])) {
+    session_cookie($mem_id, $user);
+} else {
+    $mem_id = -1;
+    $user = -1;
+}
+
 
 ?>
 <section class="breadcrumb-area">
@@ -174,9 +181,13 @@ $at = $row_user['created_at'];
                                 </ul>
                             </div>
                             <!-- end /.social -->
-
+                            <div id="followresp"></div>
                             <div class="author-btn">
-                                <a href="" class="btn btn--md btn--round">Follow</a>
+                                <form action="" method="POST" id="formFollow">
+                                    <input type="hidden" id="reciever" name="reciever" value="<?php echo $id; ?>">
+                                    <input type="hidden" id="sender" name="sender" value="<?php echo $mem_id; ?>">
+                                    <a id="follow" href="" class="btn btn--md btn--round">Follow</a>
+                                </form>
                             </div>
                             <!-- end /.author-btn -->
                         </div>
@@ -457,29 +468,23 @@ $at = $row_user['created_at'];
     </div>
 </section>
 
-
-<section class="call-to-action bgimage">
-    <div class="bg_image_holder">
-        <img src="images/calltobg.jpg" alt="">
-    </div>
-    <div class="container content_above">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="call-to-wrap">
-                    <h1 class="text--white">Ready to Join Our Marketplace!</h1>
-                    <h4 class="text--white">Over 25,000 designers and developers trust the MartPlace.</h4>
-                    <a href="#" class="btn btn--lg btn--round btn--white callto-action-btn">Join Us Today</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 <script>
-    // $(document).ready(function() {
-    //     $(".alert").fadeOut(5000);
-    // })
+    $(document).ready(function() {
+        $('#follow').click(function(e) {
+            e.preventDefault();
+            var sender = $('#sender').val();
+            var reciever = $('#reciever').val();
+            $.ajax({
+                method: 'POST',
+                url: 'AJAX/follow.php',
+                data: {
+                    sender: sender,
+                    reciever: reciever
+                }
+            }).done(function(resp) {
+                $('#followresp').html(resp);
+            });
+        });
+    });
 </script>
-<!--================================
-        END CALL TO ACTION AREA
-    =================================-->
 <?php require_once "footer.php"; ?>

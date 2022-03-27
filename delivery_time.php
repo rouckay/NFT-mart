@@ -37,12 +37,13 @@
                                 <div class="with_close">
                                     <div class="labels clearfix">
                                         <p>Your Medicine Is On The Way</p>
-                                        <span data-width="70" id="percent"></span>
+                                        <span data-width="100" id="percent"></span>
                                     </div>
                                     <div class="progress">
-                                        <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
-                                            <span class="sr-only"> // 70% Complete</span>
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                            <span class="sr-only"> </span>
                                         </div>
+                                        <img src="img/heartBeat.gif" alt="">
                                     </div>
                                 </div>
                                 <span class="p_cross lnr lnr-cross"></span>
@@ -73,6 +74,6 @@
             location.href = 'dashboard-statement.php';
         }
     }
-    var interval = setInterval(pro, 10)
+    var interval = setInterval(pro, 100)
 </script>
 <?php require_once "footer.php"; ?>

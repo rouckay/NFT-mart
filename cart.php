@@ -101,7 +101,7 @@ if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
                                     <div class="single_product clearfix">
                                         <div class="col-lg-5 col-md-7 v_middle">
                                             <div class="product__description">
-                                                <img width="150px" height="120px" src="admin/img/member_product/<?php echo $cart_mem_pro_info['mem_pro_name'] ?>/<?php echo $cart_mem_pro_info['mem_pro_image'] ?>" alt="<?php echo $cart_mem_pro_info['mem_pro_name'] ?>">
+                                                <img height="120px" style="object-fit: contain;" src="admin/img/member_product/<?php echo $cart_mem_pro_info['mem_pro_name'] ?>/<?php echo $cart_mem_pro_info['mem_pro_image'] ?>" alt="<?php echo $cart_mem_pro_info['mem_pro_name'] ?>">
                                                 <div class="short_desc">
                                                     <a href="">
                                                         <h4><?php echo $cart_mem_pro_info['mem_pro_name']; ?></h4>
@@ -172,7 +172,6 @@ if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
                             </div>
                         <?php } ?>
                         <div id='resp'></div>
-
                         <div class="row">
                             <div class="col-md-6 offset-md-6">
                                 <div class="cart_calculation">
@@ -218,7 +217,7 @@ if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
                 amount: amount
             }, function(resp) {
                 $('#resp').html(resp);
-                location.href = "./cart.php";
+                location.href = "./dashboard-withdrawal.php?#cartRedirectplace";
             })
         });
     })

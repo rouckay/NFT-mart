@@ -12,7 +12,16 @@
     <meta name="description" content="MartPlace - Complete Online Multipurpose Marketplace HTML Template">
     <meta name="keywords" content="marketplace, easy digital download, digital product, digital, html5">
 
-    <title><?php echo $curr_page; ?></title>
+    <title><?php $page = $curr_page;
+            $exploaded = explode('.', $page);
+            $ready =  $exploaded[0];
+            $curr_page = $ready;
+            if ($curr_page == 'index') {
+                echo "Home";
+            } else {
+                echo strtoupper($curr_page);
+            }
+            ?></title>
     <script src="js/jquery.js"></script>
     <script src="js/frontscript.js"></script>
     <!-- inject:css -->
@@ -26,6 +35,7 @@
     <link rel="stylesheet" href="css/trumbowyg.min.css">
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="css/NFTcard.css">
+    <link rel="stylesheet" href="css/custom.css">
     <link rel="stylesheet" href="style.css">
     <!-- endinject -->
     <!-- Favicon -->
@@ -34,7 +44,13 @@
 <!-- class  -->
 
 <body class="<?php echo  $curr_page == "dashboard-manage-item.php" ? "preload dashboard-edit" : "preload home1 mutlti-vendor";  ?>">
-
+    <img src="img/heartBeat.gif" style="margin-left: auto;margin-right:auto;display:block;" id="imgg" alt="">
+    <script>
+        var img = document.querySelector('#imgg');
+        document.addEventListener('DOMContentLoaded', function() {
+            img.style.display = 'none';
+        });
+    </script>
     <!-- ================================
     START MENU AREA
 ================================= -->
@@ -110,7 +126,7 @@
                                         <a href="category.php">categories</a>
                                     </li>
                                     <li>
-                                        <a href="auction.php">Auction</a>
+                                        <a href="blog.php">Blog</a>
                                     </li>
                                     <li>
                                         <a href="support.php">Support</a>

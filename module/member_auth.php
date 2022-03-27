@@ -455,42 +455,7 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
                         <span class="lnr lnr-alarm"></span>
                     </div>
 
-                    <div class="dropdowns notification--dropdown">
-
-                        <div class="dropdown_module_header">
-                            <h4>My Notifications</h4>
-                            <a href="notification.php">View All</a>
-                        </div>
-
-                        <div class="notifications_module">
-
-                            <!-- end /.notifications -->
-
-                            <div class="notification">
-                                <a href="login.php" class="author-area__seller-btn inline">Sign In</a>
-
-                                <!-- <div class="notification__info">
-                                <div class="info_avatar">
-                                    <img src="images/notification_head2.png" alt="">
-                                </div>
-                                <div class="info">
-                                    <p>
-                                        <span>Mahmood</span> commented on
-                                        <a href="#">MartPlace Extension Bundle</a>
-                                    </p>
-                                    <p class="time">Just now</p>
-                                </div>
-                            </div> -->
-                                <!-- end /.notifications -->
-
-                                <div class="notification__icons ">
-                                    <span class="lnr lnr-bubble commented noti_icon"></span>
-                                </div>
-                                <!-- end /.notifications -->
-                            </div>
-                        </div>
-                        <!-- end /.dropdown -->
-                    </div>
+                    <!-- Removed Some Code for notifications  -->
                 </li>
 
 

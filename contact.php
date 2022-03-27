@@ -72,8 +72,8 @@
                             <span class="tiles__icon lnr lnr-phone"></span>
                             <h4 class="tiles__title">Phone Number</h4>
                             <div class="tiles__content">
-                                <p>1-800-643-4500</p>
-                                <p>1-800-643-4500</p>
+                                <p>+(0) 789 888 666</p>
+                                <p>+(0) 789 888 666</p>
                             </div>
                         </div>
                         <!-- end /.contact_tile -->
@@ -85,8 +85,8 @@
                             <span class="tiles__icon lnr lnr-inbox"></span>
                             <h4 class="tiles__title">Phone Number</h4>
                             <div class="tiles__content">
-                                <p>support@aazztech.com</p>
-                                <p>support@aazztech.com</p>
+                                <p>support@nijat.com</p>
+                                <p>support@nijta.com</p>
                             </div>
                         </div>
                         <!-- end /.contact_tile -->
@@ -102,40 +102,28 @@
                             <div class="row">
                                 <div class="col-md-8 offset-md-2">
                                     <div class="contact_form--wrapper">
-                                        <form action="#">
+                                        <div id="resp"></div>
+                                        <form action="" id="messageForm">
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="text" placeholder="Name">
+                                                        <input type="text" id="user_name" placeholder="Name">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input type="text" placeholder="Email">
+                                                        <input type="email" id="email" placeholder="Email">
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <input type="text" placeholder="Name">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <input type="text" placeholder="Email">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <textarea cols="30" rows="10" placeholder="Yout text here"></textarea>
+                                            <textarea cols="30" rows="10" id="message" placeholder="Yout text here"></textarea>
 
                                             <div class="sub_btn">
-                                                <button type="button" class="btn btn--round btn--default">Send
-                                                    Request</button>
+                                                <button type="submit" id="send_btn" class="btn btn--round btn--default">Send
+                                                </button>
+                                                <img style="margin-left: auto; margin-right:auto; display:none" src="img/heartBeat.gif" id="loading" alt="">
                                             </div>
                                         </form>
                                     </div>
@@ -156,16 +144,82 @@
     </div>
     <!-- end /.container -->
 </section>
-<!--================================
-        END BREADCRUMB AREA
-    =================================-->
 
-<!--================================
-            START
-    =================================-->
+<!-- Start /.map -->
 <div id="map"></div>
 <!-- end /.map -->
-<!--================================
-            END FAQ AREA
-    =================================-->
+<!------------------------------------------------ Script ---------------------------------------------------------->
+<script>
+    var form = document.querySelector('#messageForm');
+    var btn = document.querySelector('#send_btn');
+    var user_name = document.querySelector('#user_name');
+    var email = document.querySelector('#email');
+    var message = document.querySelector('#message');
+    var img = document.querySelector('#loading');
+    // EventListener
+    events();
+
+    function events() {
+        document.addEventListener('DOMContentLoaded', loadOnLoad);
+        user_name.addEventListener('blur', validateField);
+        email.addEventListener('blur', validateField);
+        message.addEventListener('blur', validateField);
+    }
+    // functions 
+    // -------------------------load on load-----------------------------
+    function loadOnLoad() {
+        btn.disabled = true;
+    }
+    // ----------------------------validate Length ---------------------
+    function validateLength(length) {
+        if (length.value === '') {
+            length.classList.add('error');
+            length.style.borderBottom = '1px solid red';
+        } else {
+            length.classList.remove('error');
+            length.style.borderBottom = '1px solid green';
+        }
+    }
+    // ----------------------------END validate Length ---------------------
+    // ------------------------- Validate Fields ------------------------
+    function validateField() {
+        validateLength(this);
+        var errors = document.querySelectorAll('.error');
+        if (user_name.value !== '' && email.value !== '' && message.value !== '') {
+            if (errors.length === 0) {
+                btn.disabled = false;
+            }
+        } else {
+            btn.disabled = true;
+        }
+    }
+    // -------------- JQuery -----------------
+    $(document).ready(function() {
+        $('#send_btn').click(function(e) {
+            e.preventDefault();
+            var user_nameA = $('#user_name').val();
+            var EmailA = $('#email').val();
+            var messageA = $('#message').val();
+            $.ajax({
+                method: 'POST',
+                url: 'AJAX/site_message.php',
+                data: {
+                    user_name: user_nameA,
+                    email: EmailA,
+                    message: messageA
+                }
+            }).done(function(resp) {
+                $('#messageForm')[0].reset();
+                var sendBtn = document.querySelector('#send_btn');
+                img.style.display = 'block';
+                setTimeout(() => {
+                    $('#resp').html(resp);
+                    img.style.display = 'none';
+                }, 2000);
+            });
+        });
+    });
+    // -------------- END JQuery -----------------
+</script>
+<!--------------------- END Script ------------------------------------------------------>
 <?php require_once "footer.php"; ?>

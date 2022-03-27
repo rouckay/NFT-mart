@@ -1,0 +1,7 @@
+/* Fit Images */
+.fit_image{
+    height:"240px";
+    object-fit: cover;
+    border-radius:15px 15px 15px 15px;
+  }
+  /* END Fit Images */

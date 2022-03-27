@@ -4,14 +4,12 @@
 check_mem();
 session_cookie($mem_id, $user);
 ?>
-<!-- Buyer Author info -->
 <?php
 $buyer_info =  fetch_mem_info_by_id($mem_id);
 foreach ($buyer_info  as $buyer_data) {
     $member_name = $buyer_data['mem_name'];
 }
 ?>
-<!-- END Buyer Author info -->
 <section class="breadcrumb-area">
     <div class="container">
         <div class="row">
@@ -31,19 +29,10 @@ foreach ($buyer_info  as $buyer_data) {
                 </div>
                 <h1 class="page-title">Withdrawals</h1>
             </div>
-            <!-- end /.col-md-12 -->
         </div>
-        <!-- end /.row -->
     </div>
-    <!-- end /.container -->
 </section>
-<!--================================
-        END BREADCRUMB AREA
-    =================================-->
 
-<!--================================
-            START DASHBOARD AREA
-    =================================-->
 <section class="dashboard-area">
     <div class="dashboard_menu_area">
         <div class="container">
@@ -52,15 +41,10 @@ foreach ($buyer_info  as $buyer_data) {
                     <ul class="dashboard_menu">
                         <?php require_once "module/dashboard_nav.php"; ?>
                     </ul>
-                    <!-- end /.dashboard_menu -->
                 </div>
-                <!-- end /.col-md-12 -->
             </div>
-            <!-- end /.row -->
         </div>
-        <!-- end /.container -->
     </div>
-    <!-- end /.dashboard_menu_area -->
 
     <div class="dashboard_contents">
         <div class="container">
@@ -162,8 +146,11 @@ foreach ($buyer_info  as $buyer_data) {
             <div class="row">
                 <div class="col-md-12">
                     <div class="withdraw_module withdraw_history">
-                        <div class="withdraw_table_header">
-                            <h3>Withdrawal History</h3>
+                        <div id="cartRedirectplace" class="withdraw_table_header">
+                            <?php if (isset($_GET['cartRedirectplace'])) {
+                                echo '<div class"alert alert-success">Your Product is Added To Withdrawals!</div>';
+                            } ?>
+                            <h3>Withdrawal</h3>
                         </div>
                         <div class="table-responsive">
                             <table class="table withdraw__table table-bordered">
@@ -182,6 +169,7 @@ foreach ($buyer_info  as $buyer_data) {
                                     <?php
                                     $Retrive_with = fetch_Withdrawal($mem_id);
                                     if ($Retrive_with == '') {
+                                        echo "<div class='bg-info text-center text-white'>There No Pending Products to Approve</div>";
                                     } else {
                                         foreach ($Retrive_with as $withdrawal_data) {
                                             $product_id =  $withdrawal_data['with_pro_id'];
@@ -262,7 +250,7 @@ foreach ($buyer_info  as $buyer_data) {
                                                         <div id="response_with"></div>
                                                         <div id="response_deliv"></div>
                                                         <td><?php echo $pro_name; ?></td>
-                                                        <td><img height="80px" width="80px" src="admin/img/member_product/<?php echo $pro_name; ?>/<?php echo $image; ?>"></td>
+                                                        <td><img style="object-fit:contain;height:70px;" src="admin/img/member_product/<?php echo $pro_name; ?>/<?php echo $image; ?>"></td>
                                                         <td class="bold">$<?php echo $price; ?></td>
                                                         <td class="bold"><?php echo $amount_or_products; ?></td>
                                                         <td class="bold"><span class="btn btn--icon btn-md btn--round btn-success"><span class="lnr lnr-user"></span><?php echo $buyer_name; ?></span> </td>
@@ -343,6 +331,7 @@ foreach ($buyer_info  as $buyer_data) {
         // start Deny Button
         $('#btn_deny').click(function(e) {
             e.preventDefault();
+            // e.target.parentElement.parentElement.remove();
             var with_id = $('#with_id').val();
             $.ajax({
                 url: 'phpscripts/denySell.php',
@@ -352,12 +341,20 @@ foreach ($buyer_info  as $buyer_data) {
                 },
                 success: function(responseDeny) {
                     $('#responseDeny').html(responseDeny);
-                    location.href = "dashboard-withdrawal.php";
+                    $('#table').load(location.href + " #table");
+
                 }
             })
         })
 
     });
+    // var btDeny = document.querySelector('#btn_deny');
+    // btDeny.addEventListener('click',removePar);
+    // function removePar(e){
+    //     e.preventDefault();
+    //     e.t
+    //     // console.log()
+    // }
     // Add PayMent Method
     // const addPaymentMethod = document.querySelector('#addPaymentMethod');
     // addPaymentMethod.style = 'background-color:gray'
