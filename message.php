@@ -169,13 +169,13 @@ if (isset($_GET['msg_id'])) {
                                                 <div class="message <?php echo $state == '0' ? 'active' : ''; ?>">
                                                     <div class="message__actions_avatar">
                                                         <div class="actions">
-                                                            <span class="fa fa-star-o"></span>
-                                                            <div class="custom_checkbox">
+                                                            <!-- <span class="fa fa-star-o"></span> -->
+                                                            <!-- <div class="custom_checkbox">
                                                                 <input type="checkbox" id="ch2">
                                                                 <label for="ch2">
                                                                     <span class="shadow_checkbox"></span>
                                                                 </label>
-                                                            </div>
+                                                            </div> -->
                                                         </div>
 
                                                         <div class="avatar">
@@ -192,7 +192,8 @@ if (isset($_GET['msg_id'])) {
                                                             </div>
 
                                                             <span class="time"><?php echo $date; ?></span>
-                                                            <p><?php echo substr($detail, 0, 36);  ?> ...</p>
+                                                            <!-- Message Data detail Here  -->
+                                                            <!-- END Message Data detail Here  -->
                                                         </div>
                                                     </div>
                                                     <!-- end /.message_data -->
@@ -259,63 +260,10 @@ if (isset($_GET['msg_id'])) {
                     <!-- end /.chat_area--title -->
 
                     <div class="chat_area--conversation">
-                        <div class="conversation">
-                            <div class="head">
-                                <div class="chat_avatar">
-                                    <img src="images/notification_head5.png" alt="Notification avatar">
-                                </div>
 
-                                <div class="name_time">
-                                    <div>
-                                        <h4>Codepoet</h4>
-                                        <p>Mar 2, 2019 at 2:14 pm</p>
-                                    </div>
-                                    <span class="email">jonathan@domain.com</span>
-                                </div>
-                                <!-- end /.name_time -->
-                            </div>
-                            <!-- end /.head -->
-
-                            <div class="body">
-                                <p>Faucibus rutrum. Phasellus sodales vulputate urna, vel accumsan augue egestas ac.
-                                    Donec
-                                    vitae leo at sem lobortis porttitor eu conse quat risus. Mauris sed congue orci.
-                                    Donec ultrices faucibus rutrum. Phasellus sodales vulputate urna, vel accumsan
-                                    augue.</p>
-                            </div>
-                            <!-- end /.body -->
-
-                        </div>
                         <!-- end /.conversation -->
 
-                        <div class="conversation">
-                            <div class="head">
-                                <div class="chat_avatar">
-                                    <img src="images/notification_head4.png" alt="Notification avatar">
-                                </div>
 
-                                <div class="name_time">
-                                    <div>
-                                        <h4>AazzTech</h4>
-                                        <p>Mar 2, 2019 at 2:14 pm</p>
-                                    </div>
-                                    <span class="email">Me</span>
-                                </div>
-                                <!-- end /.name_time -->
-                            </div>
-                            <!-- end /.head -->
-
-                            <div class="body">
-                                <p>Faucibus rutrum. Phasellus sodales vulputate urna, vel accumsan augue egestas ac.
-                                    Donec
-                                    vitae leo at sem lobortis porttitor eu conse quat risus. Mauris sed congue orci.
-                                    Donec ultrices faucibus rutrum. Phasellus sodales vulputate urna, vel accumsan
-                                    augue.</p>
-                            </div>
-                            <!-- end /.body -->
-
-                        </div>
-                        <!-- end /.conversation -->
 
                         <div class="conversation">
                             <div class="head">
@@ -338,30 +286,6 @@ if (isset($_GET['msg_id'])) {
                                 <p>Faucibus rutrum. Phasellus sodales vulputate urna, vel accumsan augue egestas ac.
                                     Donec
                                     vitae leo at sem lobortis porttitor.</p>
-                                <div class="attachments">
-                                    <div class="attachment_head">
-                                        <p>
-                                            <span class="lnr lnr-paperclip"></span> 2 Attachments
-                                        </p>
-                                        <a href="#">
-                                            <span class="lnr lnr-download"></span> Download</a>
-                                    </div>
-
-                                    <div class="attachment">
-                                        <ul>
-                                            <li>
-                                                <a href="images/att_av.jpg" class="venobox">
-                                                    <img src="images/att_av.jpg" alt="image attachment">
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="images/att_av2.jpg" class="venobox">
-                                                    <img src="images/att_av2.jpg" alt="image attachment">
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
                             </div>
                             <!-- end /.body -->
                         </div>
@@ -396,8 +320,11 @@ if (isset($_GET['msg_id'])) {
 
 <script>
     $(document).ready(function() {
-        $('#btn_viewed').click(function() {
+        $('#btn_viewed').click(function(e) {
+            e.preventDefault();
+            console.log(e.target)
             var msg_id = $('#msg_id').val();
+
             $.ajax({
                 url: 'admin/include/user_functions.php',
                 method: 'POST',

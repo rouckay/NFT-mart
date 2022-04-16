@@ -63,6 +63,7 @@ if (isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
                             $type = $rows['type'];
                             $date = $rows['notif_at'];
                             $from = $rows['notificationFrom'];
+                            $notif_status = $rows['notif_status'];
                             $senderInfo = fetch_mem_info_by_id($from);
                             foreach ($senderInfo as $senderData) {
                                 $senderImage = $senderData['mem_image'];
@@ -70,7 +71,8 @@ if (isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
                                 $senderUserName = $senderData['mem_user_name'];
                         ?>
                                 <div class="notification">
-                                    <span class="line"></span>
+                                    <div class="delayRun"><?php echo $notif_status = 1 ? '<span class="line"></span>' : ''; ?></div>
+
                                     <div class="notification__info">
                                         <div class="info_avatar">
                                             <img src="admin/img/member_avatars/<?php echo $senderUserName; ?>/<?php echo $senderImage; ?>" alt="">
@@ -152,7 +154,7 @@ if (isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
                         } ?>
 <!-- end /.notifications -->
 
-
+<?php seenNotification($mem_id); ?>
 <!-- pagination -->
 <div class="pagination-area pagination-area2">
     <nav class="navigation pagination " role="navigation">
@@ -181,10 +183,16 @@ if (isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
 </div>
 <!-- end /.dashboard_menu_area -->
 </section>
+<script>
+    let delayEle = document.querySelector('.delayRun');
+    document.addEventListener('DOMContentLoaded', function() {
+        delayEle.style.display = 'none';
+        setTimeout(() => {
+            delayEle.style.display = 'block';
+        }, 1000);
+    })
+</script>
 <?php
 require_once('footer.php');
 
 ?>
-<script>
-    swal("Hello world!");
-</script>

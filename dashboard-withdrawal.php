@@ -281,6 +281,29 @@ foreach ($buyer_info  as $buyer_data) {
         </div>
     </div>
 </section>
+<!-- modele -->
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <center>
+                    <h4 class="modal-title" id="myModalLabel">Delete Member</h4>
+                </center>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">Are you sure you want to Delete</p>
+                <h2 class="text-center fullname"></h2>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                <button type="button" class="btn btn-danger id"><span class="glyphicon glyphicon-trash"></span> Yes</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- END modele -->
 <?php if (isset($_POST['approvedBtn'])) {
     header('refresh:2url=dashboard-withdrawal.php#productConfirmPlace');
 } ?>
@@ -342,7 +365,6 @@ foreach ($buyer_info  as $buyer_data) {
                 success: function(responseDeny) {
                     $('#responseDeny').html(responseDeny);
                     $('#table').load(location.href + " #table");
-
                 }
             })
         })

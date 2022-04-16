@@ -1143,14 +1143,14 @@ function showProductWithAuthorandId($product_id, $user)
 }
 // END Show Member Product By Id 
 // Notify User If SomeOne Want to Buy their Products
-function productNotif($user_name)
+function notifcations($user_name)
 {
     $conn = config();
-    $sql_pro_notif = "SELECT * FROM withdrawal WHERE with_pro_author = :with_pro_author AND status = :status";
+    $sql_pro_notif = "SELECT * FROM notification WHERE notificationFor = :author AND notif_status = :status";
     $stmt_notif = $conn->prepare($sql_pro_notif);
     $stmt_notif->execute([
-        ':with_pro_author' => $user_name,
-        ':status' => 'pending'
+        ':author' => $user_name,
+        ':status' => 0
     ]);
     $rows = $stmt_notif->rowCount();
     return $rows;
@@ -1806,21 +1806,27 @@ function freelancerControl($freelid, $status)
     $seeFirst = freelancerStatus($freelid);
     foreach ($seeFirst as $freelanser) {
         $checkId = $freelanser['freel_mem_id'];
-        if ($checkId) {
-            echo 'exist';
-        } else {
-            echo 'need To Insert';
-        }
     }
-    $sql = "INSERT INTO freelancering (freel_mem_id, status) VALUES (:memid,:controls)";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute([
-        ':memid' => $freelid,
-        ':controls' => $status
-    ]);
+    if ($checkId == '') {
+        echo 'exist';
+        $sql = "INSERT INTO freelancering (freel_mem_id, status) VALUES (:memid,:controls)";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([
+            ':memid' => $freelid,
+            ':controls' => $status
+        ]);
+    } else {
+        $updateSql = "UPDATE freelancering SET status =:status WHERE freel_mem_id = :id";
+        $stmtUp = $conn->prepare($updateSql);
+        $stmtUp->execute([
+            ':status' => $status,
+            ':id' => $freelid
+        ]);
+    }
 }
 function freelancerStatus($mem_id)
 {
+    error_reporting(0);
     $conn = config();
     $sql = "SELECT * FROM freelancering WHERE freel_mem_id = :memid
     ";
@@ -1832,7 +1838,32 @@ function freelancerStatus($mem_id)
     while ($rows = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $results[] = $rows;
     }
-    return $results;
+    return $results ?? 0;
 }
 // END Member Freelancering 
+// Notifications Seen
+function seenNotification($mem_id)
+{
+    $conn = config();
+    $sqlSeen = "UPDATE notification SET notif_status = :status WHERE notificationFor = :whoSeen";
+    $stmt = $conn->prepare($sqlSeen);
+    $stmt->execute([
+        ':status' => 1,
+        ':whoSeen' => $mem_id
+    ]);
+}
+// END Notifications Seen
+// fetch Admin Site Messages
+function fetchSiteMsg()
+{
+    $conn = config();
+    $sql = "SELECT * FROM site_message";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    while ($rows = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $result[] = $rows;
+    }
+    return $result;
+}
+// END fetch Admin Site Messages
 ?>

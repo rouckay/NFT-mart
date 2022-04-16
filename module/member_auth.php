@@ -6,14 +6,14 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
     <?php
 
     if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
-        $user_id = $_SESSION['member_id'];
-        $user_name = $_SESSION['member_user'];
+        $mem_id = $_SESSION['member_id'];
+        $user = $_SESSION['member_user'];
     } elseif (isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
-        $user_id = $_COOKIE['mem_user_id'];
-        $user_name = $_COOKIE['mem_user_name'];
+        $mem_id = $_COOKIE['mem_user_id'];
+        $user = $_COOKIE['mem_user_name'];
     } else {
-        $user_id = -1;
-        $user_name = -1;
+        $mem_id = -1;
+        $user = -1;
     }
 
 
@@ -25,30 +25,28 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
             <ul>
                 <li class="has_dropdown">
                     <div class="icon_wrap">
-                        <span class="lnr lnr-alarm"></span>
-                        <?php $pro_notif =  productNotif($user_name);
+                        <a href="notification.php"><span class="lnr lnr-alarm"></span></a>
+                        <?php $pro_notif =  notifcations($mem_id);
                         echo $pro_notif >= 1 ? "<span class='notification_count noti'>$pro_notif</span>" : '';
                         ?>
                     </div>
-                    <div class="dropdowns notification--dropdown">
-                        <div class="dropdown_module_header">
-                            <h4>My Notifications</h4>
-                            <a href="notification.php">View All</a>
-                        </div>
-                        <?php
-                        $user = $user_name;
-                        $notif = proNotif($user);
-                        // Check Variable notif That is Not Null
-                        if ($notif == null) {
-                            echo  "<div class='bg-warning'>Notification Empty</div>";
-                        } else {
-                            foreach ($notif as $notif_data) {
-                                $product_id = $notif_data['with_pro_id'];
-                                $proFromTbl = showProductsById($product_id);
-                                foreach ($proFromTbl as $proTblInfo) {
-                                    $pro_name = $proTblInfo['mem_pro_name'];
-                                    $pro_image = $proTblInfo['mem_pro_image'];
-                        ?>
+                    <?php
+                    $notif = proNotif($user);
+                    // Check Variable notif That is Not Null
+                    if ($notif == null) {
+                    } else {
+                        foreach ($notif as $notif_data) {
+                            $product_id = $notif_data['with_pro_id'];
+                            $proFromTbl = showProductsById($product_id);
+                            foreach ($proFromTbl as $proTblInfo) {
+                                $pro_name = $proTblInfo['mem_pro_name'];
+                                $pro_image = $proTblInfo['mem_pro_image'];
+                    ?>
+                                <div class="dropdowns notification--dropdown">
+                                    <div class="dropdown_module_header">
+                                        <h4>My Notifications</h4>
+                                        <a href="notification.php">View All</a>
+                                    </div>
 
                                     <div class="notifications_module">
                                         <div class="notification">
@@ -68,30 +66,17 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
                                             </div>
                                         </div>
                                     </div>
-                        <?php  }
-                            }
+                                </div>
+                    <?php  }
                         }
-                        ?>
-                    </div>
+                    }
+                    ?>
 
                 </li>
 
                 <li class="has_dropdown">
                     <?php
                     $conn = config();
-                    if (isset($_SESSION['member_id']) || isset($_SESSION['member_user'])) {
-                        $mem_id = $_SESSION['member_id'];
-                        $user = $_SESSION['member_user'];
-                    } elseif (isset($_COOKIE['mem_user_id']) || isset($_COOKIE['mem_user_name'])) {
-                        $mem_id = base64_decode($_COOKIE['mem_user_id']);
-                        $user = base64_decode($_COOKIE['mem_user_name']);
-                    } else {
-                        $mem_id = -1;
-                        $user = -1;
-                    }
-
-
-
                     $msg_notif = "SELECT * FROM messages WHERE msg_state=:state AND reciever = :reciever";
                     $stmt_notif = $conn->prepare($msg_notif);
                     $stmt_notif->execute([
@@ -253,13 +238,7 @@ if (isset($_SESSION['member_user']) || isset($_COOKIE['mem_user_id']) || isset($
         <!-- User info -->
         <?php
         $conn = config();
-        if (isset($_COOKIE['mem_user_id'])) {
-            $mem_id = base64_decode($_COOKIE['mem_user_id']);
-        } elseif (isset($_SESSION['member_id'])) {
-            $mem_id = $_SESSION['member_id'];
-        } else {
-            $mem_id = -1;
-        }
+
         $data_mem = "SELECT * FROM members WHERE mem_id = :id";
         $stmt_mem = $conn->prepare($data_mem);
         $stmt_mem->execute([
