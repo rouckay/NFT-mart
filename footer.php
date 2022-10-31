@@ -147,7 +147,7 @@
                     <div class="copyright-text">
                         <p>&copy; <span id='year'></span>
                             <a href="#">Nijat</a>. All rights reserved. Created by
-                            <a href="#">Qalam University Developers &#128170; with &#128151;</a>
+                            <a href="#">Farhad Rahmani&#128170; with &#128151;</a>
                         </p>
                     </div>
 
